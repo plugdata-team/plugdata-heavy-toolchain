@@ -54,11 +54,17 @@ jobs:
           - name: Debian-x64
             os: debian
             pacman: apt
+          - name: Raspbian-Stretch-ARM
+            os: raspbian/stretch
+            pacman: apt
           - name: Fedora-36-x64
             os: fedora:36
             pacman: dnf
           - name: Fedora-36-x64
             os: fedora:35
+            pacman: dnf
+          - name: Mageia-x64
+            os: mageia
             pacman: dnf
           - name: OpenSUSE-Leap-x64
             os: opensuse/leap
@@ -69,6 +75,7 @@ jobs:
           - name: Arch-x64
             os: archlinux
             pacman: pacman
+
     steps:
 
     - name: Update git (dnf)
