@@ -90,7 +90,7 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-        ./make_executable.sh ${{ matrix.name }}
+        ./make_executable.sh
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
