@@ -35,7 +35,12 @@ jobs:
   build-linux:
     name: ${{ matrix.name }}
     runs-on: ubuntu-latest
-    container: ${{ matrix.os }}
+    container:
+      image: ${{ matrix.os }}
+      options: --privileged
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup
+
     strategy:
       fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
       matrix:
