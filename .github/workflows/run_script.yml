@@ -54,7 +54,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Heavy-Win64
-          path: ${{github.workspace}}/Heavy
+          path: ${{github.workspace}}/Heavy.exe
 
       - name: Release Artifacts
         uses: softprops/action-gh-release@v1

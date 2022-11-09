@@ -9,7 +9,12 @@ python3 pyinstaller -F --noconfirm --windowed --paths $(python3 -m site --user-s
 else
 python3 pyinstaller -F --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --add-data="./hvcc/*;./hvcc"
 fi
+
+if  [[ $(uname -s) == CYGWIN* ]]; then 
+mv ./dist/__init__.exe ./Heavy.exe
+else
 mv ./dist/__init__ ./Heavy
+fi
 rm -rf ./dist
 rm -rf ./build
 rm -rf ./__init__.spec
