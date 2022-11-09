@@ -45,25 +45,41 @@ jobs:
       fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
       matrix:
         include:
-          - name: Ubuntu-22.04
+          - name: Ubuntu-22.04-x64
             os: ubuntu:22.04
-          - name: Fedora-36
+            pacman: apt
+          - name: Ubuntu-20.04-x64
+            os: ubuntu:20.04
+            pacman: apt
+          - name: Debian-x64
+            os: debian
+            pacman: apt
+          - name: Fedora-36-x64
             os: fedora:36
-          - name: macOS-Universal
-            os: macos:12
+            pacman: dnf
+          - name: OpenSUSE-x64
+            os: opensuse/leap
+            pacman: zypper
+          - name: Arch-x64
+            os: archlinux
+            pacman: pacman
     steps:
 
     - name: Update git (dnf)
-      if: ${{ matrix.name == 'Fedora-36' }}
+      if: ${{ matrix.pacman == 'dnf' }}
       run: dnf install -y git binutils
 
     - name: Update git (apt)
-      if: ${{ matrix.name == 'Ubuntu-22.04' }}
+      if: ${{ matrix.pacman == 'apt' }}
       run: apt update && apt install -y git binutils
 
     - name: Update git (zypper)
-      if: ${{ matrix.name == 'OpenSUSE' }}
+      if: ${{ matrix.pacman == 'zypper' }}
       run: zypper refresh && zypper install -y git binutils
+    
+    - name: Update git (zypper)
+      if: ${{ matrix.pacman == 'pacman' }}
+      run: pacman -Sy && pacman -S --noconfirm git binutils && pacman --noconfirm -Syu
 
     - uses: actions/checkout@v3
       with:
