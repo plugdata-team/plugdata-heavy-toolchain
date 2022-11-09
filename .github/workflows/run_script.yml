@@ -3,21 +3,10 @@ name: Create Package
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
-    name: ${{ matrix.name }}
-    runs-on: ubuntu-latest
-    container: ${{ matrix.os }}
-    strategy:
-      fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
-      matrix:
-        include:
-          - name: Ubuntu
-            os: ubuntu:22.04
-          - name: Fedora
-            os: fedora:36
-          - name: macOS
-            os: macos:12
+    name: MacOS Univeral
+    runs-on: macos-latest
     steps:
+
     - uses: actions/checkout@v3
       with:
         submodules: recursive
@@ -25,13 +14,13 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-        ./make_executable.sh ${{ matrix.os }}
+        ./make_executable.sh MacOS-Universal
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Heavy-${{ matrix.os }}
-        path: ${{github.workspace}}/Heavy-${{ matrix.os }}
+        name: Heavy-MacOS-Universal
+        path: ${{github.workspace}}/Heavy-MacOS-Universal
 
     - name: Release Artifacts
       uses: softprops/action-gh-release@v1
@@ -39,6 +28,57 @@ jobs:
       with:
         prerelease: true
         draft: true
-        files: Heavy-${{ matrix.os }}
+        files: Heavy-MacOS-Universal
+
+  build-macos:
+
+  build-linux:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    container: ${{ matrix.os }}
+    strategy:
+      fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
+      matrix:
+        include:
+          - name: Ubuntu-22.04
+            os: ubuntu:22.04
+          - name: Fedora-36
+            os: fedora:36
+          - name: macOS-Universal
+            os: macos:12
+    steps:
+
+    - name: Update git
+      if: ${{ matrix.name == 'Fedora-36' }}
+      run: sudo dnf install -y git
+
+    - name: Update git
+      if: ${{ matrix.name == 'Ubuntu-22.04' }}
+      run: sudo apt install -y git
+
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+      env:
+        PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+    - name: Run Packaging Script
+      working-directory: ${{github.workspace}}
+      run:
+        ./make_executable.sh ${{ matrix.name }}
+
+    - name: Archive Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Heavy-${{ matrix.name }}
+        path: ${{github.workspace}}/Heavy-${{ matrix.name }}
+
+    - name: Release Artifacts
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        prerelease: true
+        draft: true
+        files: Heavy-${{ matrix.name }}
 
     
