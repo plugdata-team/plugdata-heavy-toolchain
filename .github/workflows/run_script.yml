@@ -30,8 +30,8 @@ jobs:
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Heavy-MacOS-Universal
-        path: ${{github.workspace}}/Heavy-MacOS-Universal
+        name: Heavy-${{ matrix.os }}
+        path: ${{github.workspace}}/Heavy-${{ matrix.os }}
 
     - name: Release Artifacts
       uses: softprops/action-gh-release@v1
@@ -39,6 +39,6 @@ jobs:
       with:
         prerelease: true
         draft: true
-        files: Heavy-MacOS-Universal
+        files: Heavy-${{ matrix.os }}
 
     
