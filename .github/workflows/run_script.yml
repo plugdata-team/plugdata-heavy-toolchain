@@ -3,34 +3,35 @@ name: Create Package
 on: [push, workflow_dispatch]
 
 jobs:
-    name: MacOS Univeral
-    runs-on: macos-latest
-    steps:
+    build-macos:
+      name: MacOS Univeral
+      runs-on: macos-latest
+      steps:
 
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
-    - name: Run Packaging Script
-      working-directory: ${{github.workspace}}
-      run:
-        ./make_executable.sh MacOS-Universal
+      - name: Run Packaging Script
+        working-directory: ${{github.workspace}}
+        run:
+          ./make_executable.sh MacOS-Universal
 
-    - name: Archive Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: Heavy-MacOS-Universal
-        path: ${{github.workspace}}/Heavy-MacOS-Universal
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Heavy-MacOS-Universal
+          path: ${{github.workspace}}/Heavy-MacOS-Universal
 
-    - name: Release Artifacts
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        prerelease: true
-        draft: true
-        files: Heavy-MacOS-Universal
+      - name: Release Artifacts
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          draft: true
+          files: Heavy-MacOS-Universal
 
-  build-macos:
+
 
   build-linux:
     name: ${{ matrix.name }}
@@ -48,13 +49,17 @@ jobs:
             os: macos:12
     steps:
 
-    - name: Update git
+    - name: Update git (dnf)
       if: ${{ matrix.name == 'Fedora-36' }}
       run: sudo dnf install -y git
 
-    - name: Update git
+    - name: Update git (apt)
       if: ${{ matrix.name == 'Ubuntu-22.04' }}
-      run: sudo apt install -y git
+      run: sudo apt update && sudo apt install -y git
+
+    - name: Update git (zypper)
+      if: ${{ matrix.name == 'OpenSUSE' }}
+      run: zypper refresh && zypper install -y git
 
     - uses: actions/checkout@v3
       with:
