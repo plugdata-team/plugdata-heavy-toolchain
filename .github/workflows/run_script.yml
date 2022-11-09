@@ -3,8 +3,6 @@ name: Create Package
 on: [push, workflow_dispatch]
 
 jobs:
-
-jobs:
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
