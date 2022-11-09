@@ -11,3 +11,4 @@ mv ./dist/__init__ ./Heavy
 rm -rf ./dist
 rm -rf ./build
 rm -rf ./__init__.spec
+chmod +x ./Heavy
