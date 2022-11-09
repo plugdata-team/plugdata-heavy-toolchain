@@ -31,6 +31,37 @@ jobs:
         draft: true
         files: Heavy-MacOS-Universal
 
+  build-windows:
+    name: Windows
+    runs-on: windows-2022
+
+    - run: git config --global core.autocrlf input
+
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - uses: cygwin/cygwin-install-action@master
+
+    - name: Run Packaging Script
+      working-directory: ${{github.workspace}}
+      run:
+        bash ./make_executable.sh
+
+    - name: Archive Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Heavy-Win64
+        path: ${{github.workspace}}/Heavy
+
+    - name: Release Artifacts
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        prerelease: true
+        draft: true
+        files: Heavy-Win64
+        
 
   build-linux:
     name: ${{ matrix.name }}
@@ -53,9 +84,6 @@ jobs:
             pacman: apt
           - name: Debian-x64
             os: debian
-            pacman: apt
-          - name: Raspbian-Stretch-ARM
-            os: raspbian/stretch
             pacman: apt
           - name: Fedora-36-x64
             os: fedora:36
