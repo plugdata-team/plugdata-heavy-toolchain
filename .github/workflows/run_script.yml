@@ -5,13 +5,16 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    container: ${{ matrix.os }}
     strategy:
       fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
       matrix:
         include:
-          - name: Linux
+          - name: Ubuntu
             os: ubuntu-22.04
+          - name: Fedora
+            os: fedora-36
           - name: macOS
             os: macos-12
     steps:
