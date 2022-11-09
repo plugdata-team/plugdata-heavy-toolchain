@@ -67,19 +67,19 @@ jobs:
 
     - name: Update git (dnf)
       if: ${{ matrix.pacman == 'dnf' }}
-      run: dnf install -y git binutils
+      run: dnf install -y git binutils python3
 
     - name: Update git (apt)
       if: ${{ matrix.pacman == 'apt' }}
-      run: apt update && apt install -y git binutils
+      run: apt update && apt install -y git binutils python3
 
     - name: Update git (zypper)
       if: ${{ matrix.pacman == 'zypper' }}
-      run: zypper refresh && zypper install -y git binutils
+      run: zypper refresh && zypper install -y git binutils python3
     
-    - name: Update git (zypper)
+    - name: Update git (pacman)
       if: ${{ matrix.pacman == 'pacman' }}
-      run: pacman -Sy && pacman -S --noconfirm git binutils && pacman --noconfirm -Syu
+      run: pacman -Sy && pacman -S --noconfirm git binutils python3 && pacman --noconfirm -Syu
 
     - uses: actions/checkout@v3
       with:
