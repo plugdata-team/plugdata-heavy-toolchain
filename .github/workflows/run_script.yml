@@ -20,7 +20,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Heavy-MacOS-Universal
-        path: ./Heavy-MacOS-Universal
+        path: ${{github.workspace}}/Heavy-MacOS-Universal
 
     - name: Release Artifacts
       uses: softprops/action-gh-release@v1
