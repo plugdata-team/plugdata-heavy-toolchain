@@ -98,9 +98,6 @@ jobs:
           - name: OpenSUSE-Leap-x64
             os: opensuse/leap
             pacman: zypper
-          - name: OpenSUSE-Tumbleweed-x64
-            os: opensuse/tumbleweed
-            pacman: zypper
           - name: Arch-x64
             os: archlinux
             pacman: pacman
