@@ -12,11 +12,11 @@ jobs:
       matrix:
         include:
           - name: Ubuntu
-            os: ubuntu-22.04
+            os: ubuntu:22.04
           - name: Fedora
-            os: fedora-36
+            os: fedora:36
           - name: macOS
-            os: macos-12
+            os: macos:12
     steps:
     - uses: actions/checkout@v3
       with:
