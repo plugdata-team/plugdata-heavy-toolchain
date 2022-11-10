@@ -5,7 +5,7 @@ python -m pip install pyinstaller
 FOR /F "tokens=*" %%g IN ('python -m site --user-site') do (SET PYTHON_SITE=%%g)
 
 python pyinstaller -F --noconfirm --windowed --paths %PYTHON_SITE% .\hvcc\hvcc\__init__.py ^
---add-data=".\hvcc\*;." --add-data=".\hvcc\*;.\hvcc\"
+--add-data=".\hvcc\hvcc\core;.\hvcc\core" --add-data=".\hvcc\hvcc\generators;.\hvcc\generators"
 
 move .\dist\__init__.exe ./Heavy.exe
 
