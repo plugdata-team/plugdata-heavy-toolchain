@@ -94,6 +94,7 @@ jobs:
             pacman: dnf
           - name: OpenSUSE-Leap-x64
             os: opensuse/leap
+            pacman: zypper
           - name: OpenSUSE-Tumbleweed-x64
             os: opensuse/tumbleweed
             pacman: zypper
@@ -103,19 +104,19 @@ jobs:
 
     steps:
 
-    - name: Update git (dnf)
+    - name: Install Dependencies (dnf)
       if: ${{ matrix.pacman == 'dnf' }}
       run: dnf install -y git binutils python3
 
-    - name: Update git (apt)
+    - name: Install Dependencies (apt)
       if: ${{ matrix.pacman == 'apt' }}
       run: apt update && apt install -y git binutils python3 python3-pip
 
-    - name: Update git (zypper)
+    - name: Install Dependencies (zypper)
       if: ${{ matrix.pacman == 'zypper' }}
       run: zypper refresh && zypper install -y git binutils python3
     
-    - name: Update git (pacman)
+    - name: Install Dependencies (pacman)
       if: ${{ matrix.pacman == 'pacman' }}
       run: pacman -Sy && pacman -S --noconfirm git binutils python3 && pacman --noconfirm -Syu
 
