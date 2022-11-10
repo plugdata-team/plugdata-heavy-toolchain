@@ -3,13 +3,13 @@ python3 -m pip install hvcc
 python3 -m pip install pyinstaller
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    python3 pyinstaller -F --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --add-data="./hvcc/*:./hvcc"
+    python3 pyinstaller -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    python3 pyinstaller -F --noconfirm --windowed --target-architecture universal2 --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --add-data="./hvcc/*:./hvcc" --add-data="./hvcc/*:./"
+    python3 pyinstaller -n Heavy --noconfirm --windowed --target-architecture universal2 --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 fi
 
-mv ./dist/__init__ ./Heavy
+mv ./dist/Heavy ./Heavy
 rm -rf ./dist
 rm -rf ./build
 rm -rf ./__init__.spec
-chmod +x ./Heavy
+chmod +x ./Heavy/Heavy
