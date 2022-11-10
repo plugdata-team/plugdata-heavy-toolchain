@@ -35,20 +35,17 @@ jobs:
     name: Windows
     runs-on: windows-2022
     steps:
-      - name: Configure Git
-        run: git config --global core.autocrlf input
+      - name: Install Packages
+        run: choco install -y python vcbuildtools
 
       - uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - name: Configure Cygwin
-        uses: cygwin/cygwin-install-action@master
-
       - name: Run Packaging Script
         working-directory: ${{github.workspace}}
         run:
-          bash ./make_executable.sh
+          ./make_executable.bat
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v3
