@@ -94,6 +94,8 @@ jobs:
             pacman: dnf
           - name: OpenSUSE-Leap-x64
             os: opensuse/leap
+          - name: OpenSUSE-Tumbleweed-x64
+            os: opensuse/tumbleweed
             pacman: zypper
           - name: Arch-x64
             os: archlinux
