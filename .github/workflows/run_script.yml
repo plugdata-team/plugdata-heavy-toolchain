@@ -36,7 +36,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Install Packages
-        run: choco install python visualstudio2017-workload-vctools -y
+        run: choco install python -y
 
       - uses: actions/checkout@v3
         with:
