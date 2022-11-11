@@ -58,4 +58,4 @@ cd ./libDaisy/
 make
 cd ..
 
-cp -rf ./libDaisy ./Heavy/usr/opt/libDaisy
+cp -rf ./libDaisy ./Heavy/usr/utils/libDaisy
