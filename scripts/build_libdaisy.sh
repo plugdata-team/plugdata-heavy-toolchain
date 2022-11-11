@@ -6,7 +6,7 @@ mkdir -p Heavy/usr/utils
 mkdir -p Heavy/usr/include
 
 cp -f $(which make) Heavy/usr/bin/make
-cp -f ./scripts/Makefile Heavy/usr/utils/Makefile
+cp -f ./scripts/Makefile Heavy/usr/utils/daisy_makefile
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     
