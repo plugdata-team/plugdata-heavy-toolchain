@@ -5,9 +5,6 @@ mkdir -p Heavy/usr/lib
 mkdir -p Heavy/usr/utils
 mkdir -p Heavy/usr/include
 
-cp -f $(which make) Heavy/usr/bin/make
-cp -f ./resources/Makefile Heavy/usr/utils/daisy_makefile
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
     
 # path variable
@@ -41,16 +38,23 @@ else
 URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-x86_64-arm-none-eabi.tar.xz?rev=bad6fbd075214a34b48ddbf57e741249&hash=F87A67141928852E079463E67E2B7A02"
 
 echo "Downloading arm-none-eabi-gcc"
-curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
+#curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
 echo "Extracting..."
 mkdir tmp
 pushd tmp
-tar -xf ../gcc-arm-none-eabi.tar
+tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
-rm gcc-arm-none-eabi.tar
+rm gcc-arm-none-eabi.tar.xz
 
-mv tmp/gcc-arm-*/* usr/
+mv -f tmp/arm-gnu-*/* ./Heavy/usr/
+cp -f $(which make) Heavy/usr/bin/make
+
+sudo ln -s /usr/bin/arm-none-eabi-gcc /usr/bin/arm-none-eabi-gcc 
+sudo ln -s /usr/bin/arm-none-eabi-g++ /usr/bin/arm-none-eabi-g++
+sudo ln -s /usr/bin/arm-none-eabi-gdb /usr/bin/arm-none-eabi-gdb
+sudo ln -s /usr/bin/arm-none-eabi-size /usr/bin/arm-none-eabi-size
+sudo ln -s /usr/bin/arm-none-eabi-objcopy /usr/bin/arm-none-eabi-objcopy
 
 fi
 
