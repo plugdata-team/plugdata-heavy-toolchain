@@ -2,7 +2,7 @@
 # GENERATE TARGET
 
 # Library Locations
-LIBDAISY_DIR = ../utils/libDaisy
+LIBDAISY_DIR = libDaisy
 HVCC_DIR = source
 
 # HVCC Sources
