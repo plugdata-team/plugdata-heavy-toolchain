@@ -51,7 +51,7 @@ tar -xf ../gcc-arm-none-eabi.tar
 popd
 rm gcc-arm-none-eabi.tar
 
-mv tmp/gcc-arm-*/* gcc-arm-none-eabi/usr/
+mv tmp/gcc-arm-*/* usr/
 
 fi
 
