@@ -37,11 +37,10 @@ else
 # https://askubuntu.com/a/1371525
 # https://developer.arm.com/downloads/-/gnu-rm
 
-
 URL=https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-x86_64-arm-none-eabi.tar.xz?rev=bad6fbd075214a34b48ddbf57e741249&hash=F87A67141928852E079463E67E2B7A02
 
 echo "Downloading arm-none-eabi-gcc"
-curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar "$URL"
+curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz "$URL"
 
 echo "Extracting..."
 mkdir tmp
