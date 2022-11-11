@@ -2,6 +2,7 @@
 
 mkdir -p Heavy/usr/bin
 mkdir -p Heavy/usr/lib
+mkdir -p Heavy/usr/opt
 mkdir -p Heavy/usr/include
 
 cp $(which make) Heavy/usr/bin/make
@@ -54,9 +55,8 @@ mv tmp/gcc-arm-*/* gcc-arm-none-eabi/usr/
 
 fi
 
-
 cd ./libDaisy/
 make
 cd ..
 
-cp -r ./libDaisy Heavy/usr/opt/libDaisy
+cp -r ./libDaisy ./Heavy/usr/opt/libDaisy
