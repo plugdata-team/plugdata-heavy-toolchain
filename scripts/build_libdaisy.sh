@@ -2,10 +2,11 @@
 
 mkdir -p Heavy/usr/bin
 mkdir -p Heavy/usr/lib
-mkdir -p Heavy/usr/opt
+mkdir -p Heavy/usr/utils
 mkdir -p Heavy/usr/include
 
 cp $(which make) Heavy/usr/bin/make
+cp ./scripts/Makefile Heavy/usr/utils/Makefile
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     
