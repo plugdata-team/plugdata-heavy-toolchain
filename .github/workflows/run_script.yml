@@ -15,7 +15,7 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-        ./make_executable.sh MacOS-Universal
+        ./build.sh MacOS-Universal
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
@@ -45,7 +45,7 @@ jobs:
       - name: Run Packaging Script
         working-directory: ${{github.workspace}}
         run:
-          ./make_executable.bat
+          ./build.bat
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v3
@@ -126,7 +126,7 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-        bash ./make_executable.sh
+        bash ./build.sh
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3

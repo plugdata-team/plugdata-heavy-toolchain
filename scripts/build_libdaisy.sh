@@ -21,19 +21,19 @@ echo "Installing packages with Homebrew"
 brew install openocd dfu-util
 brew install $SCRIPTPATH/gcc-arm-embedded.rb --cask
 
-find /usr/local/Caskroom/gcc-arm-embedded -type f -perm +111 -print | xargs spctl --add --label "gcc-arm-embedded"
-find /usr/local/Caskroom/gcc-arm-embedded | xargs xattr -d com.apple.quarantine
-
 fi
 
 mkdir -p Heavy/usr/bin
 mkdir -p Heavy/usr/lib
 mkdir -p Heavy/usr/include
 
-cp $(which arm-none-eabi-gcc) usr/bin/arm-none-eabi-gcc
-cp $(which dfu-util) usr/bin/dfu-util
-cp $(which openocd) usr/bin/openocd
+cp $(which arm-none-eabi-gcc) Heavy/usr/bin/arm-none-eabi-gcc
+cp $(which dfu-util) Heavy/usr/bin/dfu-util
+cp $(which openocd) Heavy/usr/bin/openocd
+cp $(which make) Heavy/usr/bin/make
 
+cd ./libDaisy/
+make
+cd ..
 
-
-
+cp -r ./libDaisy Heavy/usr/opt/libDaisy
