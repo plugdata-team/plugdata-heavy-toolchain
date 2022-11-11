@@ -1,3 +1,5 @@
+#!/bin/bash
+
 python3 -m ensurepip
 python3 -m pip install hvcc
 python3 -m pip install pyinstaller
@@ -11,5 +13,5 @@ fi
 mv ./dist/Heavy ./Heavy
 rm -rf ./dist
 rm -rf ./build
-rm -rf ./__init__.spec
+rm -rf ./Heavy.spec
 chmod +x ./Heavy/Heavy
