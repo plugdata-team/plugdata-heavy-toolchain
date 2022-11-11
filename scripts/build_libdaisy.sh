@@ -5,8 +5,8 @@ mkdir -p Heavy/usr/lib
 mkdir -p Heavy/usr/utils
 mkdir -p Heavy/usr/include
 
-cp $(which make) Heavy/usr/bin/make
-cp ./scripts/Makefile Heavy/usr/utils/Makefile
+cp -f $(which make) Heavy/usr/bin/make
+cp -f ./scripts/Makefile Heavy/usr/utils/Makefile
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     
@@ -29,9 +29,9 @@ echo "Installing packages with Homebrew"
 brew install openocd dfu-util
 brew install $SCRIPTPATH/gcc-arm-embedded.rb --cask
 
-cp $(which arm-none-eabi-gcc) Heavy/usr/bin/arm-none-eabi-gcc
-cp $(which dfu-util) Heavy/usr/bin/dfu-util
-cp $(which openocd) Heavy/usr/bin/openocd
+cp -f $(which arm-none-eabi-gcc) Heavy/usr/bin/arm-none-eabi-gcc
+cp -f $(which dfu-util) Heavy/usr/bin/dfu-util
+cp -f $(which openocd) Heavy/usr/bin/openocd
 
 else
 
