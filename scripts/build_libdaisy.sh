@@ -36,6 +36,8 @@ mv "./Heavy/lib/gcc/arm-none-eabi/12.2.0/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-no
 rm -rf "./Heavy/lib/gcc/arm-none-eabi/12.2.0/thumb"
 mv "./Heavy/lib/gcc/arm-none-eabi/12.2.0/temp" "./Heavy/lib/gcc/arm-none-eabi/12.2.0/thumb"
 
+rm -rf "./Heavy/arm-none-eabi/lib/arm"
+
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
