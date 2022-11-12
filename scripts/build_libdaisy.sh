@@ -31,7 +31,7 @@ cp -rf ./resources/daisy_makefile ./Heavy/utils/daisy_makefile
 cp -f $(which make) Heavy/bin/make
 
 cd ./libDaisy/
-make GCC_PATH=./Heavy/bin/
+make GCC_PATH=../Heavy/bin/
 cd ..
 
 cp -rf ./libDaisy ./Heavy/utils/libDaisy
