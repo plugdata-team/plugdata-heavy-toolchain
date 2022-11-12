@@ -49,7 +49,6 @@ popd
 rm gcc-arm-none-eabi.tar.xz
 
 cp -rf tmp/arm-gnu-*/* ./Heavy/usr/
-cp -f $(which make) Heavy/usr/bin/make
 
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-gcc /usr/bin/arm-none-eabi-gcc 
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-g++ /usr/bin/arm-none-eabi-g++
@@ -58,6 +57,8 @@ sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-size /usr/bin/arm-none-eabi-size
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-objcopy /usr/bin/arm-none-eabi-objcopy
 
 fi
+
+cp -f $(which make) Heavy/usr/bin/make
 
 cd ./libDaisy/
 make
