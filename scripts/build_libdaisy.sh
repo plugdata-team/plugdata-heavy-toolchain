@@ -1,10 +1,5 @@
 #!/bin/bash
 
-mkdir -p Heavy/usr/bin
-mkdir -p Heavy/usr/lib
-mkdir -p Heavy/usr/utils
-mkdir -p Heavy/usr/include
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-darwin-x86_64-arm-none-eabi.tar.xz?rev=84494f738c6349fe84e509e91713f409&hash=F740DA913B3F2DADEC857F189AC97F76"
 elif [[ $(uname -m) == "aarch64" ]]; then
@@ -14,25 +9,29 @@ else
 fi
 
 echo "Downloading arm-none-eabi-gcc"
-curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
+#curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
 echo "Extracting..."
 mkdir tmp
 pushd tmp
-tar -xf ../gcc-arm-none-eabi.tar.xz
+#tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
 rm gcc-arm-none-eabi.tar.xz
 
-cp -rf tmp/arm-gnu-*/lib ./Heavy/usr/lib
-cp -rf tmp/arm-gnu-*/libexec ./Heavy/usr/libexec
-cp -rf tmp/arm-gnu-*/share ./Heavy/usr/share
+cp -rf tmp/arm-gnu-*/bin/* ./Heavy/bin
+cp -rf tmp/arm-gnu-*/lib ./Heavy/lib
+cp -rf tmp/arm-gnu-*/libexec ./Heavy/libexec
+cp -rf tmp/arm-gnu-*/share ./Heavy/share
+cp -rf tmp/arm-gnu-*/include ./Heavy/include
+cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy/arm-none-eabi
 
-cp -rf tmp/arm-gnu-*/* ./Heavy/usr/
+cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
+cp -rf ./resources/daisy_makefile ./Heavy/utils/daisy_makefile
 
-cp -f $(which make) Heavy/usr/bin/make
+cp -f $(which make) Heavy/bin/make
 
 cd ./libDaisy/
-make GCC_PATH=./Heavy/usr/bin/
+make GCC_PATH=./Heavy/bin/
 cd ..
 
-cp -rf ./libDaisy ./Heavy/usr/utils/libDaisy
+cp -rf ./libDaisy ./Heavy/utils/libDaisy
