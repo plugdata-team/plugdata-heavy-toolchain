@@ -29,18 +29,10 @@ cp -rf tmp/arm-gnu-*/share ./Heavy/usr/share
 
 cp -rf tmp/arm-gnu-*/* ./Heavy/usr/
 
-
-sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-gcc /usr/bin/arm-none-eabi-gcc 
-sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-g++ /usr/bin/arm-none-eabi-g++
-sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-gdb /usr/bin/arm-none-eabi-gdb
-sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-size /usr/bin/arm-none-eabi-size
-sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-objcopy /usr/bin/arm-none-eabi-objcopy
-sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-ar /usr/bin/arm-none-eabi-ar
-
 cp -f $(which make) Heavy/usr/bin/make
 
 cd ./libDaisy/
-make
+make GCC_PATH=./Heavy/usr/bin/
 cd ..
 
 cp -rf ./libDaisy ./Heavy/usr/utils/libDaisy
