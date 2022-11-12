@@ -27,6 +27,12 @@ brew install openocd dfu-util
 brew install $SCRIPTPATH/gcc-arm-embedded.rb --cask
 
 cp -f $(which arm-none-eabi-gcc) Heavy/usr/bin/arm-none-eabi-gcc
+cp -f $(which arm-none-eabi-g++) Heavy/usr/bin/arm-none-eabi-g++
+cp -f $(which arm-none-eabi-gdb) Heavy/usr/bin/arm-none-eabi-gdb
+cp -f $(which arm-none-eabi-size) Heavy/usr/bin/arm-none-eabi-size
+cp -f $(which arm-none-eabi-objcopy) Heavy/usr/bin/arm-none-eabi-objcopy
+cp -f $(which arm-none-eabi-ar) Heavy/usr/bin/arm-none-eabi-ar
+
 cp -f $(which dfu-util) Heavy/usr/bin/dfu-util
 cp -f $(which openocd) Heavy/usr/bin/openocd
 
@@ -50,11 +56,19 @@ rm gcc-arm-none-eabi.tar.xz
 
 cp -rf tmp/arm-gnu-*/* ./Heavy/usr/
 
+cp tmp/arm-gnu-*/usr/bin/arm-none-eabi-gcc ./Heavy/usr/bin/arm-none-eabi-gcc
+cp tmp/arm-gnu-*/usr/bin/arm-none-eabi-g++ ./Heavy/usr/bin/arm-none-eabi-g++
+cp tmp/arm-gnu-*/usr/bin/arm-none-eabi-gdb ./Heavy/usr/bin/arm-none-eabi-gdb
+cp tmp/arm-gnu-*/usr/bin/arm-none-eabi-size ./Heavy/usr/bin/arm-none-eabi-size
+cp tmp/arm-gnu-*/usr/bin/arm-none-eabi-objcopy ./Heavy/usr/bin/arm-none-eabi-objcopy
+cp tmp/arm-gnu-*/usr/bin/arm-none-eabi-ar ./Heavy/usr/bin/arm-none-eabi-ar
+
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-gcc /usr/bin/arm-none-eabi-gcc 
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-g++ /usr/bin/arm-none-eabi-g++
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-gdb /usr/bin/arm-none-eabi-gdb
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-size /usr/bin/arm-none-eabi-size
 sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-objcopy /usr/bin/arm-none-eabi-objcopy
+sudo ln -s $(pwd)/Heavy/usr/bin/arm-none-eabi-ar /usr/bin/arm-none-eabi-ar
 
 fi
 
