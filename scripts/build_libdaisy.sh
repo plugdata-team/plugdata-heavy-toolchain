@@ -19,19 +19,19 @@ popd
 rm gcc-arm-none-eabi.tar.xz
 
 cp -rf tmp/arm-gnu-*/bin/* ./Heavy/bin
-cp -rf tmp/arm-gnu-*/lib ./Heavy/lib
-cp -rf tmp/arm-gnu-*/libexec ./Heavy/libexec
-cp -rf tmp/arm-gnu-*/share ./Heavy/share
-cp -rf tmp/arm-gnu-*/include ./Heavy/include
-cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy/arm-none-eabi
+cp -rf tmp/arm-gnu-*/lib ./Heavy
+cp -rf tmp/arm-gnu-*/libexec ./Heavy
+cp -rf tmp/arm-gnu-*/share ./Heavy
+cp -rf tmp/arm-gnu-*/include ./Heavy
+cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/utils/daisy_makefile
 
 cp -f $(which make) Heavy/bin/make
 
-cd ./libDaisy/
+pushd libDaisy
 make GCC_PATH=../Heavy/bin/
-cd ..
+popd
 
 cp -rf ./libDaisy ./Heavy/utils/libDaisy
