@@ -13,7 +13,7 @@ xcopy /E tmp\arm-gnu-*\include .\Heavy
 xcopy /E tmp\arm-gnu-*\arm-none-eabi .\Heavy
 
 copy .\resources\heavy-static.a .\Heavy\lib\heavy-static.a
-copy .\resources\daisy_makefile .\Heavy\utils\daisy_makefile
+copy .\resources\daisy_makefile .\Heavy\share\daisy_makefile
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`where make`) DO (
 SET make_location=%%F
@@ -25,4 +25,4 @@ cd libDaisy
 make GCC_PATH=..\Heavy\bin\
 cd ..
 
-xcopy /E .\libDaisy .\Heavy\utils\libDaisy
+xcopy /E .\libDaisy .\Heavy\lib\libDaisy

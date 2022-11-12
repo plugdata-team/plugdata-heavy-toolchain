@@ -26,7 +26,7 @@ cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
-cp -rf ./resources/daisy_makefile ./Heavy/utils/daisy_makefile
+cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
 cp -f $(which make) Heavy/bin/make
 
@@ -34,4 +34,4 @@ pushd libDaisy
 make GCC_PATH=../Heavy/bin/
 popd
 
-cp -rf ./libDaisy ./Heavy/utils/libDaisy
+cp -rf ./libDaisy ./Heavy/lib/libDaisy

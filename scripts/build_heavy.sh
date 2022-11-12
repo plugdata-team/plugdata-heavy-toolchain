@@ -5,7 +5,6 @@ python3 -m pip install hvcc
 python3 -m pip install pyinstaller
 
 mkdir -p Heavy/bin
-mkdir -p Heavy/utils
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     python3 pyinstaller -n Heavy --noconfirm  --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
