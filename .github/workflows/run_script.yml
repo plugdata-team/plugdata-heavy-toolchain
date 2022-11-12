@@ -38,14 +38,27 @@ jobs:
       - name: Install Packages
         run: choco install python -y
 
+      - uses: actions/cache@v3
+        id: gnu-toolchain-cache
+        with:
+          path: ${{github.workspace}}/arm-none-eabi-gcc.zip
+          key: gnu-toolchain-cache
+
       - uses: actions/checkout@v3
         with:
           submodules: recursive
 
       - name: Run Packaging Script
+        if: steps.gnu-toolchain-cache.outputs.cache-hit != 'true'
         working-directory: ${{github.workspace}}
         run:
-          ./build.bat
+          ./build.bat 1
+
+      - name: Run Packaging Script
+        if: steps.gnu-toolchain-cache.outputs.cache-hit == 'true'
+        working-directory: ${{github.workspace}}
+        run:
+          ./build.bat 0
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v3
