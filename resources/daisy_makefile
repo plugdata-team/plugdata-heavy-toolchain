@@ -2,7 +2,7 @@
 TARGET = Heavy_$(PROJECT_NAME)
 
 # Library Locations
-LIBDAISY_DIR = ../../libdaisy
+LIBDAISY_DIR = ../../libDaisy
 
 # Project Source
 CPP_SOURCES = HeavyDaisy_$(PROJECT_NAME).cpp $(TARGET).cpp $(shell pwd)/build/heavy-static.a
