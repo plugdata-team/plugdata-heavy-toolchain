@@ -5,24 +5,19 @@ powershell -Command "arm-none-eabi-gcc.zip -DestinationPath .\tmp"
 
 del arm-none-eabi-gcc.zip
 
-xcopy /E tmp\arm-gnu-*\bin\* .\Heavy\bin
-xcopy /E tmp\arm-gnu-*\lib .\Heavy
-xcopy /E tmp\arm-gnu-*\libexec .\Heavy
-xcopy /E tmp\arm-gnu-*\share .\Heavy
-xcopy /E tmp\arm-gnu-*\include .\Heavy
-xcopy /E tmp\arm-gnu-*\arm-none-eabi .\Heavy
+move tmp\arm-gnu-* .\Heavy
 
-copy .\resources\heavy-static.a .\Heavy\lib\heavy-static.a
-copy .\resources\daisy_makefile .\Heavy\share\daisy_makefile
+copy resources\heavy-static.a Heavy\lib\heavy-static.a
+copy resources\daisy_makefile Heavy\share\daisy_makefile
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`where make`) DO (
 SET make_location=%%F
 )
 
-cp -f %make_location% Heavy\bin\make
+copy %make_location% Heavy\bin\make.exe
 
 cd libDaisy
 make GCC_PATH=..\Heavy\bin\
 cd ..
 
-xcopy /E .\libDaisy .\Heavy\lib
+xcopy /E /H /C /I libDaisy Heavy\lib\libDaisy
