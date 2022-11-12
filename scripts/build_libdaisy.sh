@@ -9,14 +9,14 @@ else
 fi
 
 echo "Downloading arm-none-eabi-gcc"
-#curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
+curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
 echo "Extracting..."
 mkdir tmp
 pushd tmp
-#tar -xf ../gcc-arm-none-eabi.tar.xz
+tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
-#rm gcc-arm-none-eabi.tar.xz
+rm gcc-arm-none-eabi.tar.xz
 
 cp -rf tmp/arm-gnu-*/bin/* ./Heavy/bin
 cp -rf tmp/arm-gnu-*/lib ./Heavy
