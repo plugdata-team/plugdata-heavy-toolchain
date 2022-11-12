@@ -25,4 +25,4 @@ cd libDaisy
 make GCC_PATH=..\Heavy\bin\
 cd ..
 
-xcopy /E .\libDaisy .\Heavy\lib\libDaisy
+xcopy /E .\libDaisy .\Heavy\lib
