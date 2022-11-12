@@ -47,7 +47,7 @@ tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
 rm gcc-arm-none-eabi.tar.xz
 
-mv -f tmp/arm-gnu-*/* ./Heavy/usr/
+cp -rf tmp/arm-gnu-*/* ./Heavy/usr/
 cp -f $(which make) Heavy/usr/bin/make
 
 sudo ln -s /usr/bin/arm-none-eabi-gcc /usr/bin/arm-none-eabi-gcc 
