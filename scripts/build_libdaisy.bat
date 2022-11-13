@@ -11,12 +11,12 @@ copy resources\daisy_makefile Heavy\share\daisy_makefile
 mkdir "Heavy\arm-none-eabi\lib\temp"
 move "Heavy\arm-none-eabi\lib\thumb\v7e-m+dp" "Heavy\arm-none-eabi\lib\temp\v7e-m+dp"
 del /S /Q "Heavy\arm-none-eabi\lib\thumb"
-move "Heavy\arm-none-eabi\lib\temp" "Heavy\arm-none-eabi\lib\thumb"
+rename "Heavy\arm-none-eabi\lib\temp" "Heavy\arm-none-eabi\lib\thumb"
 
 mkdir "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp"
 move "\Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb\v7e-m+dp" "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp\v7e-m+dp"
 del /S /Q "Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb"
-move "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp" "Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb"
+rename "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp" "Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb"
 
 del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
 
