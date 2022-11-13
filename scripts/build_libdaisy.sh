@@ -41,7 +41,11 @@ rm -rf "./Heavy/arm-none-eabi/lib/arm"
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
-cp -f $(which make) Heavy/bin/make
+pushd resources/unix_make
+chmod +x build.sh
+build.sh
+cp make ../../Heavy/bin/make
+popd
 
 pushd libDaisy
 make GCC_PATH=../Heavy/bin/
