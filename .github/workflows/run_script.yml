@@ -21,7 +21,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Heavy-MacOS-Universal
-        path: ${{github.workspace}}/Heavy.tar.gz
+        path: ${{github.workspace}}/Heavy
 
     - name: Release Artifacts
       uses: softprops/action-gh-release@v1
@@ -145,7 +145,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Heavy-${{ matrix.name }}
-        path: ${{github.workspace}}/Heavy.tar.gz
+        path: ${{github.workspace}}/Heavy
 
     - name: Release Artifacts
       uses: softprops/action-gh-release@v1

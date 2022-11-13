@@ -1,6 +1,6 @@
 set URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi.zip"
 
-if "%1" == "1" powershell -Command "Invoke-WebRequest %URL% -OutFile arm-none-eabi-gcc.zip"
+if "%1"=="1" powershell -Command "Invoke-WebRequest %URL% -OutFile arm-none-eabi-gcc.zip"
 powershell -Command "Expand-Archive arm-none-eabi-gcc.zip -Force -DestinationPath .\tmp"
 
 del arm-none-eabi-gcc.zip
