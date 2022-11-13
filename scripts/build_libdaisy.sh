@@ -47,7 +47,7 @@ pushd make-4.4
 chmod +x build.sh
 chmod +x configure
 ./configure
-build.sh
+./build.sh
 cp make ../../../Heavy/bin/make
 popd
 popd
