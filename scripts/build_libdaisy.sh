@@ -43,6 +43,8 @@ cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
 pushd resources/unix_make
 chmod +x build.sh
+chmod +x configure
+./configure
 build.sh
 cp make ../../Heavy/bin/make
 popd
