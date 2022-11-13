@@ -36,7 +36,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Install Packages
-        run: choco install python -y
+        run: choco install python make -y
 
       - uses: actions/cache@v3
         id: gnu-toolchain-cache
