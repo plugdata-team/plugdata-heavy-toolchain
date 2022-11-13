@@ -42,11 +42,14 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
 pushd resources/unix_make
+pushd make-4.4
+tar -xf make-4.4.tar.gz
 chmod +x build.sh
 chmod +x configure
 ./configure
 build.sh
-cp make ../../Heavy/bin/make
+cp make ../../../Heavy/bin/make
+popd
 popd
 
 pushd libDaisy
