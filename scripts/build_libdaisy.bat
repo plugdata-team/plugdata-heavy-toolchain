@@ -20,11 +20,8 @@ move "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp" "Heavy\lib\gcc\arm-none-eabi\12.2
 
 del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
 
-FOR /F "tokens=* USEBACKQ" %%F IN (`where make`) DO (
-set make_location=%%F
-)
-
-copy %make_location% Heavy\bin\make.exe
+copy resources\win_make\bin\* Heavy\bin
+copy resources\win_make\lib\* Heavy\lib
 
 cd libDaisy
 make GCC_PATH=..\Heavy\bin\
