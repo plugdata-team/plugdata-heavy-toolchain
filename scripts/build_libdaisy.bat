@@ -1,5 +1,6 @@
-git clone --recursive https://github.com/electro-smith/DaisyToolchain Heavy
+git clone --recursive https://github.com/electro-smith/DaisyToolchain
 
+move DaisyToolchain/windows Heavy
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\share\daisy_makefile
 
