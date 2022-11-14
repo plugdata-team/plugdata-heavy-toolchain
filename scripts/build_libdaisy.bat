@@ -24,7 +24,7 @@ copy resources\win_make\bin\* Heavy\bin
 copy resources\win_make\lib\* Heavy\lib
 
 cd libDaisy
-make GCC_PATH=../Heavy/bin
+Heavy\bin\make GCC_PATH=../Heavy/bin
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\lib\libDaisy

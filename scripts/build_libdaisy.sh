@@ -46,8 +46,8 @@ tar -xf make-4.4.tar.gz
 pushd make-4.4
 chmod +x ./build.sh
 chmod +x ./configure
-./configure
-make
+./configure --disable-dependency-tracking with_guile=no
+./build.sh
 cp make ../../../Heavy/bin/make
 popd
 popd
