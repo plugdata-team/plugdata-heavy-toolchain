@@ -9,12 +9,12 @@ else
 fi
 
 echo "Downloading arm-none-eabi-gcc"
-curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
+#curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
 echo "Extracting..."
 mkdir tmp
 pushd tmp
-tar -xf ../gcc-arm-none-eabi.tar.xz
+#tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
 rm gcc-arm-none-eabi.tar.xz
 
@@ -46,7 +46,7 @@ tar -xf make-4.4.tar.gz
 pushd make-4.4
 chmod +x ./build.sh
 chmod +x ./configure
-./configure --disable-dependency-tracking with_guile=no
+./configure --disable-dependency-tracking with_guile=no LDFLAGS=-static
 ./build.sh
 cp make ../../../Heavy/bin/make
 popd
