@@ -23,7 +23,7 @@ rmdir /S /Q "Heavy\arm-none-eabi\lib\thumb"
 rename "Heavy\arm-none-eabi\lib\temp" "thumb"
 
 mkdir "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp"
-move "\Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb\v7e-m+dp" "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp\v7e-m+dp"
+move "Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb\v7e-m+dp" "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp\v7e-m+dp"
 rmdir /S /Q "Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb"
 rename "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp" "thumb"
 
