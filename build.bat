@@ -52,4 +52,4 @@ del /s /q .\dist\*
 del /s /q .\build\*
 del /s /q .\__init__.spec
 
-cp VERSION Heavy\VERSION
+copy VERSION Heavy\VERSION
