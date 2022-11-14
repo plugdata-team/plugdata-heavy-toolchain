@@ -46,7 +46,13 @@ tar -xf make-4.4.tar.gz
 pushd make-4.4
 chmod +x ./build.sh
 chmod +x ./configure
-./configure --disable-dependency-tracking --with-guile=no --without-libintl-prefix --without-LIBINTL
+
+# Hack: make sure libintl is not found on macOS!
+if [[ "$OSTYPE" == "darwin"* ]]; then
+rm -f /usr/local/opt/gettext/lib/libintl*.dylib
+fi
+
+./configure --disable-dependency-tracking --with-guile=no --without-libintl-prefix
 ./build.sh
 cp make ../../../Heavy/bin/make
 popd
