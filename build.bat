@@ -31,7 +31,7 @@ del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
 
 :: Pre-build libdaisy
 cd libDaisy
-Heavy\bin\make.exe GCC_PATH=../Heavy/bin
+..\Heavy\bin\make.exe GCC_PATH=../Heavy/bin
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\lib\libDaisy
