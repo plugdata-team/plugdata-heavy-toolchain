@@ -11,10 +11,10 @@ copy resources\daisy_makefile Heavy\share\daisy_makefile
 powershell -Command "Invoke-WebRequest %URL% -OutFile MinGit.zip"
 powershell -Command "Expand-Archive MinGit.zip -Force -DestinationPath .\tmp"
 
-move tmp\mingw64 Heavy\mingw64
 move tmp\etc Heavy\etc
-move tmp\usr Heavy\usr
-move tmp\cmd Heavy\cmd
+move tmp\usr\bin\* Heavy\bin\
+move tmp\usr\etc Heavy\etc
+move tmp\usr\libexec Heavy\libexec
 
 :: Remove unnecessary target platforms from compiler
 mkdir "Heavy\arm-none-eabi\lib\temp"
