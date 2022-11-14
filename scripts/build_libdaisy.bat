@@ -3,7 +3,7 @@ git clone --recursive https://github.com/electro-smith/DaisyToolchain
 set URL="https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/MinGit-2.38.1-64-bit.zip"
 
 powershell -Command "Invoke-WebRequest %URL% -OutFile MinGit.zip"
-powershell -Command "Expand-Archive MinGit.zip -Force -DestinationPath tmp"
+powershell -Command "Expand-Archive MinGit.zip -Force -DestinationPath .\tmp"
 
 move tmp\mingw64 Heavy\mingw64
 move tmp\etc Heavy\etc
