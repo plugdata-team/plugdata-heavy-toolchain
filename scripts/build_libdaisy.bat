@@ -1,9 +1,4 @@
-set URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi.zip"
-
-if "%1"=="1" powershell -Command "Invoke-WebRequest %URL% -OutFile arm-none-eabi-gcc.zip"
-powershell -Command "Expand-Archive arm-none-eabi-gcc.zip -Force -DestinationPath .\tmp"
-
-move tmp\arm-gnu-* .\Heavy
+git clone --recursive https://github.com/electro-smith/DaisyToolchain Heavy
 
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\share\daisy_makefile
@@ -19,9 +14,6 @@ rmdir /S /Q "Heavy\lib\gcc\arm-none-eabi\12.2.0\thumb"
 rename "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp" "thumb"
 
 del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
-
-copy resources\win_make\bin\* Heavy\bin
-copy resources\win_make\lib\* Heavy\lib
 
 cd libDaisy
 Heavy\bin\make GCC_PATH=../Heavy/bin
