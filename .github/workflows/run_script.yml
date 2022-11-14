@@ -15,7 +15,7 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-        ./build.sh MacOS-Universal
+       GITHUB_ACTIONS_BUILD=1 ./build.sh MacOS-Universal 
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
