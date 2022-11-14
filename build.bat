@@ -33,7 +33,7 @@ del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
 cd libDaisy
 
 echo ../Heavy/bin/make.exe GCC_PATH=../Heavy/bin> build.sh
-..\Heavy\usr\bin\sh.exe --login build.sh
+..\Heavy\bin\sh.exe --login build.sh
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\lib\libDaisy
