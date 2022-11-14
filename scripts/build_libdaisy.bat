@@ -27,7 +27,7 @@ rename "Heavy\lib\gcc\arm-none-eabi\12.2.0\temp" "thumb"
 del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
 
 cd libDaisy
-./Heavy/bin/make.exe GCC_PATH=../Heavy/bin
+Heavy\bin\make.exe GCC_PATH=../Heavy/bin
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\lib\libDaisy
