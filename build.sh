@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-darwin-x86_64-arm-none-eabi.tar.xz"
@@ -70,7 +68,6 @@ make GCC_PATH=../Heavy/bin/
 popd
 
 cp -rf ./libDaisy ./Heavy/lib/libDaisy
-
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
