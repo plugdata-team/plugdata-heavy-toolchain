@@ -31,7 +31,8 @@ del /S /Q ".\Heavy\arm-none-eabi\lib\arm"
 
 :: Pre-build libdaisy
 cd libDaisy
-echo "../Heavy/bin/make.exe GCC_PATH=../Heavy/bin"> build.sh
+
+echo ../Heavy/bin/make.exe GCC_PATH=../Heavy/bin> build.sh
 ..\Heavy\usr\bin\sh.exe --login build.sh
 cd ..
 
