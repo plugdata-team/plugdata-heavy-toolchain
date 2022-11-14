@@ -52,7 +52,7 @@ chmod +x ./build.sh
 chmod +x ./configure
 
 # Hack: make sure libintl is not found on macOS, when building on Github actions server!
-if [[ "$OSTYPE" == "darwin"* ]] && $GITHUB_ACTIONS_BUILD; then
+if [[ "$CLEAR_INTL" == "1" ]]; then
 rm -f /usr/local/opt/gettext/lib/libintl*.dylib
 fi
 
