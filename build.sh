@@ -59,7 +59,7 @@ fi
 
 ./configure --disable-dependency-tracking --with-guile=no --without-libintl-prefix
 ./build.sh
-cp make ../../Heavy/bin/make
+cp make ../Heavy/bin/make
 popd
 
 # Pre-build libdaisy
