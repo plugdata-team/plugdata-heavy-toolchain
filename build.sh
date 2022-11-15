@@ -61,6 +61,7 @@ fi
 ./build.sh
 cp make ../Heavy/bin/make
 popd
+rm -rf make-4.4 make-4.4.tar.gz
 
 # Pre-build libdaisy
 pushd libDaisy
