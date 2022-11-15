@@ -27,6 +27,7 @@ cp -rf tmp/arm-gnu-*/share ./Heavy
 cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
+
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
 mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp" 
@@ -46,6 +47,7 @@ cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
 # build a version of GNU make that has no dependencies
 pushd resources/unix_make
+curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
 tar -xf make-4.4.tar.gz
 pushd make-4.4
 chmod +x ./build.sh
