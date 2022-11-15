@@ -46,7 +46,6 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
 # build a version of GNU make that has no dependencies
-pushd resources/unix_make
 curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
 tar -xf make-4.4.tar.gz
 pushd make-4.4
@@ -61,7 +60,6 @@ fi
 ./configure --disable-dependency-tracking --with-guile=no --without-libintl-prefix
 ./build.sh
 cp make ../../../Heavy/bin/make
-popd
 popd
 
 # Pre-build libdaisy
