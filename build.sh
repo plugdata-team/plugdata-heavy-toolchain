@@ -45,6 +45,19 @@ rm -rf "./Heavy/arm-none-eabi/lib/arm"
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
 
+# copy dfu-util
+cp $(which dfu-util) ./Heavy/bin/dfu-util
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    cp $(locate -b '\libusb-1.0.so.0' -l1) ./Heavy/lib/libusb-1.0.so.0
+    # Make sure it can find libusb
+    patchelf --replace-needed "./Heavy/bin/dfu-util" "/usr/lib64/libusb-1.0.so.0" "\$ORIGIN/../lib/libusb-1.0.so.0"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    cp $HOMEBREW_PREFIX/opt/libusb/lib/libusb-1.0.0.dylib ./Heavy/lib/libusb-1.0.0.dylib
+     # Make sure it can find libusb
+    install_name_tool -change "$HOMEBREW_PREFIX/opt/libusb/lib/libusb-1.0.0.dylib" "@executable_path/../lib/libusb-1.0.0.dylib" "./Heavy/bin/dfu-util"
+fi
+
 # build a version of GNU make that has no dependencies
 curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
 tar -xf make-4.4.tar.gz
