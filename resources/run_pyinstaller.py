@@ -1,5 +1,3 @@
-#!/usr/local/bin/python3
-# -*- coding: utf-8 -*-
 import re
 import sys
 from PyInstaller.__main__ import run

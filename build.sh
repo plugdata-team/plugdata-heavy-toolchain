@@ -28,6 +28,7 @@ cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
 
+
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
 mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp" 
@@ -41,9 +42,12 @@ mv "./Heavy/lib/gcc/arm-none-eabi/12.2.0/temp" "./Heavy/lib/gcc/arm-none-eabi/12
 
 rm -rf "./Heavy/arm-none-eabi/lib/arm"
 
+mkdir -p ./Heavy/etc/linkers
+
 # copy a prebuild static library for heavy
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
-cp -rf ./resources/daisy_makefile ./Heavy/share/daisy_makefile
+cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
+cp -rf ./resources/*.lds ./Heavy/etc/linkers
 
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
@@ -89,9 +93,9 @@ python3 -m pip install hvcc
 python3 -m pip install pyinstaller
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    python3 ./resources/pyinstaller -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    python3 ./resources/pyinstaller -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) --target-architecture universal2 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) --target-architecture universal2 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 fi
 
 cp ./dist/Heavy/json2daisy/resources/component_defs.json ./dist/Heavy/json2daisy/resources/seed.json

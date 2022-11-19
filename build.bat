@@ -5,7 +5,7 @@ set URL="https://github.com/git-for-windows/git/releases/download/v2.38.1.window
 
 move DaisyToolchain\windows Heavy
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
-copy resources\daisy_makefile Heavy\share\daisy_makefile
+copy resources\daisy_makefile Heavy\etc\daisy_makefile
 
 :: Get minimal git bash, for command line utilities
 powershell -Command "Invoke-WebRequest %URL% -OutFile MinGit.zip"
