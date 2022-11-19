@@ -112,8 +112,8 @@ jobs:
     - name: Install Dependencies (zypper)
       if: ${{ matrix.pacman == 'zypper' }}
       run: |
-        zypper -n addrepo https://download.opensuse.org/repositories/hardware/15.4/hardware.repo
-        zypper -n refresh && zypper -n install -y git binutils python3 curl tar gzip xz make dfu-util patchelf
+        zypper -y addrepo https://download.opensuse.org/repositories/hardware/15.4/hardware.repo
+        zypper -y refresh && zypper -n install -y git binutils python3 curl tar gzip xz make dfu-util patchelf
     
     - name: Install Dependencies (pacman)
       if: ${{ matrix.pacman == 'pacman' }}
