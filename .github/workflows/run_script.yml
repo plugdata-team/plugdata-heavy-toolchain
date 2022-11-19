@@ -112,7 +112,7 @@ jobs:
     - name: Install Dependencies (zypper)
       if: ${{ matrix.pacman == 'zypper' }}
       run: |
-        zypper refresh && zypper install -y git binutils python3 curl tar gzip xz make dfu-util patchelf
+        zypper refresh && zypper install -y git binutils python3 curl tar gzip xz make patchelf
         curl -fSL -A "Mozilla/4.0" -o dfu_util.rpm https://download.opensuse.org/repositories/hardware/15.4/x86_64/dfu-util-0.11-lp154.4.1.x86_64.rpm
         rpm -i dfu_util.rpm
     
