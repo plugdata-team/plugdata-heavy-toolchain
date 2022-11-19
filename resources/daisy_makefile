@@ -7,6 +7,8 @@ LIBDAISY_DIR = ../../libDaisy
 # Project Source
 CPP_SOURCES = HeavyDaisy_$(PROJECT_NAME).cpp $(TARGET).cpp $(shell pwd)/build/heavy-static.a
 
+# LINKER
+
 # Core location, and generic makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 include $(SYSTEM_FILES_DIR)/Makefile
