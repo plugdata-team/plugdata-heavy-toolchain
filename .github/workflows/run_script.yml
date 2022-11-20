@@ -103,22 +103,22 @@ jobs:
 
     - name: Install Dependencies (dnf)
       if: ${{ matrix.pacman == 'dnf' }}
-      run: dnf install -y git binutils python3 curl gzip xz make dfu-util patchelf
+      run: dnf install -y git binutils python3 curl gzip xz make dfu-util patchelf libusb-devel
 
     - name: Install Dependencies (apt)
       if: ${{ matrix.pacman == 'apt' }}
-      run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf
+      run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf libusb-dev
 
     - name: Install Dependencies (zypper)
       if: ${{ matrix.pacman == 'zypper' }}
       run: |
-        zypper refresh && zypper install -y git binutils python3 curl tar gzip xz make patchelf
+        zypper refresh && zypper install -y git binutils python3 curl tar gzip xz make patchelf libusb-devel
         curl -fSL -A "Mozilla/4.0" -o dfu_util.rpm https://download.opensuse.org/repositories/hardware/15.4/x86_64/dfu-util-0.11-lp154.4.1.x86_64.rpm
         rpm -i dfu_util.rpm
     
     - name: Install Dependencies (pacman)
       if: ${{ matrix.pacman == 'pacman' }}
-      run: pacman -Sy && pacman -S --noconfirm git binutils python3 curl tar gzip xz make dfu-util patchelf && pacman --noconfirm -Syu
+      run: pacman -Sy && pacman -S --noconfirm git binutils python3 curl tar gzip xz make dfu-util patchelf libusb && pacman --noconfirm -Syu
 
     - uses: actions/checkout@v3
       with:
