@@ -53,7 +53,7 @@ cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp $(which dfu-util) ./Heavy/bin/dfu-util
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    cp $(locate -b '\libusb-1.0.so.0' -l1) ./Heavy/lib/libusb-1.0.so.0
+    cp $(locate -b '\libusb-1.0.so*' -l1) ./Heavy/lib/libusb-1.0.so.0
     # Make sure it can find libusb
     patchelf --replace-needed "libusb-1.0.so.0" "\$ORIGIN/../lib/libusb-1.0.so.0" "./Heavy/bin/dfu-util"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
