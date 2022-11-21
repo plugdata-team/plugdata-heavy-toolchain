@@ -27,8 +27,6 @@ cp -rf tmp/arm-gnu-*/share ./Heavy
 cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
-
-
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
 mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp" 

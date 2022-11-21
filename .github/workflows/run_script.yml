@@ -12,6 +12,10 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Install dependencies
+      working-directory: ${{github.workspace}}
+      run: brew install dfu-util
+
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
