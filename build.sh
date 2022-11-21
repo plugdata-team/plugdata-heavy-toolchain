@@ -56,7 +56,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     patchelf --replace-needed "libusb-1.0.so.0" "\$ORIGIN/../lib/libusb-1.0.so" "./Heavy/bin/dfu-util"
     patchelf --replace-needed "libusb-1.0.so" "\$ORIGIN/../lib/libusb-1.0.so" "./Heavy/bin/dfu-util"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    HOMEBREW_PREFIX="/usr"
+    HOMEBREW_PREFIX="/usr/local"
     cp $HOMEBREW_PREFIX/opt/libusb/lib/libusb-1.0.0.dylib ./Heavy/lib/libusb-1.0.0.dylib
      # Make sure it can find libusb
     install_name_tool -change "$HOMEBREW_PREFIX/opt/libusb/lib/libusb-1.0.0.dylib" "@executable_path/../lib/libusb-1.0.0.dylib" "./Heavy/bin/dfu-util"
