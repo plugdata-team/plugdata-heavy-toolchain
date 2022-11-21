@@ -51,7 +51,7 @@ cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp $(which dfu-util) ./Heavy/bin/dfu-util
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    cp $(find /usr/lib*/libusb-1.0.so* -print -quit) ./Heavy/lib/libusb-1.0.so
+    cp "$(ldconfig -p | grep libusb-1.0.so | tr ' ' '\n' | grep /)" ./Heavy/lib/libusb-1.0.so
     # Make sure it can find libusb
     patchelf --replace-needed "libusb-1.0.so.0" "\$ORIGIN/../lib/libusb-1.0.so" "./Heavy/bin/dfu-util"
     patchelf --replace-needed "libusb-1.0.so" "\$ORIGIN/../lib/libusb-1.0.so" "./Heavy/bin/dfu-util"
