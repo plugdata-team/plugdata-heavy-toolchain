@@ -34,11 +34,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     unzip homebrew.zip
     mv brew-3.6.13 homebrew
     ./homebrew/bin/brew install llvm
-    cp -rf ./bin/* ./Heavy/bin
-    cp -rf ./lib/* ./Heavy/lib
-    cp -rf ./Cellar ./Heavy/Cellar
+    cp -rf ./homebrew/bin/* ./Heavy/bin
+    cp -rf ./homebrew/lib/* ./Heavy/lib
+    cp -rf ./homebrew/Cellar ./Heavy/Cellar
 else
 #TODO: find a less hacky method for this!
+    mkdir ./Heavy/usr
     cp -rf /usr/bin ./Heavy/usr/bin
     cp -rf /usr/include ./Heavy/usr/include
     cp -rf /usr/lib ./Heavy/usr/lib

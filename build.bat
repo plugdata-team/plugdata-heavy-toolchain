@@ -9,9 +9,9 @@ set URL="https://github.com/skeeto/w64devkit/releases/download/v1.17.0/w64devkit
 powershell -Command "Invoke-WebRequest %URL% -OutFile w64devkit.zip"
 powershell -Command "Expand-Archive w64devkit.zip -Force -DestinationPath .\tmp"
 
-move tmp\bin\* Heavy\bin\
-move tmp\lib\* Heavy\lib\
-move tmp\libexec Heavy\libexec
+move tmp\w64devkit\bin\* Heavy\bin\
+move tmp\w64devkit\lib\* Heavy\lib\
+move tmp\w64devkit\libexec Heavy\libexec
 
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\etc\daisy_makefile
