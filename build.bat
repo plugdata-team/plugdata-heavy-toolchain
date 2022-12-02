@@ -1,17 +1,16 @@
 :: Get daisy toolchain, containing the arm compiler and more utils
 git clone --recursive https://github.com/electro-smith/DaisyToolchain
 
-set URL="https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/MinGit-2.38.1-64-bit.zip"
-
 move DaisyToolchain\windows Heavy
 
-:: Get minimal git bash, for command line utilities
-powershell -Command "Invoke-WebRequest %URL% -OutFile MinGit.zip"
-powershell -Command "Expand-Archive MinGit.zip -Force -DestinationPath .\tmp"
+set URL="https://github.com/skeeto/w64devkit/releases/download/v1.17.0/w64devkit-1.17.0.zip"
 
-move tmp\etc Heavy\etc
+:: Get minimal minGW environment, for command line utilities and native compilation utilities
+powershell -Command "Invoke-WebRequest %URL% -OutFile w64devkit.zip"
+powershell -Command "Expand-Archive w64devkit.zip -Force -DestinationPath .\tmp"
+
 move tmp\usr\bin\* Heavy\bin\
-move tmp\usr\etc Heavy\etc
+move tmp\usr\lib\* Heavy\lib\
 move tmp\usr\libexec Heavy\libexec
 
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
