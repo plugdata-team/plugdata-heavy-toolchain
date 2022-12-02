@@ -3,8 +3,10 @@
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-darwin-x86_64-arm-none-eabi.tar.xz"
+# Aarch64 Linux
 elif [[ $(uname -m) == "aarch64" ]]; then
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-aarch64-arm-none-eabi.tar.xz"
+# x86_64 Linux
 else
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-x86_64-arm-none-eabi.tar.xz"
 fi
@@ -26,6 +28,20 @@ cp -rf tmp/arm-gnu-*/libexec ./Heavy
 cp -rf tmp/arm-gnu-*/share ./Heavy
 cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+#TODO: find a better method for this!
+    cp -rf /usr ./Heavy/usr
+else
+    curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
+    mkdir homebrew
+    unzip homebrew.zip -d ./homebrew
+    ./homebrew/bin/brew install llvm
+    cp -rf ./bin/* ./Heavy/bin
+    cp -rf ./lib/* ./Heavy/lib
+    cp -rf ./Cellar ./Heavy/Cellar
+
+fi
 
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"

@@ -19,7 +19,7 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-       CLEAR_INTL=1 ./build.sh MacOS-Universal 
+       CLEAR_INTL=1 ./build.sh
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
