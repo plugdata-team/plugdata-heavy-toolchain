@@ -39,7 +39,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     cp -rf ./Cellar ./Heavy/Cellar
 else
 #TODO: find a less hacky method for this!
-    cp -rf /usr ./Heavy/usr
+    cp -rf /usr/bin ./Heavy/usr/bin
+    cp -rf /usr/include ./Heavy/usr/include
+    cp -rf /usr/lib ./Heavy/usr/lib
 
 fi
 
