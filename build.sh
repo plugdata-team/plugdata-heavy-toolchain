@@ -30,16 +30,16 @@ cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-#TODO: find a better method for this!
-    cp -rf /usr ./Heavy/usr
-else
     curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
-    mkdir homebrew
-    unzip homebrew.zip -d ./homebrew
+    unzip homebrew.zip
+    mv brew-3.6.13 homebrew
     ./homebrew/bin/brew install llvm
     cp -rf ./bin/* ./Heavy/bin
     cp -rf ./lib/* ./Heavy/lib
     cp -rf ./Cellar ./Heavy/Cellar
+else
+#TODO: find a less hacky method for this!
+    cp -rf /usr ./Heavy/usr
 
 fi
 
