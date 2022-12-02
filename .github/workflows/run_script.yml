@@ -107,12 +107,11 @@ jobs:
     - name: Install Dependencies (dnf)
       if: ${{ matrix.pacman == 'dnf' }}
       run: |
-        dnf install -y git binutils python3 curl gzip xz make dfu-util patchelf libusb-devel which
-        dnf group install "C Development Tools and Libraries" "Development Tools"
+        dnf install -y git binutils python3 curl gzip xz make dfu-util patchelf libusb-devel which gcc
 
     - name: Install Dependencies (apt)
       if: ${{ matrix.pacman == 'apt' }}
-      run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf libusb-dev which build-essential
+      run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf libusb-dev build-essential
 
     - name: Install Dependencies (zypper)
       if: ${{ matrix.pacman == 'zypper' }}
