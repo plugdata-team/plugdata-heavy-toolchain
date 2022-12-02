@@ -104,7 +104,6 @@ jobs:
             pacman: pacman
 
     steps:
-
     - name: Install Dependencies (dnf)
       if: ${{ matrix.pacman == 'dnf' }}
       run: |
@@ -126,7 +125,7 @@ jobs:
     
     - name: Install Dependencies (pacman)
       if: ${{ matrix.pacman == 'pacman' }}
-      run: pacman -Sy && pacman -S --noconfirm git binutils python3 curl tar gzip xz make dfu-util patchelf libusb && pacman --noconfirm -Syu
+      run: pacman -Sy && pacman -S --noconfirm git binutils python3 curl tar gzip xz make dfu-util patchelf libusb base-devel && pacman --noconfirm -Syu
 
     - uses: actions/checkout@v3
       with:
