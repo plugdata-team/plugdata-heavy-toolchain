@@ -37,6 +37,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     #cp -rf ./homebrew/bin/* ./Heavy/bin
     #cp -rf ./homebrew/lib/* ./Heavy/lib
     #cp -rf ./homebrew/Cellar ./Heavy/Cellar
+    echo "do nothing for now"
 else
 
 git clone https://github.com/minos-org/minos-static.git
