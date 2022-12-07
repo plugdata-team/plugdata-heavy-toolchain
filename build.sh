@@ -42,9 +42,13 @@ else
 git clone https://github.com/minos-org/minos-static.git
 ./minos-static/static-get -x gcc
 echo $(ls)
-cp ./gcc* ./Heavy/bin
-cp ./g++* ./Heavy/bin
+cp -rf ./gcc-*/usr/bin/* ./Heavy/bin/
+cp -rf ./gcc-*/usr/lib/* ./Heavy/lib/
+cp -rf ./gcc-*/usr/libexec/* ./Heavy/libexec/
+cp -rf ./gcc-*/usr/share/* ./Heavy/share/
+cp -rf ./gcc-*/usr/include/* ./Heavy/include/
 fi
+
 
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
