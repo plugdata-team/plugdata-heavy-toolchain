@@ -30,13 +30,13 @@ cp -rf tmp/arm-gnu-*/include ./Heavy
 cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
-    unzip homebrew.zip
-    mv brew-3.6.13 homebrew
-    ./homebrew/bin/brew install llvm
-    cp -rf ./homebrew/bin/* ./Heavy/bin
-    cp -rf ./homebrew/lib/* ./Heavy/lib
-    cp -rf ./homebrew/Cellar ./Heavy/Cellar
+    #curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
+    #unzip homebrew.zip
+    #mv brew-3.6.13 homebrew
+    #./homebrew/bin/brew install llvm
+    #cp -rf ./homebrew/bin/* ./Heavy/bin
+    #cp -rf ./homebrew/lib/* ./Heavy/lib
+    #cp -rf ./homebrew/Cellar ./Heavy/Cellar
 else
 
 git clone https://github.com/minos-org/minos-static.git
