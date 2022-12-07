@@ -38,12 +38,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     cp -rf ./homebrew/lib/* ./Heavy/lib
     cp -rf ./homebrew/Cellar ./Heavy/Cellar
 else
-#TODO: find a less hacky method for this!
-    mkdir ./Heavy/usr
-    cp -rf /usr/bin ./Heavy/usr/bin
-    cp -rf /usr/include ./Heavy/usr/include
-    cp -rf /usr/lib ./Heavy/usr/lib
 
+git clone https://github.com/minos-org/minos-static.git
+./minos-static/static-get -x gcc
+echo $(ls)
+cp ./gcc* ./Heavy/bin
+cp ./g++* ./Heavy/bin
 fi
 
 # Reduce package size by only including the daisy platform tools
