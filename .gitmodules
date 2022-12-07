@@ -4,3 +4,6 @@
 [submodule "libDaisy"]
 	path = libDaisy
 	url = https://github.com/electro-smith/libDaisy.git
+[submodule "DPF"]
+	path = DPF
+	url = https://github.com/DISTRHO/DPF.git
