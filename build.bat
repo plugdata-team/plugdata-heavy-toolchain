@@ -38,6 +38,7 @@ echo ../Heavy/bin/make.exe GCC_PATH=../Heavy/bin> build.sh
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\lib\libDaisy
+xcopy /E /H /C /I DPF Heavy\lib\DPF
 
 :: Package heavy using pyinstaller
 python -m ensurepip
