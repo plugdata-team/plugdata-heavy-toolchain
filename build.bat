@@ -1,6 +1,3 @@
-:: Get daisy toolchain, containing the arm compiler and more utils
-git clone --recursive https://github.com/electro-smith/DaisyToolchain
-
 mkdir "Heavy"
 
 :: Expand minGW environment, for command line utilities and compilation utilities
