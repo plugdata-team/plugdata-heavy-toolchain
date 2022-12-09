@@ -1,14 +1,10 @@
 :: Get daisy toolchain, containing the arm compiler and more utils
 git clone --recursive https://github.com/electro-smith/DaisyToolchain
 
-move DaisyToolchain\windows Heavy
+mkdir "Heavy"
 
 :: Expand minGW environment, for command line utilities and compilation utilities
-powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath .\tmp"
-
-move tmp\bin\* Heavy\bin\
-move tmp\lib\* Heavy\lib\
-move tmp\libexec Heavy\libexec
+powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath .\Heavy"
 
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\etc\daisy_makefile
