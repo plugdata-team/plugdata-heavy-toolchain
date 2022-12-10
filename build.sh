@@ -37,7 +37,7 @@ mkdir build
 ./build-anywhere.sh ./build
 popd
 
-rsync -a ./build-anywhere/x86_64-anywhere-linux-gnu/ ./Heavy/
+rsync -a ./build-anywhere/build/x86_64-anywhere-linux-gnu/ ./Heavy/
 fi
 
 # Reduce package size by only including the daisy platform tools
