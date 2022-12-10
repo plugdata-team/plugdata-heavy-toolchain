@@ -107,11 +107,6 @@ curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-
 tar -xf make-4.4.tar.gz
 pushd make-4.4
 
-# On Linux, build make in our build-anywhere environment
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    source ../Heavy/scripts/anywhere-setup.sh
-fi
-
 chmod +x ./build.sh
 chmod +x ./configure
 
@@ -125,11 +120,6 @@ fi
 cp make ../Heavy/bin/make
 popd
 rm -rf make-4.4 make-4.4.tar.gz
-
-# Exit our build-anywhere environment
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-source ~/.bashrc
-fi
 
 # Pre-build libdaisy
 pushd libDaisy
