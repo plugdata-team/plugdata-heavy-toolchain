@@ -70,62 +70,13 @@ jobs:
     name: ${{ matrix.name }}
     runs-on: ubuntu-latest
     container:
-      image: ${{ matrix.os }}
+      image: debian
       options: --privileged
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup
 
-    strategy:
-      fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
-      matrix:
-        include:
-          - name: Ubuntu-22.04-x64
-            os: ubuntu:22.04
-            pacman: apt
-          - name: Ubuntu-20.04-x64
-            os: ubuntu:20.04
-            pacman: apt
-          - name: Debian-x64
-            os: debian
-            pacman: apt
-          - name: Fedora-36-x64
-            os: fedora:36
-            pacman: dnf
-          - name: Fedora-35-x64
-            os: fedora:35
-            pacman: dnf
-          - name: Mageia-x64
-            os: mageia
-            pacman: dnf
-          - name: OpenSUSE-Leap-x64
-            os: opensuse/leap
-            pacman: zypper
-          - name: Arch-x64
-            os: archlinux
-            pacman: pacman
-
-    steps:
-    - name: Install Dependencies (dnf)
-      if: ${{ matrix.pacman == 'dnf' }}
-      run: |
-        dnf install -y git binutils python3 curl gzip xz make dfu-util patchelf libusb-devel which gcc rsync
-
     - name: Install Dependencies (apt)
-      if: ${{ matrix.pacman == 'apt' }}
       run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf libusb-dev build-essential rsync
-
-    - name: Install Dependencies (zypper)
-      if: ${{ matrix.pacman == 'zypper' }}
-      run: |
-        zypper refresh && zypper install -y git binutils python3 curl tar gzip xz make patchelf which gcc rsync
-        curl -fSL -A "Mozilla/4.0" -o libusb.rpm https://download.opensuse.org/repositories/hardware/15.4/src/libusb-1_0-1.0.26-lp154.73.1.src.rpm
-        rpm -i libusb.rpm
-        curl -fSL -A "Mozilla/4.0" -o dfu_util.rpm https://download.opensuse.org/repositories/hardware/15.4/x86_64/dfu-util-0.11-lp154.4.1.x86_64.rpm
-        rpm -i dfu_util.rpm
-    
-    - name: Install Dependencies (pacman)
-      if: ${{ matrix.pacman == 'pacman' }}
-      run: pacman -Sy && pacman -S --noconfirm git binutils python3 curl tar gzip xz make dfu-util patchelf libusb base-devel rsync && pacman --noconfirm -Syu
 
     - uses: actions/checkout@v3
       with:
@@ -150,6 +101,6 @@ jobs:
       with:
         prerelease: true
         draft: true
-        files: Heavy-${{ matrix.name }}
+        files: Heavy-Linux-x64
 
     
