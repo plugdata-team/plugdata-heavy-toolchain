@@ -60,8 +60,16 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 
+# install an old version of dfu-util for compatibility
+TEMP_DEB="$(mktemp)"
+wget -O "$TEMP_DEB" 'http://ftp.de.debian.org/debian/pool/main/d/dfu-util/dfu-util_0.9-1_amd64.deb'
+sudo dpkg -i "$TEMP_DEB"
+rm -f "$TEMP_DEB"
+
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
+cp $(which dfu-prefix) ./Heavy/bin/dfu-prefix
+cp $(which dfu-suffix) ./Heavy/bin/dfu-suffix
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     cp "$(ldconfig -p | grep libusb-1.0.so | tr ' ' '\n' | grep /)" ./Heavy/lib/libusb-1.0.so
@@ -79,10 +87,16 @@ fi
 curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
 tar -xf make-4.4.tar.gz
 pushd make-4.4
+
+# On Linux, build make in our build-anywhere environment
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    source ../Heavy/scripts/anywhere-setup.sh
+fi
+
 chmod +x ./build.sh
 chmod +x ./configure
 
-# Hack: make sure libintl is not found on macOS, when building on Github actions server!
+# Hack: make sure libintl is not found on macOS when building on Github actions server!
 if [[ "$CLEAR_INTL" == "1" ]]; then
 rm -f /usr/local/opt/gettext/lib/libintl*.dylib
 fi
@@ -92,6 +106,11 @@ fi
 cp make ../Heavy/bin/make
 popd
 rm -rf make-4.4 make-4.4.tar.gz
+
+# Exit our build-anywhere environment
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+source ~/.bashrc
+fi
 
 # Pre-build libdaisy
 pushd libDaisy
