@@ -50,8 +50,8 @@ rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/clang-*
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang.so.8
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libLLVM-8.so
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/git-clang-format
-sed -i 's/clang++/g++/' '/home/timothy/HeavyDistributable/build-anywhere/x86_64-anywhere-linux-gnu/scripts/anywhere-setup.sh'
-sed -i 's/clang/gcc/' '/home/timothy/HeavyDistributable/build-anywhere/x86_64-anywhere-linux-gnu/scripts/anywhere-setup.sh'
+sed -i 's/clang++/g++/' './x86_64-anywhere-linux-gnu/scripts/anywhere-setup.sh'
+sed -i 's/clang/gcc/' './x86_64-anywhere-linux-gnu/scripts/anywhere-setup.sh'
 
 popd
 popd
