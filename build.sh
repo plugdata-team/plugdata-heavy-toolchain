@@ -29,15 +29,17 @@ cp -rf gcc-arm-none-eabi/arm-gnu-*/include ./Heavy
 cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
-
 git clone https://github.com/theopolis/build-anywhere.git
 pushd build-anywhere
+
+adduser crosstoolng
+chown crosstoolng:crosstoolng ./build
+su crosstoolng
 mkdir build
 ./build-anywhere.sh ./build
 popd
-
 rsync -a ./build-anywhere/build/x86_64-anywhere-linux-gnu/ ./Heavy/
+su root
 fi
 
 # Reduce package size by only including the daisy platform tools
