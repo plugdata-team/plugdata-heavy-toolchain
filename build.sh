@@ -29,12 +29,34 @@ cp -rf gcc-arm-none-eabi/arm-gnu-*/include ./Heavy
 cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-git clone https://github.com/theopolis/build-anywhere.git
+
+curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
+
+mkdir build-anywhere
 pushd build-anywhere
-mkdir build
-./build-anywhere.sh ./build
+tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
+
+pushd x86_64-anywhere-linux-gnu
+# Fix: use gcc instead of clang, for compactness
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/llvm
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/clang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/cmake/llvm
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/cmake/clang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/clang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/llvm-cov
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/llvm-*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/clang-*
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang.so.8
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libLLVM-8.so
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/git-clang-format
+sed -i 's/clang++/g++/' '/home/timothy/HeavyDistributable/build-anywhere/x86_64-anywhere-linux-gnu/scripts/anywhere-setup.sh'
+sed -i 's/clang/gcc/' '/home/timothy/HeavyDistributable/build-anywhere/x86_64-anywhere-linux-gnu/scripts/anywhere-setup.sh'
+
 popd
-rsync -a ./build-anywhere/build/x86_64-anywhere-linux-gnu/ ./Heavy/
+popd
+
+rsync -a ./build-anywhere/x86_64-anywhere-linux-gnu/ ./Heavy/
 fi
 
 # Reduce package size by only including the daisy platform tools
