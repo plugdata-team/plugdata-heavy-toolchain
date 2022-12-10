@@ -67,7 +67,7 @@ jobs:
           files: Heavy-Win64
 
   build-linux:
-    name: ${{ matrix.name }}
+    name: Linux-x64
     runs-on: ubuntu-latest
     container:
       image: debian
@@ -92,7 +92,7 @@ jobs:
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Heavy-${{ matrix.name }}
+        name: Heavy-Linux-x64
         path: ${{github.workspace}}/Heavy
 
     - name: Release Artifacts
