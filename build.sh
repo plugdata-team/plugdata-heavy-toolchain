@@ -31,9 +31,10 @@ cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
 
-mkdir build-anywhere
+git clone https://github.com/theopolis/build-anywhere.git
 pushd build-anywhere
-tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
+mkdir build
+./build-anywhere.sh ./build
 popd
 
 rsync -a ./build-anywhere/x86_64-anywhere-linux-gnu/ ./Heavy/
