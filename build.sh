@@ -36,7 +36,7 @@ pushd build-anywhere
 tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
 popd
 
-rsync -a ./build-anywhere/ ./Heavy/
+rsync -a ./build-anywhere/x86_64-anywhere-linux-gnu/ ./Heavy/
 fi
 
 # Reduce package size by only including the daisy platform tools
