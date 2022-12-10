@@ -31,15 +31,10 @@ cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 git clone https://github.com/theopolis/build-anywhere.git
 pushd build-anywhere
-
-adduser crosstoolng
-chown crosstoolng:crosstoolng ./build
-su crosstoolng
 mkdir build
 ./build-anywhere.sh ./build
 popd
 rsync -a ./build-anywhere/build/x86_64-anywhere-linux-gnu/ ./Heavy/
-su root
 fi
 
 # Reduce package size by only including the daisy platform tools
@@ -65,7 +60,7 @@ cp -rf ./resources/*.lds ./Heavy/etc/linkers
 # install an old version of dfu-util for compatibility
 TEMP_DEB="$(mktemp)"
 wget -O "$TEMP_DEB" 'http://ftp.de.debian.org/debian/pool/main/d/dfu-util/dfu-util_0.9-1_amd64.deb'
-dpkg -i "$TEMP_DEB"
+sudo dpkg -i "$TEMP_DEB"
 rm -f "$TEMP_DEB"
 
 # copy dfu-util
