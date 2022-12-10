@@ -13,7 +13,6 @@ fi
 
 curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
-
 echo "Extracting..."
 mkdir gcc-arm-none-eabi
 pushd gcc-arm-none-eabi
