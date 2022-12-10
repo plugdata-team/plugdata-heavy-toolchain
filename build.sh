@@ -11,23 +11,34 @@ else
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-x86_64-arm-none-eabi.tar.xz"
 fi
 
-echo "Downloading arm-none-eabi-gcc"
 curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
+
 echo "Extracting..."
-mkdir tmp
-pushd tmp
+mkdir gcc-arm-none-eabi
+pushd gcc-arm-none-eabi
 tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
 rm gcc-arm-none-eabi.tar.xz
 
 mkdir Heavy
-cp -rf tmp/arm-gnu-*/bin ./Heavy
-cp -rf tmp/arm-gnu-*/lib ./Heavy
-cp -rf tmp/arm-gnu-*/libexec ./Heavy
-cp -rf tmp/arm-gnu-*/share ./Heavy
-cp -rf tmp/arm-gnu-*/include ./Heavy
-cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/bin ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/lib ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/libexec ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/share ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/include ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
+
+mkdir build-anywhere
+pushd build-anywhere
+tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
+popd
+
+rsync -a ./build-anywhere/ ./Heavy/
+fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     #curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
