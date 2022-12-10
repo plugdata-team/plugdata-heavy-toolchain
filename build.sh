@@ -121,7 +121,7 @@ make GCC_PATH=../Heavy/bin/
 popd
 
 cp -rf ./libDaisy ./Heavy/lib/libDaisy
-cp -rf ./dpf ./Heavy/lib/dpf
+cp -rf ./DPF ./Heavy/lib/dpf
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
