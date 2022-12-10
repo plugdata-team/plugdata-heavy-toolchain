@@ -65,7 +65,7 @@ cp -rf ./resources/*.lds ./Heavy/etc/linkers
 # install an old version of dfu-util for compatibility
 TEMP_DEB="$(mktemp)"
 wget -O "$TEMP_DEB" 'http://ftp.de.debian.org/debian/pool/main/d/dfu-util/dfu-util_0.9-1_amd64.deb'
-sudo dpkg -i "$TEMP_DEB"
+dpkg -i "$TEMP_DEB"
 rm -f "$TEMP_DEB"
 
 # copy dfu-util
