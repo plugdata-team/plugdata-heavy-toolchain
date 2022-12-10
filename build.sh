@@ -11,45 +11,52 @@ else
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-x86_64-arm-none-eabi.tar.xz"
 fi
 
-echo "Downloading arm-none-eabi-gcc"
 curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
 
 echo "Extracting..."
-mkdir tmp
-pushd tmp
+mkdir gcc-arm-none-eabi
+pushd gcc-arm-none-eabi
 tar -xf ../gcc-arm-none-eabi.tar.xz
 popd
 rm gcc-arm-none-eabi.tar.xz
 
 mkdir Heavy
-cp -rf tmp/arm-gnu-*/bin ./Heavy
-cp -rf tmp/arm-gnu-*/lib ./Heavy
-cp -rf tmp/arm-gnu-*/libexec ./Heavy
-cp -rf tmp/arm-gnu-*/share ./Heavy
-cp -rf tmp/arm-gnu-*/include ./Heavy
-cp -rf tmp/arm-gnu-*/arm-none-eabi ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/bin ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/lib ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/libexec ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/share ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/include ./Heavy
+cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    #curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
-    #unzip homebrew.zip
-    #mv brew-3.6.13 homebrew
-    #./homebrew/bin/brew install llvm
-    #cp -rf ./homebrew/bin/* ./Heavy/bin
-    #cp -rf ./homebrew/lib/* ./Heavy/lib
-    #cp -rf ./homebrew/Cellar ./Heavy/Cellar
-    echo "do nothing for now"
-else
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-git clone https://github.com/minos-org/minos-static.git
-./minos-static/static-get -x gcc
-echo $(ls)
-cp -rf ./gcc-*/usr/bin/* ./Heavy/bin/
-cp -rf ./gcc-*/usr/lib/* ./Heavy/lib/
-cp -rf ./gcc-*/usr/libexec/* ./Heavy/libexec/
-cp -rf ./gcc-*/usr/share/* ./Heavy/share/
-cp -rf ./gcc-*/usr/include/* ./Heavy/include/
+curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
+
+mkdir build-anywhere
+pushd build-anywhere
+tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
+
+pushd x86_64-anywhere-linux-gnu
+# Fix: use gcc instead of clang, for compactness
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/llvm
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/clang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/cmake/llvm
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/cmake/clang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/clang
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/llvm-cov
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/llvm-*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/clang-*
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang.so.8
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libLLVM-8.so
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/git-clang-format
+cp ../../resources/anywhere-setup.sh ./scripts/anywhere-setup.sh
+
+popd
+popd
+
+rsync -a ./build-anywhere/x86_64-anywhere-linux-gnu/ ./Heavy/
 fi
-
 
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
@@ -71,8 +78,23 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 
+# install an old version of dfu-util for compatibility
+TEMP_DEB="$(mktemp)"
+wget -O "$TEMP_DEB" 'http://ftp.de.debian.org/debian/pool/main/d/dfu-util/dfu-util_0.9-1_amd64.deb'
+sudo dpkg -i "$TEMP_DEB"
+rm -f "$TEMP_DEB"
+
+TEMP_DEB2="$(mktemp)"
+wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.1.3-5_amd64.deb'
+ar x "$TEMP_DEB2"
+tar xvf data.tar.xz
+cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
+
+
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
+cp $(which dfu-prefix) ./Heavy/bin/dfu-prefix
+cp $(which dfu-suffix) ./Heavy/bin/dfu-suffix
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     cp "$(ldconfig -p | grep libusb-1.0.so | tr ' ' '\n' | grep /)" ./Heavy/lib/libusb-1.0.so
@@ -90,10 +112,12 @@ fi
 curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
 tar -xf make-4.4.tar.gz
 pushd make-4.4
+
 chmod +x ./build.sh
 chmod +x ./configure
 
-# Hack: make sure libintl is not found on macOS, when building on Github actions server!
+
+# Hack: make sure libintl is not found on macOS when building on Github actions server!
 if [[ "$CLEAR_INTL" == "1" ]]; then
 rm -f /usr/local/opt/gettext/lib/libintl*.dylib
 fi
@@ -110,7 +134,7 @@ make GCC_PATH=../Heavy/bin/
 popd
 
 cp -rf ./libDaisy ./Heavy/lib/libDaisy
-cp -rf ./DPF ./Heavy/lib/DPF
+cp -rf ./DPF ./Heavy/lib/dpf
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
