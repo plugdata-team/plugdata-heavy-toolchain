@@ -39,28 +39,6 @@ popd
 rsync -a ./build-anywhere/ ./Heavy/
 fi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    #curl -fSL -A "Mozilla/4.0" -o homebrew.zip https://github.com/Homebrew/brew/archive/refs/tags/3.6.13.zip
-    #unzip homebrew.zip
-    #mv brew-3.6.13 homebrew
-    #./homebrew/bin/brew install llvm
-    #cp -rf ./homebrew/bin/* ./Heavy/bin
-    #cp -rf ./homebrew/lib/* ./Heavy/lib
-    #cp -rf ./homebrew/Cellar ./Heavy/Cellar
-    echo "do nothing for now"
-else
-
-git clone https://github.com/minos-org/minos-static.git
-./minos-static/static-get -x gcc
-echo $(ls)
-cp -rf ./gcc-*/usr/bin/* ./Heavy/bin/
-cp -rf ./gcc-*/usr/lib/* ./Heavy/lib/
-cp -rf ./gcc-*/usr/libexec/* ./Heavy/libexec/
-cp -rf ./gcc-*/usr/share/* ./Heavy/share/
-cp -rf ./gcc-*/usr/include/* ./Heavy/include/
-fi
-
-
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
 mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp" 
