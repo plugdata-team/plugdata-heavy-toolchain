@@ -116,6 +116,11 @@ pushd make-4.4
 chmod +x ./build.sh
 chmod +x ./configure
 
+# On Linux, enter our build-anywhere environment to build a cross-distro version of make
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    source ../Heavy/scripts/anywhere-setup.sh
+fi
+
 # Hack: make sure libintl is not found on macOS when building on Github actions server!
 if [[ "$CLEAR_INTL" == "1" ]]; then
 rm -f /usr/local/opt/gettext/lib/libintl*.dylib
@@ -126,6 +131,11 @@ fi
 cp make ../Heavy/bin/make
 popd
 rm -rf make-4.4 make-4.4.tar.gz
+
+# Exit build-anywhere environment
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+source ~/.bashrc
+fi
 
 # Pre-build libdaisy
 pushd libDaisy
