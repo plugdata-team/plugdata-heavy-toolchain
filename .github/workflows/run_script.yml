@@ -76,7 +76,7 @@ jobs:
         - /sys/fs/cgroup:/sys/fs/cgroup
     steps:
     - name: Install Dependencies (apt)
-      run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf libusb-dev build-essential rsync csh gawk autoconf automake autotools-dev wget m4 flex bison makeinfo
+      run: apt update && apt install -y git binutils python3 python3-pip curl tar gzip xz-utils make dfu-util patchelf libusb-dev build-essential rsync csh gawk autoconf automake autotools-dev wget m4 flex bison texinfo
 
     - uses: actions/checkout@v3
       with:
