@@ -12,7 +12,7 @@ xcopy /E /H /C /I resources\usb_driver Heavy\etc\usb_driver
 
 :: Remove unnecessary target platforms from compiler
 mkdir "Heavy\usr\arm-none-eabi\lib\temp"
-move "Heavy\usr\arm-none-eabi\lib\thumb\v7e-m+dp" "Heavy\arm-none-eabi\usr\lib\temp\v7e-m+dp"
+move "Heavy\usr\arm-none-eabi\lib\thumb\v7e-m+dp" "Heavy\usr\arm-none-eabi\lib\temp\v7e-m+dp"
 rmdir /S /Q "Heavy\usr\arm-none-eabi\lib\thumb"
 rename "Heavy\usr\arm-none-eabi\lib\temp" "thumb"
 
