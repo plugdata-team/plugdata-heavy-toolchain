@@ -3,13 +3,16 @@ mkdir "Heavy"
 :: Expand minGW environment, for command line utilities and compilation utilities
 powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath .\Heavy"
 
+mkdir .\Heavy\etc\linkers
+
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\etc\daisy_makefile
+copy ./resources/*.lds ./Heavy/usr/etc/linkers
 xcopy /E /H /C /I resources\usb_driver Heavy\etc\usb_driver
 
 :: Remove unnecessary target platforms from compiler
 mkdir "Heavy\usr\arm-none-eabi\lib\temp"
-move "Heavy\usr\arm-none-eabi\lib\thumb\v7e-m+dp" "Heavy\arm-none-eabi\usr\lib\temp\v7e-m+dp"
+move "Heavy\usr\arm-none-eabi\lib\thumb\v7e-m+dp" "Heavy\usr\arm-none-eabi\lib\temp\v7e-m+dp"
 rmdir /S /Q "Heavy\usr\arm-none-eabi\lib\thumb"
 rename "Heavy\usr\arm-none-eabi\lib\temp" "thumb"
 
@@ -23,8 +26,8 @@ del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"
 :: Pre-build libdaisy
 cd libDaisy
 
-echo ../Heavy/bin/make.exe GCC_PATH=../Heavy/bin> build.sh
-..\Heavy\bin\sh.exe --login build.sh
+echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin> build.sh
+..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\usr\lib\libDaisy

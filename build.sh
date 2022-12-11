@@ -78,18 +78,13 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 
-# install an old version of dfu-util for compatibility
-TEMP_DEB="$(mktemp)"
-wget -O "$TEMP_DEB" 'http://ftp.de.debian.org/debian/pool/main/d/dfu-util/dfu-util_0.9-1_amd64.deb'
-sudo dpkg -i "$TEMP_DEB"
-rm -f "$TEMP_DEB"
 
+# Get libasound
 TEMP_DEB2="$(mktemp)"
 wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.1.3-5_amd64.deb'
 ar x "$TEMP_DEB2"
 tar xvf data.tar.xz
 cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
-
 
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
