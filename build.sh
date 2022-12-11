@@ -86,7 +86,6 @@ ar x "$TEMP_DEB2"
 tar xvf data.tar.xz
 cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
 
-
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
 cp $(which dfu-prefix) ./Heavy/bin/dfu-prefix
