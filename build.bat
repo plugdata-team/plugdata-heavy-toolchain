@@ -3,8 +3,11 @@ mkdir "Heavy"
 :: Expand minGW environment, for command line utilities and compilation utilities
 powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath .\Heavy"
 
+mkdir .\Heavy\etc\linkers
+
 copy resources\heavy-static.a Heavy\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\etc\daisy_makefile
+copy ./resources/*.lds ./Heavy/usr/etc/linkers
 xcopy /E /H /C /I resources\usb_driver Heavy\etc\usb_driver
 
 :: Remove unnecessary target platforms from compiler
@@ -24,7 +27,7 @@ del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"
 cd libDaisy
 
 echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin> build.sh
-..\Heavy\usr\bin\sh.exe --login build.sh
+..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
 xcopy /E /H /C /I libDaisy Heavy\usr\lib\libDaisy
