@@ -1,12 +1,13 @@
 mkdir "Heavy"
 
 :: Expand minGW environment, for command line utilities and compilation utilities
-powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath .\Heavy"
+powershell -Command "Invoke-WebRequest -Uri https://github.com/timothyschoen/HeavyDistributable/releases/download/minGW_package/minGW.zip -OutFile minGW.zip"
+powershell -Command "Expand-Archive minGW.zip -Force -DestinationPath .\Heavy"
 
 mkdir .\Heavy\etc\linkers
 
-copy resources\heavy-static.a Heavy\lib\heavy-static.a
-copy resources\daisy_makefile Heavy\etc\daisy_makefile
+copy resources\heavy-static.a Heavy\usr\lib\heavy-static.a
+copy resources\daisy_makefile Heavy\usr\etc\daisy_makefile
 copy ./resources/*.lds ./Heavy/usr/etc/linkers
 xcopy /E /H /C /I resources\usb_driver Heavy\etc\usb_driver
 
