@@ -1,7 +1,8 @@
 mkdir "Heavy"
 
 :: Expand minGW environment, for command line utilities and compilation utilities
-powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath .\Heavy"
+powershell -Command "Invoke-WebRequest -Uri https://github.com/timothyschoen/HeavyDistributable/releases/download/minGW_package/minGW.zip -OutFile minGW.zip"
+powershell -Command "Expand-Archive minGW.zip -Force -DestinationPath .\Heavy"
 
 mkdir .\Heavy\etc\linkers
 
