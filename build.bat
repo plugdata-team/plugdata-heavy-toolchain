@@ -5,8 +5,8 @@ powershell -Command "Expand-Archive resources\minGW.zip -Force -DestinationPath 
 
 mkdir .\Heavy\etc\linkers
 
-copy resources\heavy-static.a Heavy\lib\heavy-static.a
-copy resources\daisy_makefile Heavy\etc\daisy_makefile
+copy resources\heavy-static.a Heavy\usr\lib\heavy-static.a
+copy resources\daisy_makefile Heavy\usr\etc\daisy_makefile
 copy ./resources/*.lds ./Heavy/usr/etc/linkers
 xcopy /E /H /C /I resources\usb_driver Heavy\etc\usb_driver
 
