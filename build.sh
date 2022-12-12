@@ -50,7 +50,11 @@ rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/clang-*
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang.so.8
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libLLVM-8.so
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/git-clang-format
+
 cp ../../resources/anywhere-setup.sh ./scripts/anywhere-setup.sh
+cp ../../resources/install_udev_rule.sh ./scripts/install_udev_rule.sh
+cp ../../resources/askpass.sh ./scripts/askpass.sh
+
 
 popd
 popd
