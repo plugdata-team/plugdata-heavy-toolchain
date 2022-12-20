@@ -7,8 +7,8 @@
 # export SUDO_ASKPASS=sudo-askpass
 #
 # and then call sudo with the "-A" option
-
-export SUDO_ASKPASS=askpass.sh
+CURRENT_DIR=$(dirname -- "$( readlink -f -- "$0"; )"; )
+export SUDO_ASKPASS=${CURRENT_DIR}/askpass.sh
 echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="0666", GROUP="plugdev"' | sudo -A tee /etc/udev/rules.d/50-daisy-stmicro-dfu.rules> /dev/null
 
 
