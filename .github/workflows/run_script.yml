@@ -40,7 +40,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Install Packages
-        run: choco install python make -y
+        run: choco install make -y
 
       - uses: actions/checkout@v3
         with:
