@@ -81,7 +81,7 @@ mkdir -p ./Heavy/etc/linkers
 cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
-
+cp ./resources/simple.json ./Heavy/etc/simple.json
 
 # Get libasound
 TEMP_DEB2="$(mktemp)"

@@ -9,6 +9,7 @@ mkdir .\Heavy\usr\etc\linkers
 copy resources\heavy-static.a Heavy\usr\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\usr\etc\daisy_makefile
 copy .\resources\*.lds .\Heavy\usr\etc\linkers
+copy .\resources\simple.json .\Heavy\usr\etc\simple.json
 xcopy /E /H /C /I resources\usb_driver Heavy\usr\etc\usb_driver
 
 :: Remove unnecessary target platforms from compiler
