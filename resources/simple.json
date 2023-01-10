@@ -1,0 +1,63 @@
+{
+    "name": "Simple",
+    "som": "seed",
+    "defines": {
+        "OOPSY_TARGET_HAS_MIDI_INPUT": 1
+    },
+    "audio": {
+        "channels": 2
+    },
+    "components": {
+        "knob1": {
+            "component": "AnalogControl",
+            "pin": 15
+        },
+        "knob2": {
+            "component": "AnalogControl",
+            "pin": 16
+        },
+        "knob3": {
+            "component": "AnalogControl",
+            "pin": 17
+        },
+        "knob4": {
+            "component": "AnalogControl",
+            "pin": 18
+        },
+        "knob5": {
+            "component": "AnalogControl",
+            "pin": 19
+        },
+        "knob6": {
+            "component": "AnalogControl",
+            "pin": 20
+        },
+        "knob7": {
+            "component": "AnalogControl",
+            "pin": 21
+        },
+        "knob8": {
+            "component": "AnalogControl",
+            "pin": 22
+        },
+        "knob9": {
+            "component": "AnalogControl",
+            "pin": 23
+        },
+        "knob10": {
+            "component": "AnalogControl",
+            "pin": 24
+        },
+        "knob11": {
+            "component": "AnalogControl",
+            "pin": 25
+        },
+        "knob12": {
+            "component": "AnalogControl",
+            "pin": 28
+        },
+    },
+    "aliases": {
+        "knob": "knob1"
+    }
+}
