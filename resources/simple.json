@@ -55,7 +55,7 @@
         "knob12": {
             "component": "AnalogControl",
             "pin": 28
-        },
+        }
     },
     "aliases": {
         "knob": "knob1"
