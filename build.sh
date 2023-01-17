@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export MACOSX_DEPLOYMENT_TARGET="10.6"
+
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-darwin-x86_64-arm-none-eabi.tar.xz"
