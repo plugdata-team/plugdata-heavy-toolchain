@@ -38,7 +38,7 @@ xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
 :: Package heavy using pyinstaller
 python -m ensurepip
 python -m pip install hvcc
-python -m pip install pyinstaller==5.6.2
+python -m pip install pyinstaller
 
 FOR /F "tokens=*" %%g IN ('python -m site --user-site') do (SET PYTHON_SITE=%%g)
 
