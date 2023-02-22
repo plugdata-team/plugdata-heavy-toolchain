@@ -2,7 +2,7 @@
 	path = hvcc
 	url = https://github.com/Wasted-Audio/hvcc.git
 [submodule "libDaisy"]
-	path = libDaisy
+	path = libdaisy
 	url = https://github.com/electro-smith/libDaisy.git
 [submodule "dpf"]
 	path = DPF

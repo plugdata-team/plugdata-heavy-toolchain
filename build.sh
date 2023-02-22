@@ -130,11 +130,11 @@ popd
 rm -rf make-4.4 make-4.4.tar.gz
 
 # Pre-build libdaisy
-pushd libDaisy
+pushd libdaisy
 make GCC_PATH=../Heavy/bin/
 popd
 
-cp -rf ./libDaisy ./Heavy/lib/libDaisy
+cp -rf ./libdaisy ./Heavy/lib/libdaisy
 cp -rf ./DPF ./Heavy/lib/dpf
 
 # Package Heavy with pyinstaller
