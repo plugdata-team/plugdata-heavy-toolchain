@@ -140,7 +140,7 @@ cp -rf ./dpf ./Heavy/lib/dpf
 # Package Heavy with pyinstaller
 python3 -m ensurepip
 python3 -m pip install hvcc
-python3 -m pip install pyinstaller==5.7.0
+python3 -m pip install pyinstaller==5.6.2
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
