@@ -5,5 +5,5 @@
 	path = libdaisy
 	url = https://github.com/electro-smith/libDaisy.git
 [submodule "dpf"]
-	path = DPF
+	path = dpf
 	url = https://github.com/DISTRHO/DPF.git

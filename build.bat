@@ -33,7 +33,7 @@ echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin> build.sh
 cd ..
 
 xcopy /E /H /C /I libdaisy Heavy\usr\lib\libdaisy
-xcopy /E /H /C /I DPF Heavy\usr\lib\dpf
+xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
 
 :: Package heavy using pyinstaller
 python -m ensurepip
