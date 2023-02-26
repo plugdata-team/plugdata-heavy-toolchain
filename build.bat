@@ -26,14 +26,14 @@ rename "Heavy\usr\lib\gcc\arm-none-eabi\12.2.0\temp" "thumb"
 del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"
 
 :: Pre-build libdaisy
-cd libDaisy
+cd libdaisy
 
 echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin> build.sh
 ..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
-xcopy /E /H /C /I libDaisy Heavy\usr\lib\libDaisy
-xcopy /E /H /C /I DPF Heavy\usr\lib\dpf
+xcopy /E /H /C /I libdaisy Heavy\usr\lib\libdaisy
+xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
 
 :: Package heavy using pyinstaller
 python -m ensurepip

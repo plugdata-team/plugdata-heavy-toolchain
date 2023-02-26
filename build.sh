@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export MACOSX_DEPLOYMENT_TARGET="10.6"
+
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
     URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-darwin-x86_64-arm-none-eabi.tar.xz"
@@ -128,12 +130,12 @@ popd
 rm -rf make-4.4 make-4.4.tar.gz
 
 # Pre-build libdaisy
-pushd libDaisy
+pushd libdaisy
 make GCC_PATH=../Heavy/bin/
 popd
 
-cp -rf ./libDaisy ./Heavy/lib/libDaisy
-cp -rf ./DPF ./Heavy/lib/dpf
+cp -rf ./libdaisy ./Heavy/lib/libdaisy
+cp -rf ./dpf ./Heavy/lib/dpf
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
@@ -143,7 +145,7 @@ python3 -m pip install pyinstaller
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) --target-architecture universal2 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) --target-architecture x86_64 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 fi
 
 cp ./dist/Heavy/json2daisy/resources/component_defs.json ./dist/Heavy/json2daisy/resources/seed.json
