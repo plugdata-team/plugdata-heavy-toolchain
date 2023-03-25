@@ -66,7 +66,7 @@ fi
 
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
-mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp" 
+mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp"
 rm -rf "./Heavy/arm-none-eabi/lib/thumb"
 mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
 
@@ -96,6 +96,10 @@ cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-g
 cp $(which dfu-util) ./Heavy/bin/dfu-util
 cp $(which dfu-prefix) ./Heavy/bin/dfu-prefix
 cp $(which dfu-suffix) ./Heavy/bin/dfu-suffix
+
+# copy openocd
+cp $(which openocd) ./Heavy/bin/openocd
+cp /usr/share/openocd/scripts/interface/stlink.cfg ./Heavy/etc/stlink.cfg
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     cp "$(ldconfig -p | grep libusb-1.0.so | tr ' ' '\n' | grep /)" ./Heavy/lib/libusb-1.0.so
