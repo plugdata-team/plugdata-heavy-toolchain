@@ -4,31 +4,31 @@ export MACOSX_DEPLOYMENT_TARGET="10.6"
 
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-darwin-x86_64-arm-none-eabi.tar.xz"
+    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2"
 # Aarch64 Linux
 elif [[ $(uname -m) == "aarch64" ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-aarch64-arm-none-eabi.tar.xz"
+    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-aarch64-linux.tar.bz2"
 # x86_64 Linux
 else
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.mpacbti-bet1/binrel/arm-gnu-toolchain-12.2.mpacbti-bet1-x86_64-arm-none-eabi.tar.xz"
+    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2"
 fi
 
-curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.xz $URL
+curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.bz2 $URL
 
 echo "Extracting..."
 mkdir gcc-arm-none-eabi
 pushd gcc-arm-none-eabi
-tar -xf ../gcc-arm-none-eabi.tar.xz
+tar -xjf ../gcc-arm-none-eabi.tar.bz2
 popd
-rm gcc-arm-none-eabi.tar.xz
+rm gcc-arm-none-eabi.tar.bz2
 
 mkdir Heavy
-cp -rf gcc-arm-none-eabi/arm-gnu-*/bin ./Heavy
-cp -rf gcc-arm-none-eabi/arm-gnu-*/lib ./Heavy
-cp -rf gcc-arm-none-eabi/arm-gnu-*/libexec ./Heavy
-cp -rf gcc-arm-none-eabi/arm-gnu-*/share ./Heavy
-cp -rf gcc-arm-none-eabi/arm-gnu-*/include ./Heavy
-cp -rf gcc-arm-none-eabi/arm-gnu-*/arm-none-eabi ./Heavy
+cp -rf gcc-arm-none-eabi/gcc-arm-*/bin ./Heavy
+cp -rf gcc-arm-none-eabi/gcc-arm-*/lib ./Heavy
+# cp -rf gcc-arm-none-eabi/gcc-arm-*/libexec ./Heavy
+cp -rf gcc-arm-none-eabi/gcc-arm-*/share ./Heavy
+# cp -rf gcc-arm-none-eabi/gcc-arm-*/include ./Heavy
+cp -rf gcc-arm-none-eabi/gcc-arm-*/arm-none-eabi ./Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
@@ -66,14 +66,14 @@ fi
 
 # Reduce package size by only including the daisy platform tools
 mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
-mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp" 
+mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp"
 rm -rf "./Heavy/arm-none-eabi/lib/thumb"
 mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
 
-mkdir -p "./Heavy/lib/gcc/arm-none-eabi/12.2.0/temp"
-mv "./Heavy/lib/gcc/arm-none-eabi/12.2.0/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/12.2.0/temp/v7e-m+dp"
-rm -rf "./Heavy/lib/gcc/arm-none-eabi/12.2.0/thumb"
-mv "./Heavy/lib/gcc/arm-none-eabi/12.2.0/temp" "./Heavy/lib/gcc/arm-none-eabi/12.2.0/thumb"
+mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.3.1/temp"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.3.1/temp/v7e-m+dp"
+rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.3.1/thumb"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.3.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.3.1/thumb"
 
 rm -rf "./Heavy/arm-none-eabi/lib/arm"
 
@@ -116,7 +116,6 @@ pushd make-4.4
 
 chmod +x ./build.sh
 chmod +x ./configure
-
 
 # Hack: make sure libintl is not found on macOS when building on Github actions server!
 if [[ "$CLEAR_INTL" == "1" ]]; then
