@@ -85,7 +85,7 @@ cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp ./resources/simple.json ./Heavy/etc/simple.json
 
-if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 # Get libasound
 TEMP_DEB2="$(mktemp)"
 wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.1.3-5_amd64.deb'
