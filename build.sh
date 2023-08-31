@@ -4,13 +4,13 @@ export MACOSX_DEPLOYMENT_TARGET="10.6"
 
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2"
+    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-mac.tar.bz2"
 # Aarch64 Linux
 elif [[ $(uname -m) == "aarch64" ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-aarch64-linux.tar.bz2"
+    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2"
 # x86_64 Linux
 else
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2"
+    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
 fi
 
 curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.bz2 $URL
@@ -70,10 +70,10 @@ mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp
 rm -rf "./Heavy/arm-none-eabi/lib/thumb"
 mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
 
-mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.3.1/temp"
-mv "./Heavy/lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.3.1/temp/v7e-m+dp"
-rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.3.1/thumb"
-mv "./Heavy/lib/gcc/arm-none-eabi/10.3.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.3.1/thumb"
+mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+dp"
+rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
 
 rm -rf "./Heavy/arm-none-eabi/lib/arm"
 
@@ -85,12 +85,14 @@ cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp ./resources/simple.json ./Heavy/etc/simple.json
 
+if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 # Get libasound
 TEMP_DEB2="$(mktemp)"
 wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.1.3-5_amd64.deb'
 ar x "$TEMP_DEB2"
 tar xvf data.tar.xz
 cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
+fi
 
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
