@@ -12,17 +12,6 @@ copy .\resources\*.lds .\Heavy\usr\etc\linkers
 copy .\resources\simple.json .\Heavy\usr\etc\simple.json
 xcopy /E /H /C /I resources\usb_driver Heavy\usr\etc\usb_driver
 
-:: Remove unnecessary target platforms from compiler
-mkdir "Heavy\usr\arm-none-eabi\lib\temp"
-move "Heavy\usr\arm-none-eabi\lib\thumb\v7e-m+dp" "Heavy\usr\arm-none-eabi\lib\temp\v7e-m+dp"
-rmdir /S /Q "Heavy\usr\arm-none-eabi\lib\thumb"
-rename "Heavy\usr\arm-none-eabi\lib\temp" "thumb"
-
-mkdir "Heavy\usr\lib\gcc\arm-none-eabi\12.2.0\temp"
-move "Heavy\usr\lib\gcc\arm-none-eabi\12.2.0\thumb\v7e-m+dp" "Heavy\usr\lib\gcc\arm-none-eabi\12.2.0\temp\v7e-m+dp"
-rmdir /S /Q "Heavy\usr\lib\gcc\arm-none-eabi\12.2.0\thumb"
-rename "Heavy\usr\lib\gcc\arm-none-eabi\12.2.0\temp" "thumb"
-
 del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"
 
 :: Pre-build libdaisy
@@ -37,7 +26,7 @@ xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
 
 :: Package heavy using pyinstaller
 python -m ensurepip
-python -m pip install hvcc
+python -m pip install hvcc\.
 python -m pip install pyinstaller
 
 FOR /F "tokens=*" %%g IN ('python -m site --user-site') do (SET PYTHON_SITE=%%g)

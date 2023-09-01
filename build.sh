@@ -140,7 +140,7 @@ cp -rf ./dpf ./Heavy/lib/dpf
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
-python3 -m pip install hvcc
+python3 -m pip install hvcc/.
 python3 -m pip install pyinstaller
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
