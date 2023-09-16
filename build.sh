@@ -65,15 +65,15 @@ rsync -a ./build-anywhere/x86_64-anywhere-linux-gnu/ ./Heavy/
 fi
 
 # Reduce package size by only including the daisy platform tools
-mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
-mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp"
-rm -rf "./Heavy/arm-none-eabi/lib/thumb"
-mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
+# mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
+# mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp"
+# rm -rf "./Heavy/arm-none-eabi/lib/thumb"
+# mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
 
-mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp"
-mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+dp"
-rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
-mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
+# mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp"
+# mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+dp"
+# rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
+# mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
 
 rm -rf "./Heavy/arm-none-eabi/lib/arm"
 
@@ -135,7 +135,20 @@ pushd libdaisy
 make GCC_PATH=../Heavy/bin/
 popd
 
+# Pre-build OWL libs (only OWL2 target for now)
+pushd OwlProgram
+../Heavy/bin/make -s -f compile.mk Libraries/libowlprg.a PLATFORM=OWL2 TOOLROOT=../Heavy/bin/
+# rm -rf Libraries/CMSIS
+# rm -rf Libraries/DaisySP
+popd
+
+# Pre-build OWL FirmwareSender
+make -C FirmwareSender/Builds/Linux/
+cp ./FirmwareSender/Builds/Linux/build/FirmwareSender OwlProgram/Tools/
+
+# Copy all libs to toolchain
 cp -rf ./libdaisy ./Heavy/lib/libdaisy
+cp -rf ./OwlProgram ./Heavy/lib/OwlProgram
 cp -rf ./dpf ./Heavy/lib/dpf
 
 # Package Heavy with pyinstaller
