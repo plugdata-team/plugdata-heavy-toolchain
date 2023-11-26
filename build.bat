@@ -10,6 +10,8 @@ copy resources\heavy-static.a Heavy\usr\lib\heavy-static.a
 copy resources\daisy_makefile Heavy\usr\etc\daisy_makefile
 copy .\resources\*.lds .\Heavy\usr\etc\linkers
 copy .\resources\simple.json .\Heavy\usr\etc\simple.json
+copy .\resources\terrarium.json .\Heavy\usr\etc\terrarium.json
+copy .\resources\versio.json .\Heavy\usr\etc\versio.json
 xcopy /E /H /C /I resources\usb_driver Heavy\usr\etc\usb_driver
 
 del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"

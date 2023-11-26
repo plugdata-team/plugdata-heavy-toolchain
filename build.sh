@@ -84,6 +84,8 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp ./resources/simple.json ./Heavy/etc/simple.json
+cp ./resources/terrarium.json ./Heavy/etc/terrarium.json
+cp ./resources/versio.json ./Heavy/etc/versio.json
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 # Get libasound
