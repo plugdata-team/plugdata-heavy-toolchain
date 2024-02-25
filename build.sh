@@ -40,7 +40,8 @@ tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
 
 pushd x86_64-anywhere-linux-gnu
 # Fix: use gcc instead of clang, for compactness
-rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/llvm
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/llvm*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/clang*
 rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/clang
 rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang
 rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/cmake/llvm
@@ -52,6 +53,17 @@ rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/clang-*
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang.so.8
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libLLVM-8.so
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/git-clang-format
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/c-index-test
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/diagtool
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/wasm-ld
+
+# more cleanup
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/src*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/sbin*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/doc*
+rm -rf ./share/doc*
+
+# copy scripts
 
 cp ../../resources/anywhere-setup.sh ./scripts/anywhere-setup.sh
 cp ../../resources/install_udev_rule.sh ./scripts/install_udev_rule.sh
