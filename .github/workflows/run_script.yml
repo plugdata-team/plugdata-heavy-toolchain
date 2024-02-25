@@ -81,7 +81,7 @@ jobs:
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
-        sudo bash ./build.sh
+        bash ./build.sh
 
     - name: Archive Artifacts
       uses: actions/upload-artifact@v3
