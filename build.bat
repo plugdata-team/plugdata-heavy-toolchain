@@ -25,6 +25,7 @@ cd ..
 
 xcopy /E /H /C /I libdaisy Heavy\usr\lib\libdaisy
 xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
+xcopy /E /H /C /I dpf-widgets Heavy\usr\lib\dpf-widgets
 
 :: Package heavy using pyinstaller
 python -m ensurepip

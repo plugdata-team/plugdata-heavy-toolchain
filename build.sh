@@ -151,6 +151,7 @@ popd
 
 cp -rf ./libdaisy ./Heavy/lib/libdaisy
 cp -rf ./dpf ./Heavy/lib/dpf
+cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
