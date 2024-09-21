@@ -164,8 +164,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --paths $(python3 -m site --user-site) --target-architecture x86_64 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
 fi
 
-cp ./dist/Heavy/json2daisy/resources/component_defs.json ./dist/Heavy/json2daisy/resources/seed.json
-
 mv ./dist/Heavy Heavy/bin/Heavy
 
 rm -rf ./dist
