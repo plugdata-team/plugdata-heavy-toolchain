@@ -29,14 +29,15 @@ xcopy /E /H /C /I dpf-widgets Heavy\usr\lib\dpf-widgets
 
 :: Package heavy using pyinstaller
 python -m ensurepip
-python -m pip install hvcc\.
-python -m pip install pyinstaller
+python -m pip install poetry poetry-pyinstaller-plugin
 
-FOR /F "tokens=*" %%g IN ('python -m site --user-site') do (SET PYTHON_SITE=%%g)
 
-python resources\run_pyinstaller.py -n Heavy --noconfirm  --windowed --paths %PYTHON_SITE% .\hvcc\hvcc\__init__.py --collect-data json2daisy --add-data=".\hvcc\hvcc\generators;.\generators" --add-data=".\hvcc\hvcc\core;.\hvcc\core" --add-data=".\hvcc\hvcc\generators;.\hvcc\generators" --add-data=".\hvcc\hvcc\interpreters;.\hvcc\interpreters"
+cd hvcc
+poetry build
+cd ..
 
-copy .\dist\Heavy\json2daisy\resources\component_defs.json .\dist\Heavy\json2daisy\resources\seed.json
+dir .\dist\pyinstaller\
+
 move .\dist\Heavy .\Heavy\usr\bin\
 
 del /s /q .\dist\*
