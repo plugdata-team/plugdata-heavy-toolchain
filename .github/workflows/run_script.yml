@@ -16,6 +16,11 @@ jobs:
       working-directory: ${{github.workspace}}
       run: brew install dfu-util
 
+    - name: Setup Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
@@ -72,11 +77,13 @@ jobs:
     - name: Install Dependencies (apt)
       run: sudo apt update && sudo apt install -y git binutils curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
       #deps for build-anywhere:  csh gawk autoconf automake autotools-dev wget m4 flex bison texinfo unzip help2man meson gperf lzip libtool-bin patch ninja-build libstdc++6 libncurses5-dev
+
     - uses: actions/checkout@v3
       with:
         submodules: recursive
       env:
         PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
     - name: Setup Python 3.11
       uses: actions/setup-python@v5
       with:
