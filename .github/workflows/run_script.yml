@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
     steps:
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -27,7 +27,7 @@ jobs:
        CLEAR_INTL=1 ./build.sh
 
     - name: Archive Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Heavy-MacOS-Universal
         path: ${{github.workspace}}/Heavy
@@ -47,7 +47,7 @@ jobs:
       - name: Install Packages
         run: choco install make -y
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -62,7 +62,7 @@ jobs:
           ./build.bat
 
       - name: Archive Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Heavy-Win64
           path: ${{github.workspace}}/Heavy
@@ -83,7 +83,7 @@ jobs:
       run: sudo apt update && sudo apt install -y git binutils curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
       #deps for build-anywhere:  csh gawk autoconf automake autotools-dev wget m4 flex bison texinfo unzip help2man meson gperf lzip libtool-bin patch ninja-build libstdc++6 libncurses5-dev
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
       env:
@@ -100,7 +100,7 @@ jobs:
         bash ./build.sh
 
     - name: Archive Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Heavy-Linux-x64
         path: ${{github.workspace}}/Heavy
