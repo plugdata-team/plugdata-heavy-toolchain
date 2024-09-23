@@ -167,10 +167,4 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_14_0_arm64/Heavy Heavy/bin/Heavy
 fi
 
-# mv ./dist/Heavy Heavy/bin/Heavy
-
-rm -rf ./dist
-rm -rf ./build
-rm -rf ./Heavy.spec
-
 cp VERSION ./Heavy/VERSION
