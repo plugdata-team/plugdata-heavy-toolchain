@@ -164,8 +164,7 @@ popd
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    ls -l ./hvcc/dist/pyinstaller
-    exit 1
+    mv ./hvcc/dist/pyinstaller/macosx_14_0_arm64/Heavy Heavy/bin/Heavy
 fi
 
 # mv ./dist/Heavy Heavy/bin/Heavy
