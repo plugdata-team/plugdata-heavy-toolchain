@@ -38,7 +38,7 @@ cd ..
 
 dir .\dist\pyinstaller\
 
-move .\dist\Heavy .\Heavy\usr\bin\
+move .\dist\pyinstaller\win_amd64\Heavy .\Heavy\usr\bin\
 
 del /s /q .\dist\*
 del /s /q .\build\*
