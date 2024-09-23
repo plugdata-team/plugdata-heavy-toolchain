@@ -16,10 +16,10 @@ jobs:
       working-directory: ${{github.workspace}}
       run: brew install dfu-util
 
-    - name: Setup Python 3.11
+    - name: Setup Python 3.12
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.12'
 
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
