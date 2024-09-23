@@ -36,6 +36,7 @@ cd hvcc
 poetry build
 cd ..
 
+dir .\hvcc\dist\pyinstaller\win_amd64\
 move .\hvcc\dist\pyinstaller\win_amd64\Heavy .\Heavy\usr\bin\
 
 cp VERSION Heavy\VERSION
