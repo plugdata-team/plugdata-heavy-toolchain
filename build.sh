@@ -155,19 +155,18 @@ cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
-python3 -m pip install hvcc/.
-python3 -m pip install pyinstaller
+python3 -m pip install poetry poetry-pyinstaller-plugin
+
+pushd hvcc
+poetry build
+popd
+
+mkdir -p Heavy/bin/Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --paths $(python3 -m site --user-site) --target-architecture x86_64 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    mv ./hvcc/dist/pyinstaller/macosx_14_0_arm64/Heavy Heavy/bin/Heavy/
 fi
-
-mv ./dist/Heavy Heavy/bin/Heavy
-
-rm -rf ./dist
-rm -rf ./build
-rm -rf ./Heavy.spec
 
 cp VERSION ./Heavy/VERSION
