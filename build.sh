@@ -158,7 +158,11 @@ cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 python3 -m pip install poetry poetry-pyinstaller-plugin
 
 pushd hvcc
-poetry build
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  arch -x86_64 poetry build
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  poetry build
+fi
 popd
 
 mkdir -p Heavy/bin/Heavy
