@@ -9,4 +9,4 @@
 	url = https://github.com/DISTRHO/DPF.git
 [submodule "dpf-widgets"]
 	path = dpf-widgets
-	url = git@github.com:DISTRHO/DPF-Widgets.git
+	url = https://github.com/DISTRHO/DPF-Widgets.git
