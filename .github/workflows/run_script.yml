@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
     steps:
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -16,19 +16,24 @@ jobs:
       working-directory: ${{github.workspace}}
       run: brew install dfu-util
 
+    - name: Setup Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
       run:
        CLEAR_INTL=1 ./build.sh
 
     - name: Archive Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Heavy-MacOS-Universal
         path: ${{github.workspace}}/Heavy
 
     - name: Release Artifacts
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         prerelease: true
@@ -42,9 +47,14 @@ jobs:
       - name: Install Packages
         run: choco install make -y
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Run Packaging Script
         working-directory: ${{github.workspace}}
@@ -52,13 +62,13 @@ jobs:
           ./build.bat
 
       - name: Archive Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Heavy-Win64
           path: ${{github.workspace}}/Heavy
 
       - name: Release Artifacts
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
@@ -70,13 +80,19 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Install Dependencies (apt)
-      run: sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt update && sudo apt install -y git binutils python3.11-full curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
+      run: sudo apt update && sudo apt install -y git binutils curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
       #deps for build-anywhere:  csh gawk autoconf automake autotools-dev wget m4 flex bison texinfo unzip help2man meson gperf lzip libtool-bin patch ninja-build libstdc++6 libncurses5-dev
-    - uses: actions/checkout@v3
+
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
       env:
         PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+    - name: Setup Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
 
     - name: Run Packaging Script
       working-directory: ${{github.workspace}}
@@ -84,13 +100,13 @@ jobs:
         bash ./build.sh
 
     - name: Archive Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Heavy-Linux-x64
         path: ${{github.workspace}}/Heavy
 
     - name: Release Artifacts
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         prerelease: true
