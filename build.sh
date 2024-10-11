@@ -155,14 +155,11 @@ cp -rf ./dpf ./Heavy/lib/dpf
 cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 
 # Package Heavy with pyinstaller
+python3 -m ensurepip
 python3 -m pip install poetry poetry-pyinstaller-plugin
 
 pushd hvcc
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  arch -x86_64 poetry build
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  poetry build
-fi
+poetry build
 popd
 
 mkdir -p Heavy/bin/Heavy
@@ -170,7 +167,7 @@ mkdir -p Heavy/bin/Heavy
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    mv ./hvcc/dist/pyinstaller/macosx_14_0_x86_64/Heavy Heavy/bin/Heavy/
+    mv ./hvcc/dist/pyinstaller/macosx_14_0_arm64/Heavy Heavy/bin/Heavy/
 fi
 
 cp VERSION ./Heavy/VERSION
