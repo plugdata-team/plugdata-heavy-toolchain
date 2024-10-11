@@ -167,7 +167,7 @@ mkdir -p Heavy/bin/Heavy
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    mv ./hvcc/dist/pyinstaller/macosx_14_0_arm64/Heavy Heavy/bin/Heavy/
+    mv ./hvcc/dist/pyinstaller/macosx_12_0_x86_64/Heavy Heavy/bin/Heavy/
 fi
 
 cp VERSION ./Heavy/VERSION
