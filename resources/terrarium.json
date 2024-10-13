@@ -1,0 +1,67 @@
+{
+    "name": "terrarium",
+    "som": "seed",
+    "audio": {
+        "channels": 2
+    },
+    "components": {
+        "fs1": {
+            "component": "Switch",
+            "pin": 25
+        },
+        "fs2": {
+            "component": "Switch",
+            "pin": 26
+        },
+        "sw1": {
+            "component": "Switch",
+            "pin": 10
+        },
+        "sw2": {
+            "component": "Switch",
+            "pin": 9
+        },
+        "sw3": {
+            "component": "Switch",
+            "pin": 8
+        },
+        "sw4": {
+            "component": "Switch",
+            "pin": 7
+        },
+        "knob1": {
+            "component": "AnalogControl",
+            "pin": 16
+        },
+        "knob2": {
+            "component": "AnalogControl",
+            "pin": 17
+        },
+        "knob3": {
+            "component": "AnalogControl",
+            "pin": 18
+        },
+        "knob4": {
+            "component": "AnalogControl",
+            "pin": 19
+        },
+        "knob5": {
+            "component": "AnalogControl",
+            "pin": 20
+        },
+        "knob6": {
+            "component": "AnalogControl",
+            "pin": 21
+        },
+        "cvout1": {
+            "component": "CVOuts"
+        },
+        "cvout2": {
+            "component": "CVOuts"
+        }
+    },
+    "aliases": {
+        "led1": "cvout2",
+        "led2": "cvout1"
+    }
+}
