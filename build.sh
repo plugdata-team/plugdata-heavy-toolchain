@@ -40,7 +40,8 @@ tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
 
 pushd x86_64-anywhere-linux-gnu
 # Fix: use gcc instead of clang, for compactness
-rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/llvm
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/llvm*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/include/clang*
 rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/clang
 rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang
 rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/cmake/llvm
@@ -52,6 +53,17 @@ rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/clang-*
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libclang.so.8
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/lib/libLLVM-8.so
 rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/git-clang-format
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/c-index-test
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/diagtool
+rm ./x86_64-anywhere-linux-gnu/sysroot/usr/bin/wasm-ld
+
+# more cleanup
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/src*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/sbin*
+rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/doc*
+rm -rf ./share/doc*
+
+# copy scripts
 
 cp ../../resources/anywhere-setup.sh ./scripts/anywhere-setup.sh
 cp ../../resources/install_udev_rule.sh ./scripts/install_udev_rule.sh
@@ -84,6 +96,9 @@ cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
 cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp ./resources/simple.json ./Heavy/etc/simple.json
+cp ./resources/terrarium.json ./Heavy/etc/terrarium.json
+cp ./resources/versio.json ./Heavy/etc/versio.json
+cp ./resources/hothouse.json ./Heavy/etc/hothouse.json
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 # Get libasound
@@ -150,24 +165,22 @@ cp ./FirmwareSender/Builds/Linux/build/FirmwareSender OwlProgram/Tools/
 cp -rf ./libdaisy ./Heavy/lib/libdaisy
 cp -rf ./OwlProgram ./Heavy/lib/OwlProgram
 cp -rf ./dpf ./Heavy/lib/dpf
+cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
-python3 -m pip install hvcc/.
-python3 -m pip install pyinstaller
+python3 -m pip install poetry poetry-pyinstaller-plugin
+
+pushd hvcc
+poetry build
+popd
+
+mkdir -p Heavy/bin/Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    python3 ./resources/run_pyinstaller.py -n Heavy --noconfirm --windowed --paths $(python3 -m site --user-site) --target-architecture x86_64 ./hvcc/hvcc/__init__.py --collect-data json2daisy --add-data="./hvcc/hvcc/generators:./generators" --add-data="./hvcc/hvcc/core:./hvcc/core" --add-data="./hvcc/hvcc/generators:./hvcc/generators" --add-data="./hvcc/hvcc/interpreters:./hvcc/interpreters"
+    mv ./hvcc/dist/pyinstaller/macosx_12_0_x86_64/Heavy Heavy/bin/Heavy/
 fi
-
-cp ./dist/Heavy/json2daisy/resources/component_defs.json ./dist/Heavy/json2daisy/resources/seed.json
-
-mv ./dist/Heavy Heavy/bin/Heavy
-
-rm -rf ./dist
-rm -rf ./build
-rm -rf ./Heavy.spec
 
 cp VERSION ./Heavy/VERSION
