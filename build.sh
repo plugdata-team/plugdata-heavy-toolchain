@@ -156,8 +156,13 @@ pushd OwlProgram
 popd
 
 # Pre-build OWL FirmwareSender
-make -C FirmwareSender/Builds/Linux/
-cp ./FirmwareSender/Builds/Linux/build/FirmwareSender OwlProgram/Tools/
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    make -C FirmwareSender/Builds/Linux/
+    cp ./FirmwareSender/Builds/Linux/build/FirmwareSender OwlProgram/Tools/
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    xcodebuild -project FirmwareSender/Builds/MacOSX/FirmwareSender.xcodeproj -configuration Release
+    cp ./FirmwareSender/Builds/MacOSX/build/Release/FirmwareSender OwlProgram/Tools/
+fi
 
 # Copy all libs to toolchain
 cp -rf ./libdaisy ./Heavy/lib/libdaisy
