@@ -150,7 +150,7 @@ popd
 
 # Pre-build OWL libs (only OWL2 target for now)
 pushd OwlProgram
-../Heavy/bin/make -s -f compile.mk libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/
+../Heavy/bin/make libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/
 # rm -rf Libraries/CMSIS
 # rm -rf Libraries/DaisySP
 popd
