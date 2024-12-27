@@ -39,7 +39,7 @@ xcopy /E /H /C /I dpf-widgets Heavy\usr\lib\dpf-widgets
 
 :: Download OWL FirmwareSender from CI
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-windows.zip -OutFile FirmwareSender.zip"
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive FirmwareSender -Force -DestinationPath .\Heavy\usr\lib\OwlProgram\Tools"
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive FirmwareSender.zip -Force -DestinationPath .\Heavy\usr\lib\OwlProgram\Tools"
 
 :: Package heavy using pyinstaller
 python -m ensurepip
