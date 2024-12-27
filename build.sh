@@ -151,11 +151,11 @@ popd
 # Pre-build OWL libs (only OWL2 target for now)
 pushd OwlProgram
 ../Heavy/bin/make libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/
-# rm -rf Libraries/CMSIS
-# rm -rf Libraries/DaisySP
+rm -rf Libraries/DaisySP
+rm -f Libraries/libdaisysp.a
 popd
 
-# Pre-build OWL FirmwareSender
+# Download OWL FirmwareSender from CI
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-ubuntu.zip"
     curl -fSL -A "Mozilla/4.0" -o FirmwareSender-ubuntu.zip $FS_URL
@@ -187,7 +187,7 @@ mkdir -p Heavy/bin/Heavy
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    mv ./hvcc/dist/pyinstaller/macosx_12_0_x86_64/Heavy Heavy/bin/Heavy/
+    mv ./hvcc/dist/pyinstaller/macosx_13_0_x86_64/Heavy Heavy/bin/Heavy/
 fi
 
 cp VERSION ./Heavy/VERSION
