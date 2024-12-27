@@ -84,7 +84,6 @@ mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+fp" "./Heavy/arm-none-eabi/lib/temp
 rm -rf "./Heavy/arm-none-eabi/lib/thumb"
 mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
 
-
 mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp"
 mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+dp"
 mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+fp"
@@ -95,9 +94,7 @@ rm -rf "./Heavy/arm-none-eabi/lib/arm"
 
 mkdir -p ./Heavy/etc/linkers
 
-# copy a prebuild static library for heavy
-cp -rf ./resources/heavy-static.a ./Heavy/lib/heavy-static.a
-cp -rf ./resources/daisy_makefile ./Heavy/etc/daisy_makefile
+# copy resource files
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp ./resources/simple.json ./Heavy/etc/simple.json
 cp ./resources/terrarium.json ./Heavy/etc/terrarium.json
