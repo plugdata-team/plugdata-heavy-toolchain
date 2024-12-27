@@ -151,8 +151,6 @@ popd
 # Pre-build OWL libs (only OWL2 target for now)
 pushd OwlProgram
 ../Heavy/bin/make libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/
-rm -rf Libraries/DaisySP
-rm -f Libraries/libdaisysp.a
 popd
 
 # Download OWL FirmwareSender from CI
