@@ -13,6 +13,3 @@
 [submodule "OwlProgram"]
 	path = OwlProgram
 	url = git@github.com:Wasted-Audio/OwlProgram.git
-[submodule "FirmwareSender"]
-	path = FirmwareSender
-	url = git@github.com:pingdynasty/FirmwareSender.git

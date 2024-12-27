@@ -157,11 +157,15 @@ popd
 
 # Pre-build OWL FirmwareSender
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    make -C FirmwareSender/Builds/Linux/
-    cp ./FirmwareSender/Builds/Linux/build/FirmwareSender OwlProgram/Tools/
+    FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-ubuntu.zip"
+    curl -fSL -A "Mozilla/4.0" -o FirmwareSender-ubuntu.zip $FS_URL
+    unzip FirmwareSender-ubuntu.zip -d FirmwareSender-ubuntu
+    cp ./FirmwareSender-ubuntu/FirmwareSender OwlProgram/Tools/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    xcodebuild -project FirmwareSender/Builds/MacOSX/FirmwareSender.xcodeproj -configuration Release
-    cp ./FirmwareSender/Builds/MacOSX/build/Release/FirmwareSender OwlProgram/Tools/
+    FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-osx.zip"
+    curl -fSL -A "Mozilla/4.0" -o FirmwareSender-osx.zip $FS_URL
+    unzip FirmwareSender-osx.zip -d FirmwareSender-osx
+    cp ./FirmwareSender-osx/FirmwareSender OwlProgram/Tools/
 fi
 
 # Copy all libs to toolchain
