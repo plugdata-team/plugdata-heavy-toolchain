@@ -75,15 +75,21 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 fi
 
 # Reduce package size by only including the daisy platform tools
-# mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
-# mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp"
-# rm -rf "./Heavy/arm-none-eabi/lib/thumb"
-# mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
+mkdir -p "./Heavy/arm-none-eabi/lib/temp/"
+# for Daisy
+mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+dp" "./Heavy/arm-none-eabi/lib/temp"
+# for OWL
+mv -f "./Heavy/arm-none-eabi/lib/thumb/v7e-m+fp" "./Heavy/arm-none-eabi/lib/temp"
 
-# mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp"
-# mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+dp"
-# rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
-# mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
+rm -rf "./Heavy/arm-none-eabi/lib/thumb"
+mv -f "./Heavy/arm-none-eabi/lib/temp" "./Heavy/arm-none-eabi/lib/thumb"
+
+
+mkdir -p "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+dp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+dp"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp/v7e-m+fp"
+rm -rf "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
+mv "./Heavy/lib/gcc/arm-none-eabi/10.2.1/temp" "./Heavy/lib/gcc/arm-none-eabi/10.2.1/thumb"
 
 rm -rf "./Heavy/arm-none-eabi/lib/arm"
 
