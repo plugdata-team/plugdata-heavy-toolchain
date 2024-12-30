@@ -20,14 +20,14 @@ del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"
 :: Pre-build libdaisy
 cd libdaisy
 
-echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin> build.sh
+echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin > build.sh
 ..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
 :: Pre-build Owl libs
 cd OwlProgram
 
-echo ../Heavy/usr/bin/make.exe libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/ > build.sh
+echo ../Heavy/usr/bin/make.exe libs PLATFORM=OWL2 TOOLROOT=../Heavy/usr/bin/ > build.sh
 ..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
