@@ -27,7 +27,7 @@ cd ..
 :: Pre-build Owl libs
 cd OwlProgram
 
-echo ../Heavy/usr/bin/make.exe ../Heavy/bin/make libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/ > build.sh
+echo ../Heavy/usr/bin/make.exe libs PLATFORM=OWL2 TOOLROOT=../Heavy/bin/ > build.sh
 ..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
