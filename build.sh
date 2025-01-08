@@ -173,7 +173,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     zip -r ./Heavy.zip ./Heavy
     xcrun notarytool store-credentials "notary_login" --apple-id ${AC_USERNAME} --password ${AC_PASSWORD} --team-id "7SV7JPRR2L"
     xcrun notarytool submit "Heavy.zip" --keychain-profile "notary_login" --wait
-    xcrun stapler staple "Heavy.zip"
 fi
 
 cp VERSION ./Heavy/VERSION
