@@ -169,6 +169,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_12_0_x86_64/Heavy Heavy/bin/Heavy/
     /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/*
+    zip -r ./Heavy ./Heavy.zip
+    xcrun notarytool store-credentials "notary_login" --apple-id ${AC_USERNAME} --password ${AC_PASSWORD} --team-id "7SV7JPRR2L"
+    xcrun notarytool submit $1 --keychain-profile "notary_login" --wait
+    xcrun stapler staple "Heavy.zip"
 fi
 
 cp VERSION ./Heavy/VERSION
