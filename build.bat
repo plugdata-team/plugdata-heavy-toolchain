@@ -20,18 +20,30 @@ del /S /Q ".\Heavy\usr\arm-none-eabi\lib\arm"
 :: Pre-build libdaisy
 cd libdaisy
 
-echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin> build.sh
+echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin > build.sh
 ..\Heavy\usr\bin\bash.exe --login build.sh
 cd ..
 
+:: Pre-build Owl libs
+cd OwlProgram
+
+echo ../Heavy/usr/bin/make.exe libs PLATFORM=OWL2 TOOLROOT=../Heavy/usr/bin/ > build.sh
+..\Heavy\usr\bin\bash.exe --login build.sh
+cd ..
+
+:: Copy all libs to toolchain
 xcopy /E /H /C /I libdaisy Heavy\usr\lib\libdaisy
+xcopy /E /H /C /I OwlProgram Heavy\usr\lib\OwlProgram
 xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
 xcopy /E /H /C /I dpf-widgets Heavy\usr\lib\dpf-widgets
+
+:: Download OWL FirmwareSender from CI
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-windows.zip -OutFile FirmwareSender.zip"
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive FirmwareSender.zip -Force -DestinationPath .\Heavy\usr\lib\OwlProgram\Tools"
 
 :: Package heavy using pyinstaller
 python -m ensurepip
 python -m pip install poetry poetry-pyinstaller-plugin
-
 
 cd hvcc
 poetry build

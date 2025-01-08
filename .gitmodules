@@ -10,3 +10,6 @@
 [submodule "dpf-widgets"]
 	path = dpf-widgets
 	url = https://github.com/DISTRHO/DPF-Widgets.git
+[submodule "OwlProgram"]
+	path = OwlProgram
+	url = git@github.com:Wasted-Audio/OwlProgram.git
