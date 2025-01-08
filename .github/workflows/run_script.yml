@@ -11,6 +11,23 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Check for Code-Signing secrets
+        id: secret-check
+        shell: bash
+        run: |
+          if [ "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}" != '' ]; then
+            echo "available=true" >> $GITHUB_OUTPUT;
+          else
+            echo "available=false" >> $GITHUB_OUTPUT;
+          fi
+
+      - name: Import Code-Signing Certificates
+        uses: figleafteam/import-codesign-certs@v2
+        if: ${{ steps.secret-check.outputs.available == 'true' }}
+        with:
+          p12-file-base64: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}
+          p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
+
       - name: Install dependencies
         working-directory: ${{github.workspace}}
         run: brew install dfu-util

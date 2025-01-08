@@ -168,6 +168,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_12_0_x86_64/Heavy Heavy/bin/Heavy/
+    /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/*
 fi
 
 cp VERSION ./Heavy/VERSION
