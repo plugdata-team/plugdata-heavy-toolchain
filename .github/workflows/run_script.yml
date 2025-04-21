@@ -89,10 +89,19 @@ jobs:
 
   build-linux:
     name: Linux-x64
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
     steps:
+      - name: Install git
+        run: |
+          apt-get update -qq && apt-get install -yqq --no-install-recommends ca-certificates curl git openssl
+          curl -sLO https://launchpad.net/~kxstudio-debian/+archive/ubuntu/toolchain/+files/git_2.34.1-1ubuntu1~bpo20.04.1~ppa1_amd64.deb
+          curl -sLO https://launchpad.net/~kxstudio-debian/+archive/ubuntu/toolchain/+files/git-man_2.34.1-1ubuntu1~bpo20.04.1~ppa1_all.deb
+          dpkg -i *.deb
+          rm *.deb
       - name: Install Dependencies (apt)
-        run: sudo apt update && sudo apt install -y git binutils curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
+        run: apt update && apt install -y lsb-release binutils curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
         #deps for build-anywhere:  csh gawk autoconf automake autotools-dev wget m4 flex bison texinfo unzip help2man meson gperf lzip libtool-bin patch ninja-build libstdc++6 libncurses5-dev
 
       - uses: actions/checkout@v4
