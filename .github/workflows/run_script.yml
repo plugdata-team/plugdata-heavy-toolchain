@@ -45,7 +45,7 @@ jobs:
       - name: Compress Artifacts
         working-directory: ${{github.workspace}}
         run: tar -cJf Heavy-MacOS-Universal.tar.xz Heavy
-        
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -57,7 +57,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Install Packages
-        run: choco install make xz -y
+        run: choco install make archiver -y
 
       - uses: actions/checkout@v4
         with:
@@ -75,8 +75,8 @@ jobs:
 
       - name: Compress Artifacts
         working-directory: ${{github.workspace}}
-        run: tar -cJf Heavy-Win64.tar.xz Heavy
-        
+        run: arc archive Heavy-Win64.tar.xz Heavy
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -110,7 +110,7 @@ jobs:
       - name: Compress Artifacts
         working-directory: ${{github.workspace}}
         run: tar -cJf Heavy-Linux-x64.tar.xz Heavy
-        
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
