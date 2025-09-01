@@ -57,7 +57,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Install Packages
-        run: choco install make -y
+        run: choco install make xz -y
 
       - uses: actions/checkout@v4
         with:
