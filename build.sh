@@ -104,7 +104,7 @@ cp ./resources/hothouse.json ./Heavy/etc/hothouse.json
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Get libasound
     TEMP_DEB2="$(mktemp)"
-    wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.1.3-5_amd64.deb'
+    wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.2.4-1.1_amd64.deb'
     ar x "$TEMP_DEB2"
     tar xvf data.tar.xz
     cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
