@@ -42,17 +42,15 @@ jobs:
         working-directory: ${{github.workspace}}
         run: CLEAR_INTL=1 ./build.sh
 
-      - name: Archive Artifacts
+      - name: Compress Artifacts
+        working-directory: ${{github.workspace}}
+        run: tar -cJf Heavy-MacOS-Universal.tar.xz Heavy
+        
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Heavy-MacOS-Universal
-          path: ${{github.workspace}}/Heavy
-
-      - name: Release Artifacts
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: Heavy-MacOS-Universal
+          path: ${{github.workspace}}/Heavy-MacOS-Universal.tar.xz
 
   build-windows:
     name: Windows
@@ -75,17 +73,15 @@ jobs:
         working-directory: ${{github.workspace}}
         run: ./build.bat
 
-      - name: Archive Artifacts
+      - name: Compress Artifacts
+        working-directory: ${{github.workspace}}
+        run: tar -cJf Heavy-Win64.tar.xz Heavy
+        
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Heavy-Win64
-          path: ${{github.workspace}}/Heavy
-
-      - name: Release Artifacts
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: Heavy-Win64
+          path: ${{github.workspace}}/Heavy-Win64.tar.xz
 
   build-linux:
     name: Linux-x64
@@ -111,14 +107,12 @@ jobs:
         working-directory: ${{github.workspace}}
         run: bash ./build.sh
 
-      - name: Archive Artifacts
+      - name: Compress Artifacts
+        working-directory: ${{github.workspace}}
+        run: tar -cJf Heavy-Linux-x64.tar.xz Heavy
+        
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Heavy-Linux-x64
-          path: ${{github.workspace}}/Heavy
-
-      - name: Release Artifacts
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: Heavy-Linux-x64
+          path: ${{github.workspace}}/Heavy-Linux-x64.tar.xz
