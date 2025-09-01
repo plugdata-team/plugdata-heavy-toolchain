@@ -194,3 +194,4 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 cp VERSION ./Heavy/VERSION
+mv ./Heavy ./Toolchain
