@@ -42,15 +42,11 @@ jobs:
         working-directory: ${{github.workspace}}
         run: CLEAR_INTL=1 ./build.sh
 
-      - name: Compress Artifacts
-        working-directory: ${{github.workspace}}
-        run: tar -cJf Heavy-MacOS-Universal.tar.xz Toolchain
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Heavy-MacOS-Universal
-          path: ${{github.workspace}}/Heavy-MacOS-Universal.tar.xz
+          path: ${{github.workspace}}/Heavy
 
   build-windows:
     name: Windows
@@ -73,15 +69,11 @@ jobs:
         working-directory: ${{github.workspace}}
         run: ./build.bat
 
-      - name: Compress Artifacts
-        working-directory: ${{github.workspace}}
-        run: arc archive Heavy-Win64.tar.xz Toolchain
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Heavy-Win64
-          path: ${{github.workspace}}/Heavy-Win64.tar.xz
+          path: ${{github.workspace}}/Heavy
 
   build-linux:
     name: Linux-x64
@@ -107,12 +99,8 @@ jobs:
         working-directory: ${{github.workspace}}
         run: bash ./build.sh
 
-      - name: Compress Artifacts
-        working-directory: ${{github.workspace}}
-        run: tar -cJf Heavy-Linux-x64.tar.xz Toolchain
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Heavy-Linux-x64
-          path: ${{github.workspace}}/Heavy-Linux-x64.tar.xz
+          path: ${{github.workspace}}/Heavy
