@@ -186,7 +186,7 @@ popd
 mkdir -p Heavy/bin/Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
+    mv ./hvcc/dist/pyinstaller/manylinux_2_35_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_13_0_x86_64/Heavy Heavy/bin/Heavy/
     /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/*
@@ -194,3 +194,4 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 cp VERSION ./Heavy/VERSION
+mv ./Heavy ./Toolchain
