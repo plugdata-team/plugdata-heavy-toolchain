@@ -104,7 +104,7 @@ cp ./resources/hothouse.json ./Heavy/etc/hothouse.json
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Get libasound
     TEMP_DEB2="$(mktemp)"
-    wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.1.3-5_amd64.deb'
+    wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.2.4-1.1_amd64.deb'
     ar x "$TEMP_DEB2"
     tar xvf data.tar.xz
     cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
@@ -128,7 +128,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # build a version of GNU make that has no dependencies
-curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
+curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftpmirror.gnu.org/make/make-4.4.tar.gz
 tar -xf make-4.4.tar.gz
 pushd make-4.4
 
@@ -186,7 +186,7 @@ popd
 mkdir -p Heavy/bin/Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    mv ./hvcc/dist/pyinstaller/manylinux_2_31_x86_64/Heavy Heavy/bin/Heavy/
+    mv ./hvcc/dist/pyinstaller/manylinux_2_35_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_13_0_x86_64/Heavy Heavy/bin/Heavy/
     /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/*
@@ -194,3 +194,4 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 cp VERSION ./Heavy/VERSION
+mv ./Heavy ./Toolchain
