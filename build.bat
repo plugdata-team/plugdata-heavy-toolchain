@@ -22,6 +22,8 @@ cd libdaisy
 
 echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin > build.sh
 ..\Heavy\usr\bin\bash.exe --login build.sh
+:: Cleanup
+rd /S /Q "Drivers"
 cd ..
 
 :: Pre-build Owl libs

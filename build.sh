@@ -149,6 +149,8 @@ rm -rf make-4.4 make-4.4.tar.gz
 # Pre-build libdaisy
 pushd libdaisy
 make GCC_PATH=../Heavy/bin/
+# Cleanup
+rm -rf Drivers
 popd
 
 # Pre-build OWL libs (only OWL2 target for now)
