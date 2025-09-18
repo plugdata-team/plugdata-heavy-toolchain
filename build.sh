@@ -152,7 +152,7 @@ make GCC_PATH=../Heavy/bin/
 # Cleanup
 rm -rf doc
 rm -rf tests
-rm -rf Drivers/CMSIS_5/CMSIS_Review_meeting_2020.pdf
+rm -rf Drivers/CMSIS_5/CMSIS_Review_Meeting_2020.pdf
 rm -rf Drivers/CMSIS_5/CMSIS/DSP
 rm -rf Drivers/CMSIS_5/CMSIS/DoxyGen
 rm -rf Drivers/CMSIS_5/CMSIS/NN

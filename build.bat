@@ -25,7 +25,7 @@ echo ../Heavy/usr/bin/make.exe GCC_PATH=../Heavy/usr/bin > build.sh
 :: Cleanup
 rd /S /Q "doc"
 rd /S /Q "tests"
-rd /S /Q "Drivers\CMSIS_5\CMSIS_Review_meeting_2020.pdf"
+rd /S /Q "Drivers\CMSIS_5\CMSIS_Review_Meeting_2020.pdf"
 rd /S /Q "Drivers\CMSIS_5\CMSIS\DSP"
 rd /S /Q "Drivers\CMSIS_5\CMSIS\DoxyGen"
 rd /S /Q "Drivers\CMSIS_5\CMSIS\NN"
