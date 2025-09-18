@@ -150,7 +150,15 @@ rm -rf make-4.4 make-4.4.tar.gz
 pushd libdaisy
 make GCC_PATH=../Heavy/bin/
 # Cleanup
-rm -rf Drivers
+rm -rf doc
+rm -rf tests
+rm -rf Drivers/CMSIS_5/CMSIS_Review_meeting_2020.pdf
+rm -rf Drivers/CMSIS_5/CMSIS/DSP
+rm -rf Drivers/CMSIS_5/CMSIS/DoxyGen
+rm -rf Drivers/CMSIS_5/CMSIS/NN
+rm -rf Drivers/CMSIS_5/CMSIS/RTOS2
+rm -rf Drivers/CMSIS_5/CMSIS/RTOS
+rm -rf Drivers/CMSIS-DSP
 popd
 
 # Pre-build OWL libs (only OWL2 target for now)
