@@ -1,7 +1,7 @@
 CHANGELOG
 =====
 
-Next
+0.7.0
 -----
 
 * update hvcc
