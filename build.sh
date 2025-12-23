@@ -36,6 +36,9 @@ cp -rf gcc-arm-none-eabi/gcc-arm-*/share ./Heavy
 # cp -rf gcc-arm-none-eabi/gcc-arm-*/include ./Heavy
 cp -rf gcc-arm-none-eabi/gcc-arm-*/arm-none-eabi ./Heavy
 
+# some cleanup
+rm -rf ./Heavy/share/doc*
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
     status=$?
@@ -70,7 +73,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/src*
     rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/sbin*
     rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/doc*
-    rm -rf ./share/doc*
 
     # copy scripts
 
