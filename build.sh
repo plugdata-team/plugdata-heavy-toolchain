@@ -4,16 +4,22 @@ export MACOSX_DEPLOYMENT_TARGET="10.6"
 
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-mac.tar.bz2"
+    URL="https://github.com/plugdata-team/plugdata-heavy-toolchain/releases/download/arm_gcc/gcc-arm-none-eabi-10-2020-q4-major-mac.tar.bz2"
 # Aarch64 Linux
 elif [[ $(uname -m) == "aarch64" ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2"
+    URL="https://github.com/plugdata-team/plugdata-heavy-toolchain/releases/download/arm_gcc/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2"
 # x86_64 Linux
 else
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
+    URL="https://github.com/plugdata-team/plugdata-heavy-toolchain/releases/download/arm_gcc/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
 fi
 
 curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.bz2 $URL
+
+status=$?
+if [ $status -ne 0 ]; then
+    echo "Failed to download gcc-arm-none-eabi"
+    exit $status
+fi
 
 echo "Extracting..."
 mkdir gcc-arm-none-eabi
@@ -32,7 +38,11 @@ cp -rf gcc-arm-none-eabi/gcc-arm-*/arm-none-eabi ./Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
-
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download x86_64-anywhere-linux-gnu-v5.tar.xz"
+        exit $status
+    fi
     mkdir build-anywhere
     pushd build-anywhere
     tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
@@ -105,6 +115,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Get libasound
     TEMP_DEB2="$(mktemp)"
     wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.2.4-1.1_amd64.deb'
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download libasound2"
+        exit $status
+    fi
     ar x "$TEMP_DEB2"
     tar xvf data.tar.xz
     cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
@@ -129,6 +144,11 @@ fi
 
 # build a version of GNU make that has no dependencies
 curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftpmirror.gnu.org/make/make-4.4.tar.gz
+status=$?
+if [ $status -ne 0 ]; then
+    echo "Failed to download make-4.4"
+    exit $status
+fi
 tar -xf make-4.4.tar.gz
 pushd make-4.4
 
@@ -170,11 +190,21 @@ popd
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-ubuntu.zip"
     curl -fSL -A "Mozilla/4.0" -o FirmwareSender-ubuntu.zip $FS_URL
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download FirmwareSender-ubuntu"
+        exit $status
+    fi
     unzip FirmwareSender-ubuntu.zip -d FirmwareSender-ubuntu
     cp ./FirmwareSender-ubuntu/FirmwareSender OwlProgram/Tools/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-osx.zip"
     curl -fSL -A "Mozilla/4.0" -o FirmwareSender-osx.zip $FS_URL
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download FirmwareSender-osx"
+        exit $status
+    fi
     unzip FirmwareSender-osx.zip -d FirmwareSender-osx
     cp ./FirmwareSender-osx/FirmwareSender OwlProgram/Tools/
 fi
