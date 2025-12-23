@@ -5,7 +5,7 @@ on: [push, workflow_dispatch]
 jobs:
   build-macos:
     name: MacOS Univeral
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v4
         with:
