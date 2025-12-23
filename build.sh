@@ -187,7 +187,7 @@ cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
-python3 -m pip install poetry poetry-pyinstaller-plugin
+python3 -m pip install poetry poetry-pyinstaller-plugin pyinstaller
 
 pushd hvcc
 poetry build
