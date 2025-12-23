@@ -222,6 +222,7 @@ python3 -m ensurepip
 python3 -m pip install poetry poetry-pyinstaller-plugin pyinstaller
 
 pushd hvcc
+pip install -e .
 poetry build
 popd
 
