@@ -5,7 +5,7 @@ on: [push, workflow_dispatch]
 jobs:
   build-macos:
     name: MacOS Univeral
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +40,9 @@ jobs:
 
       - name: Run Packaging Script
         working-directory: ${{github.workspace}}
+        env:
+          AC_USERNAME: ${{ secrets.AC_USERNAME }}
+          AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
         run: CLEAR_INTL=1 ./build.sh
 
       - name: Compress Artifacts

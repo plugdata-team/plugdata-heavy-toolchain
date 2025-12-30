@@ -4,16 +4,22 @@ export MACOSX_DEPLOYMENT_TARGET="10.6"
 
 # Download arm compiler for compiling on daisy
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-mac.tar.bz2"
+    URL="https://github.com/plugdata-team/plugdata-heavy-toolchain/releases/download/arm_gcc/gcc-arm-none-eabi-10-2020-q4-major-mac.tar.bz2"
 # Aarch64 Linux
 elif [[ $(uname -m) == "aarch64" ]]; then
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2"
+    URL="https://github.com/plugdata-team/plugdata-heavy-toolchain/releases/download/arm_gcc/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2"
 # x86_64 Linux
 else
-    URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
+    URL="https://github.com/plugdata-team/plugdata-heavy-toolchain/releases/download/arm_gcc/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
 fi
 
 curl -fSL -A "Mozilla/4.0" -o gcc-arm-none-eabi.tar.bz2 $URL
+
+status=$?
+if [ $status -ne 0 ]; then
+    echo "Failed to download gcc-arm-none-eabi"
+    exit $status
+fi
 
 echo "Extracting..."
 mkdir gcc-arm-none-eabi
@@ -30,9 +36,16 @@ cp -rf gcc-arm-none-eabi/gcc-arm-*/share ./Heavy
 # cp -rf gcc-arm-none-eabi/gcc-arm-*/include ./Heavy
 cp -rf gcc-arm-none-eabi/gcc-arm-*/arm-none-eabi ./Heavy
 
+# some cleanup
+rm -rf ./Heavy/share/doc*
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     curl -fSL -A "Mozilla/4.0" -o  x86_64-anywhere-linux-gnu-v5.tar.xz https://github.com/theopolis/build-anywhere/releases/download/v5/x86_64-anywhere-linux-gnu-v5.tar.xz
-
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download x86_64-anywhere-linux-gnu-v5.tar.xz"
+        exit $status
+    fi
     mkdir build-anywhere
     pushd build-anywhere
     tar -xf ../x86_64-anywhere-linux-gnu-v5.tar.xz
@@ -60,7 +73,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/src*
     rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/sbin*
     rm -rf ./x86_64-anywhere-linux-gnu/sysroot/usr/share/doc*
-    rm -rf ./share/doc*
 
     # copy scripts
 
@@ -105,6 +117,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Get libasound
     TEMP_DEB2="$(mktemp)"
     wget -O "$TEMP_DEB2" 'http://ftp.de.debian.org/debian/pool/main/a/alsa-lib/libasound2_1.2.4-1.1_amd64.deb'
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download libasound2"
+        exit $status
+    fi
     ar x "$TEMP_DEB2"
     tar xvf data.tar.xz
     cp ./usr/lib/x86_64-linux-gnu/libasound.so.2.0.0 ./Heavy/x86_64-anywhere-linux-gnu/sysroot/lib/libasound.so
@@ -129,6 +146,11 @@ fi
 
 # build a version of GNU make that has no dependencies
 curl -fSL -A "Mozilla/4.0" -o make-4.4.tar.gz https://ftpmirror.gnu.org/make/make-4.4.tar.gz
+status=$?
+if [ $status -ne 0 ]; then
+    echo "Failed to download make-4.4"
+    exit $status
+fi
 tar -xf make-4.4.tar.gz
 pushd make-4.4
 
@@ -170,11 +192,21 @@ popd
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-ubuntu.zip"
     curl -fSL -A "Mozilla/4.0" -o FirmwareSender-ubuntu.zip $FS_URL
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download FirmwareSender-ubuntu"
+        exit $status
+    fi
     unzip FirmwareSender-ubuntu.zip -d FirmwareSender-ubuntu
     cp ./FirmwareSender-ubuntu/FirmwareSender OwlProgram/Tools/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     FS_URL="https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-osx.zip"
     curl -fSL -A "Mozilla/4.0" -o FirmwareSender-osx.zip $FS_URL
+    status=$?
+    if [ $status -ne 0 ]; then
+        echo "Failed to download FirmwareSender-osx"
+        exit $status
+    fi
     unzip FirmwareSender-osx.zip -d FirmwareSender-osx
     cp ./FirmwareSender-osx/FirmwareSender OwlProgram/Tools/
 fi
@@ -187,9 +219,10 @@ cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
-python3 -m pip install poetry poetry-pyinstaller-plugin
+python3 -m pip install poetry poetry-pyinstaller-plugin pyinstaller
 
 pushd hvcc
+pip install -e .
 poetry build
 popd
 
@@ -198,9 +231,29 @@ mkdir -p Heavy/bin/Heavy
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_35_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    mv ./hvcc/dist/pyinstaller/macosx_13_0_x86_64/Heavy Heavy/bin/Heavy/
-    /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/*
-    /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/Heavy/*
+    mv ./hvcc/dist/pyinstaller/macosx_15_0_x86_64/Heavy Heavy/bin/Heavy/
+
+    cat > entitlements.plist << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+</dict>
+</plist>
+EOF
+
+    find ./Heavy/bin -type f -perm +111 -exec /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
+    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/Heavy/Heavy
+
+    # Submit the zipped executable for notarization
+    # This makes sure we can at least run it with online notarization
+    ditto -c -k --keepParent ./Heavy/bin Heavy.zip
+    xcrun notarytool store-credentials "notary_login" --apple-id ${AC_USERNAME} --password ${AC_PASSWORD} --team-id "7SV7JPRR2L"
+    xcrun notarytool submit Heavy.zip --keychain-profile "notary_login" --wait
+    rm Heavy.zip
+    rm entitlements.plist
 fi
 
 cp VERSION ./Heavy/VERSION
