@@ -1,6 +1,13 @@
 CHANGELOG
 =====
 
+0.8.0
+-----
+
+* update hvcc
+* update dpf and dpf-widgets
+* use macos-15-intel
+
 0.7.0
 -----
 

@@ -53,9 +53,10 @@ powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive Fi
 
 :: Package heavy using pyinstaller
 python -m ensurepip
-python -m pip install poetry poetry-pyinstaller-plugin
+python -m pip install poetry poetry-pyinstaller-plugin pyinstaller
 
 cd hvcc
+pip install -e .
 poetry build
 cd ..
 
