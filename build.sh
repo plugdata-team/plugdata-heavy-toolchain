@@ -232,8 +232,28 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     mv ./hvcc/dist/pyinstaller/manylinux_2_35_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_15_0_x86_64/Heavy Heavy/bin/Heavy/
-    /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/*
-    /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/Heavy/Heavy
+
+    cat > entitlements.plist << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+</dict>
+</plist>
+EOF
+
+    find ./Heavy/bin -type f -perm +111 -exec /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
+    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/Heavy/Heavy
+
+    # Submit the zipped executable for notarization
+    # This makes sure we can at least run it with online notarization
+    ditto -c -k --keepParent ./Heavy/bin Heavy.zip
+    xcrun notarytool store-credentials "notary_login" --apple-id ${AC_USERNAME} --password ${AC_PASSWORD} --team-id "7SV7JPRR2L"
+    xcrun notarytool submit Heavy.zip --keychain-profile "notary_login" --wait
+    rm Heavy.zip
+    rm entitlements.plist
 fi
 
 cp VERSION ./Heavy/VERSION
