@@ -244,9 +244,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 </plist>
 EOF
 
-    find ./Heavy/bin -type f -perm +111 -exec /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
-    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/Heavy/Heavy
-    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/lib/libusb-1.0.0.dylib
+    find ./Heavy -type f -perm +111 -exec file {} \; | grep "Mach-O.*executable" | cut -d: -f1 | while read f; do
+        /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" "$f"
+    done
+    find ./Heavy -type f \( -name "*.dylib" -o -name "*.so" \) -exec /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
+    
     # Submit the zipped executable for notarization
     # This makes sure we can at least run it with online notarization
     ditto -c -k --keepParent ./Heavy/bin Heavy.zip
