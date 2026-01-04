@@ -246,7 +246,7 @@ EOF
 
     find ./Heavy/bin -type f -perm +111 -exec /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
     /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/Heavy/Heavy
-
+    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/lib/libusb-1.0.0.dylib
     # Submit the zipped executable for notarization
     # This makes sure we can at least run it with online notarization
     ditto -c -k --keepParent ./Heavy/bin Heavy.zip
