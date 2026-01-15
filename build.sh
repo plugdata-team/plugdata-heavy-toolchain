@@ -231,26 +231,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_15_0_x86_64/Heavy Heavy/bin/Heavy/
 
-    cat > entitlements.plist << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>com.apple.security.cs.disable-library-validation</key>
-    <true/>
-    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
-    <true/>
-    <key>com.apple.security.device.usb</key>
-    <true/>
-</dict>
-</plist>
-EOF
-
     find ./Heavy -type f -perm +111 -exec file {} \; | grep "Mach-O.*executable" | cut -d: -f1 | while read f; do
         /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" "$f"
     done
-    find ./Heavy -type f \( -name "*.dylib" -o -name "*.so" \) -exec /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
-    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/dfu-util
+    find ./Heavy -type f \( -name "*.dylib" -o -name "*.so" \) -exec /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
+    /usr/bin/codesign --force -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/dfu-util
     
     # Submit the zipped executable for notarization
     # This makes sure we can at least run it with online notarization
