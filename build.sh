@@ -129,8 +129,6 @@ fi
 
 # copy dfu-util
 cp $(which dfu-util) ./Heavy/bin/dfu-util
-cp $(which dfu-prefix) ./Heavy/bin/dfu-prefix
-cp $(which dfu-suffix) ./Heavy/bin/dfu-suffix
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     cp "$(ldconfig -p | grep libusb-1.0.so | tr ' ' '\n' | grep /)" ./Heavy/lib/libusb-1.0.so
@@ -249,10 +247,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 EOF
 
     find ./Heavy -type f -perm +111 -exec file {} \; | grep "Mach-O.*executable" | cut -d: -f1 | while read f; do
-        /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" "$f"
+        /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" "$f"
     done
-    find ./Heavy -type f \( -name "*.dylib" -o -name "*.so" \) -exec /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
-
+    find ./Heavy -type f \( -name "*.dylib" -o -name "*.so" \) -exec /usr/bin/codesign --force --options runtime -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" {} \;
+    /usr/bin/codesign --force --options runtime --entitlements entitlements.plist -s "Developer ID Application: Timothy Schoen (7SV7JPRR2L)" ./Heavy/bin/dfu-util
+    
     # Submit the zipped executable for notarization
     # This makes sure we can at least run it with online notarization
     ditto -c -k --keepParent ./Heavy Heavy.zip
