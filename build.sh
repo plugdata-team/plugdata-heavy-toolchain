@@ -242,6 +242,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     <true/>
     <key>com.apple.security.cs.allow-dyld-environment-variables</key>
     <true/>
+    <key>com.apple.security.device.usb</key>
+    <true/>
 </dict>
 </plist>
 EOF
