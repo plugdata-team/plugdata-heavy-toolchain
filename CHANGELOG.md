@@ -1,6 +1,11 @@
 CHANGELOG
 =====
 
+0.8.1
+-----
+
+* macOS: codesign and notarize after moving to macOS 15 for github actions
+
 0.8.0
 -----
 
