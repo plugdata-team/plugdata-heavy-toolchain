@@ -1,6 +1,13 @@
 CHANGELOG
 =====
 
+Next
+-----
+
+* update hvcc to v0.16.0
+* update libDaisy to v8.1.0
+* update github actions
+
 0.8.1
 -----
 
