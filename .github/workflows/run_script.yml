@@ -7,7 +7,7 @@ jobs:
     name: MacOS Univeral
     runs-on: macos-15-intel
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
 
@@ -33,7 +33,7 @@ jobs:
         run: brew install dfu-util
 
       - name: Setup Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: "pip"
@@ -50,7 +50,7 @@ jobs:
         run: tar -cJf Heavy-MacOS-Universal.tar.xz Toolchain
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Heavy-MacOS-Universal
           path: ${{github.workspace}}/Heavy-MacOS-Universal.tar.xz
@@ -62,12 +62,12 @@ jobs:
       - name: Install Packages
         run: choco install make archiver -y
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
 
       - name: Setup Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: "pip"
@@ -81,7 +81,7 @@ jobs:
         run: arc archive Heavy-Win64.tar.xz Toolchain
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Heavy-Win64
           path: ${{github.workspace}}/Heavy-Win64.tar.xz
@@ -94,14 +94,14 @@ jobs:
         run: sudo apt update && sudo apt install -y git binutils curl tar gzip xz-utils make patchelf libusb-dev build-essential rsync wget dfu-util
         #deps for build-anywhere:  csh gawk autoconf automake autotools-dev wget m4 flex bison texinfo unzip help2man meson gperf lzip libtool-bin patch ninja-build libstdc++6 libncurses5-dev
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
         env:
           PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
       - name: Setup Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: "pip"
@@ -115,7 +115,7 @@ jobs:
         run: tar -cJf Heavy-Linux-x64.tar.xz Toolchain
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Heavy-Linux-x64
           path: ${{github.workspace}}/Heavy-Linux-x64.tar.xz
