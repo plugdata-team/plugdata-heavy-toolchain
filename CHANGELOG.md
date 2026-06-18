@@ -4,7 +4,12 @@ CHANGELOG
 Next
 -----
 
-* update hvcc to v0.16.0
+* update hvcc to v0.16.1
+
+0.9.0
+-----
+
+* update hvcc to v0.16.1
 * update libDaisy to v8.1.0
 * update github actions
 
