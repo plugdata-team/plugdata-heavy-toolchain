@@ -1,7 +1,7 @@
 CHANGELOG
 =====
 
-Next
+0.9.3
 -----
 
 * Windows: fix usb_driver for plugdata 0.9.3
