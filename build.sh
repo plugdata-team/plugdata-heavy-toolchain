@@ -229,7 +229,7 @@ popd
 mkdir -p Heavy/bin/Heavy
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    mv ./hvcc/dist/pyinstaller/manylinux_2_35_x86_64/Heavy Heavy/bin/Heavy/
+    mv ./hvcc/dist/pyinstaller/linux_x86_64/Heavy Heavy/bin/Heavy/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     mv ./hvcc/dist/pyinstaller/macosx_15_0_x86_64/Heavy Heavy/bin/Heavy/
 
