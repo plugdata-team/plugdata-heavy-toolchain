@@ -1,6 +1,12 @@
 CHANGELOG
 =====
 
+0.9.3
+-----
+
+* Windows: fix usb_driver for plugdata 0.9.3
+* update hvcc to v0.17.1
+
 0.9.2
 -----
 
