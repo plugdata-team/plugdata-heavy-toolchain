@@ -1,6 +1,13 @@
 CHANGELOG
 =====
 
+next
+-----
+
+* Add pdvg
+* update hvcc
+* use dpf fork
+
 0.9.4
 -----
 
