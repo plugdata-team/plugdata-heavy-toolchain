@@ -216,6 +216,7 @@ cp -rf ./libdaisy ./Heavy/lib/libdaisy
 cp -rf ./OwlProgram ./Heavy/lib/OwlProgram
 cp -rf ./dpf ./Heavy/lib/dpf
 cp -rf ./dpf-widgets ./Heavy/lib/dpf-widgets
+cp -rf ./pdvg ./Heavy/lib/pdvg
 
 # Package Heavy with pyinstaller
 python3 -m ensurepip
