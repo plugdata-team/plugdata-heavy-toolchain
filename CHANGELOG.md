@@ -1,7 +1,7 @@
 CHANGELOG
 =====
 
-Next
+0.9.5
 -----
 
 * update hvcc to v0.17.2
