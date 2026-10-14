@@ -1,0 +1,18 @@
+[submodule "submodules/OwlProgram"]
+	path = submodules/OwlProgram
+	url = https://github.com/Wasted-Audio/OwlProgram.git
+[submodule "submodules/dpf"]
+	path = submodules/dpf
+	url = https://github.com/Wasted-Audio/DPF.git
+[submodule "submodules/dpf-widgets"]
+	path = submodules/dpf-widgets
+	url = https://github.com/DISTRHO/DPF-Widgets.git
+[submodule "submodules/hvcc"]
+	path = submodules/hvcc
+	url = https://github.com/Wasted-Audio/hvcc.git
+[submodule "submodules/libdaisy"]
+	path = submodules/libdaisy
+	url = https://github.com/electro-smith/libDaisy.git
+[submodule "submodules/pdvg"]
+	path = submodules/pdvg
+	url = https://github.com/Wasted-Audio/PDVG.git

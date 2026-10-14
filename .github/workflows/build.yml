@@ -1,0 +1,90 @@
+name: Portable base toolchain
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            artifact: heavy-toolchain-macos-x64
+          - runner: macos-15
+            artifact: heavy-toolchain-macos-arm64
+          - runner: windows-2022
+            artifact: heavy-toolchain-windows-x64
+    runs-on: ${{ matrix.runner }}
+    env:
+      HAS_SIGNING_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: figleafteam/import-codesign-certs@v2
+        if: runner.os == 'macOS' && env.HAS_SIGNING_CERTIFICATE == 'true'
+        with:
+          p12-file-base64: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}
+          p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
+      - uses: msys2/setup-msys2@v2
+        if: runner.os == 'Windows'
+        id: msys2
+        with:
+          msystem: MSYS
+          install: make
+      - name: Build
+        run: python build.py
+        env:
+          MSYS2_ROOT: ${{ steps.msys2.outputs.msys2-location }}
+      - name: Test
+        run: python test.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: .toolchain/dist/${{ matrix.artifact }}.tar.xz
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            arch: x86_64
+            artifact: heavy-toolchain-linux-x64
+          - runner: ubuntu-24.04-arm
+            arch: aarch64
+            artifact: heavy-toolchain-linux-arm64
+    runs-on: ${{ matrix.runner }}
+    env:
+      # Builds inside manylinux_2_28 so the toolchain runs on glibc 2.28 and newer
+      MANYLINUX: quay.io/pypa/manylinux_2_28_${{ matrix.arch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work "$MANYLINUX" sh -ec '
+            dnf install -y dnf-plugins-core cpio git alsa-lib-devel python3.12 python3.12-pip
+            git config --global --add safe.directory "*"
+            # Not the python3.12 on PATH: manylinux links its own static builds there, and PyInstaller needs libpython.
+            /usr/bin/python3.12 build.py
+          '
+      - name: Test
+        run: docker run --rm -v "$PWD:/work" -w /work "$MANYLINUX" /opt/python/cp312-cp312/bin/python test.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: .toolchain/dist/${{ matrix.artifact }}.tar.xz
+      # The archive must also work without compilers or development packages installed
+      - name: Test in a clean container
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work almalinux:8.10 sh -ec '
+            dnf install -y python3.12 tar xz findutils grep sed diffutils gawk which
+            for package in gcc gcc-c++ glibc-devel libstdc++-devel; do
+              if rpm -q "$package"; then exit 1; fi
+            done
+            mkdir -p /tmp/export-test
+            tar -xJf .toolchain/dist/${{ matrix.artifact }}.tar.xz -C /tmp/export-test
+            /usr/bin/python3.12 test.py /tmp/export-test/Toolchain
+          '
