@@ -36,6 +36,21 @@ def audit_linux(root, reader=None):
             raise RuntimeError(f'{path} requires GLIBC {max(versions)}, exceeding 2.28')
 
 
+def audit_macos(root, reader):
+    """Check the minimum macOS version of Mach-O files, so exports load on older systems."""
+    for path in root.rglob('*'):
+        if not path.is_file() or path.is_symlink():
+            continue
+        with path.open('rb') as f:
+            if f.read(4) not in (b'\xcf\xfa\xed\xfe', b'\xca\xfe\xba\xbe'):
+                continue
+        output = subprocess.check_output([str(reader), '--macho-version-min', str(path)], text=True)
+        versions = [tuple(map(int, v.split('.'))) for v in re.findall(r'^\s*Version: ([0-9.]+)', output, re.M)]
+        check(versions, f'{path} has no minimum macOS version')
+        if max(versions) > (11, 0):
+            raise RuntimeError(f'{path} requires macOS {max(versions)}, exceeding 11.0')
+
+
 def run_tests(root, emsdk=None):
     root = root.resolve()
     if sys.platform.startswith('linux'):
@@ -175,6 +190,9 @@ def run_tests(root, emsdk=None):
         check((dpf_source / 'meta.json').read_bytes() == metadata.read_bytes(), 'Metadata was not preserved')
         if sys.platform.startswith('linux'):
             audit_linux(dpf, root / 'packages/clang/bin/llvm-readelf')
+        if sys.platform == 'darwin':
+            for folder in (dpf, pd_output):
+                audit_macos(folder, root / 'packages/clang/bin/llvm-readobj')
         daisy = work / 'daisy firmware'
         run(shell, root / 'run/build-daisy.sh', patch, 'smoke', '', '--output', daisy)
         check((daisy / 'smoke.bin').stat().st_size > 0, 'Artifact check failed')

@@ -32,6 +32,11 @@ AR=llvm-ar
 # Clang command line ('#' keeps it quiet). A Clang config file can't: colour is decided before it loads.
 CCC_OVERRIDE_OPTIONS='#+-fcolor-diagnostics'
 export PATH SHELL MAKESHELL CC CXX AR TOOLCHAIN_ROOT CCC_OVERRIDE_OPTIONS
+if [ "$(uname -s)" = Darwin ]; then
+    MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET:-10.15}
+    SDKROOT=${SDKROOT:-$(xcrun --sdk macosx --show-sdk-path 2>/dev/null || true)}
+    export MACOSX_DEPLOYMENT_TARGET SDKROOT
+fi
 if [ -d "$TOOLCHAIN_ROOT/sysroot" ]; then
     PKG_CONFIG_SYSROOT_DIR="$TOOLCHAIN_ROOT/sysroot"
     PKG_CONFIG_LIBDIR="$PKG_CONFIG_SYSROOT_DIR/usr/lib64/pkgconfig:$PKG_CONFIG_SYSROOT_DIR/usr/share/pkgconfig"
