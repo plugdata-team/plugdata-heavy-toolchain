@@ -178,15 +178,17 @@ def run_tests(root, emsdk=None):
                                                'plugin_formats': ['clap'], 'enable_ui': 2}}))
         dpf = work / 'dpf plugin'
         run(shell, root / 'run/build-dpf.sh', patch, 'smoke', '', '--output', dpf, '--meta', metadata, '--gui')
-        check((dpf / 'meta.json').read_bytes() == metadata.read_bytes(), 'Metadata was not preserved')
         check((dpf / 'smoke.clap').exists(), 'DPF CLAP plugin was not built')
-        check_only(dpf, 'meta.json', 'smoke.clap')
+        check_only(dpf, 'smoke.clap')
+        dpf_source = work / 'dpf source'
+        run(shell, root / 'run/build-dpf.sh', patch, 'smoke', '', '--output', dpf_source, '--mode', 'source', '--meta', metadata, '--gui')
+        check((dpf_source / 'meta.json').read_bytes() == metadata.read_bytes(), 'Metadata was not preserved')
         if sys.platform.startswith('linux'):
             audit_linux(dpf, root / 'packages/clang/bin/llvm-readelf')
         daisy = work / 'daisy firmware'
         run(shell, root / 'run/build-daisy.sh', patch, 'smoke', '', '--output', daisy)
         check((daisy / 'smoke.bin').stat().st_size > 0, 'Artifact check failed')
-        check_only(daisy, 'smoke.bin')
+        check_only(daisy, 'meta.json', 'smoke.bin')
         for board in ('OWL1', 'OWL2', 'OWL3'):
             owl = work / ('owl firmware ' + board)
             run(shell, root / 'run/build-owl.sh', patch, 'smoke', '', '--output', owl, '--board', board)
