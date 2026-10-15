@@ -1,0 +1,58 @@
+{
+    "name": "DPF Audio Plugin",
+    "order": 3,
+    "script": "build-dpf.sh",
+    "quick_menu": "mode",
+    "arguments": [ "--theme", "{theme}" ],
+    "sections": [
+        {
+            "name": "DPF",
+            "settings": [
+                { "id": "maker", "label": "Maker name (optional)", "type": "string", "argument": "--maker" },
+                { "id": "license", "label": "Project license (optional)", "type": "string", "argument": "--license" },
+                {
+                    "id": "mode", "label": "Export type", "type": "combo", "argument": "--mode", "default": "build",
+                    "options": [
+                        { "label": "Binary", "value": "build" },
+                        { "label": "Source code", "value": "source" }
+                    ]
+                },
+                {
+                    "id": "ui", "label": "GUI type", "type": "combo", "argument": "--ui", "default": "none",
+                    "options": [
+                        { "label": "None", "value": "none" },
+                        { "label": "Generic (ImGui)", "value": "imgui" },
+                        { "label": "Custom (NanoVG)", "value": "nanovg" }
+                    ]
+                },
+                { "id": "use_theme", "label": "Use theme", "type": "bool", "argument": "--use-theme", "default": true, "enabled_if": { "ui": "nanovg" } },
+                {
+                    "id": "plugin_type", "label": "Plugin type", "type": "combo", "argument": "--plugin-type", "default": "effect",
+                    "options": [
+                        { "label": "Effect", "value": "effect" },
+                        { "label": "Instrument", "value": "instrument" },
+                        { "label": "Custom", "value": "custom" }
+                    ]
+                },
+                { "id": "midi_in", "label": "MIDI input", "type": "bool", "argument": "--midi-in", "enabled_if": { "plugin_type": "custom" } },
+                { "id": "midi_out", "label": "MIDI output", "type": "bool", "argument": "--midi-out", "enabled_if": { "plugin_type": "custom" } }
+            ]
+        },
+        {
+            "name": "Plugin formats",
+            "settings": [
+                { "id": "lv2", "label": "LV2", "type": "bool", "argument": "--format", "value": "lv2_sep", "default": true },
+                { "id": "vst2", "label": "VST2", "type": "bool", "argument": "--format", "value": "vst2", "default": true },
+                { "id": "vst3", "label": "VST3", "type": "bool", "argument": "--format", "value": "vst3", "default": true },
+                { "id": "clap", "label": "CLAP", "type": "bool", "argument": "--format", "value": "clap", "default": true },
+                { "id": "jack", "label": "JACK", "type": "bool", "argument": "--format", "value": "jack" }
+            ]
+        },
+        {
+            "name": "Advanced",
+            "settings": [
+                { "id": "nosimd", "label": "Disable SIMD", "type": "bool", "argument": "--nosimd" }
+            ]
+        }
+    ]
+}

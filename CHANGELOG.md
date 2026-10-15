@@ -9,6 +9,7 @@ CHANGELOG
   * native support for arm64 on macOS and Linux
   * better separation of arm and native toolchains
   * patch build scripts now included on the toolchain side, to allow CI testing of the toolchain
+  * plugdata's export settings are defined by JSON files in exporters, and the scripts build the Heavy metadata from their arguments
 
 0.9.5
 -----

@@ -41,6 +41,16 @@ def run_tests(root, emsdk=None):
     if sys.platform.startswith('linux'):
         audit_linux(root)
     check((root / 'VERSION').read_text().strip(), 'Missing toolchain version')
+    # plugdata builds its export settings from these, and runs the scripts they name
+    definitions = sorted((root / 'exporters').glob('*.json'))
+    check(definitions, 'Missing exporter definitions')
+    for definition in definitions:
+        exporter = json.loads(definition.read_text())
+        scripts = [exporter['script']] + [option['script'] for section in exporter.get('sections', [])
+                                          for setting in section['settings'] for option in setting.get('options', [])
+                                          if isinstance(option, dict) and 'script' in option]
+        for script in scripts:
+            check((root / 'run' / script).is_file(), f'{definition.name} names a missing script: {script}')
     shell = root / 'bin/sh.exe' if os.name == 'nt' else Path('/bin/sh')
     check(shell.is_file(), f'Missing shell: {shell}')
     if os.name != 'nt':

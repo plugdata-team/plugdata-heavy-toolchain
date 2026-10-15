@@ -1,8 +1,0 @@
-{
-  "dpf": {
-    "maker": "plugdata",
-    "license": "ISC",
-    "description": "Rename Me",
-    "plugin_formats": ["lv2_sep", "vst2", "vst3", "clap"]
-  }
-}

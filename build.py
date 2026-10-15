@@ -532,6 +532,7 @@ def packageHvcc():
 
 def packageResources():
     copyDirectory(RESOURCES / "run", OUTPUT / "run")  # generator scripts
+    copyDirectory(RESOURCES / "exporters", OUTPUT / "exporters")  # plugdata's export settings, one JSON per script
     copyDirectory(RESOURCES / "etc", OUTPUT / "etc")  # Daisy board files and linker scripts
     copyFile(REPO / "VERSION", OUTPUT / "VERSION")
     # Daisy DFU access without admin rights: a udev rule on Linux, a USB driver on Windows.

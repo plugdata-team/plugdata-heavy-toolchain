@@ -1,0 +1,72 @@
+{
+    "name": "Electro-Smith Daisy",
+    "order": 2,
+    "script": "build-daisy.sh",
+    "quick_menu": "mode",
+    "sections": [
+        {
+            "name": "Daisy",
+            "settings": [
+                {
+                    "id": "board", "label": "Target board", "type": "combo", "argument": "--board", "default": "pod",
+                    "options": [
+                        { "label": "Pod", "value": "pod" },
+                        { "label": "Petal", "value": "petal" },
+                        { "label": "Patch", "value": "patch" },
+                        { "label": "Patch.Init()", "value": "patch_init" },
+                        { "label": "Field", "value": "field" },
+                        { "label": "Versio", "value": "versio" },
+                        { "label": "Terrarium", "value": "terrarium" },
+                        { "label": "Hothouse", "value": "hothouse" },
+                        { "label": "Simple", "value": "simple" },
+                        { "label": "Custom JSON", "value": "custom" }
+                    ]
+                },
+                {
+                    "id": "board_file", "label": "Board definition", "type": "string", "argument": "--board-file",
+                    "browse": "file", "pattern": "*.json", "required": true, "enabled_if": { "board": "custom" }
+                },
+                {
+                    "id": "mode", "label": "Export type", "type": "combo", "argument": "--mode", "default": "flash",
+                    "options": [
+                        { "label": "Source code", "value": "source" },
+                        { "label": "Binary", "value": "build" },
+                        { "label": "Flash", "value": "flash", "action": "flash" },
+                        { "label": "Flash Bootloader", "value": "bootloader", "action": "flash_bootloader", "script": "flash-daisy-bootloader.sh" }
+                    ]
+                },
+                { "id": "usb_midi", "label": "USB MIDI", "type": "bool", "argument": "--usb-midi", "enabled_if": { "debug_printing": false } },
+                { "id": "debug_printing", "label": "Debug printing", "type": "bool", "argument": "--debug-printing" },
+                { "id": "blocksize", "label": "Blocksize", "type": "int", "argument": "--blocksize", "default": 48, "min": 1, "max": 256 },
+                {
+                    "id": "samplerate", "label": "Samplerate", "type": "combo", "argument": "--samplerate", "default": "48000",
+                    "options": [ "8000", "16000", "32000", "48000", "96000" ]
+                },
+                {
+                    "id": "patch_size", "label": "Patch size", "type": "combo", "argument": "--patch-size", "default": "small",
+                    "options": [
+                        { "label": "Small", "value": "small" },
+                        { "label": "Big", "value": "big" },
+                        { "label": "Big + SDRAM", "value": "big-sdram" },
+                        { "label": "Huge", "value": "huge" },
+                        { "label": "Huge + SDRAM", "value": "huge-sdram" },
+                        { "label": "Custom linker", "value": "custom" }
+                    ]
+                },
+                {
+                    "id": "linker", "label": "Linker script", "type": "string", "argument": "--linker",
+                    "browse": "file", "pattern": "*.lds", "required": true, "enabled_if": { "patch_size": "custom" }
+                },
+                {
+                    "id": "app_type", "label": "App type", "type": "combo", "argument": "--app-type", "default": "none",
+                    "enabled_if": { "patch_size": "custom" },
+                    "options": [
+                        { "label": "NONE", "value": "none" },
+                        { "label": "SRAM", "value": "sram" },
+                        { "label": "QSPI", "value": "qspi" }
+                    ]
+                }
+            ]
+        }
+    ]
+}

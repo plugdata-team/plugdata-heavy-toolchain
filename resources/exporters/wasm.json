@@ -1,0 +1,13 @@
+{
+    "name": "WebAssembly",
+    "order": 6,
+    "script": "build-wasm.sh",
+    "sections": [
+        {
+            "name": "WASM",
+            "settings": [
+                { "id": "emsdk", "label": "EMSDK path", "type": "string", "argument": "--emsdk", "browse": "folder", "required": true }
+            ]
+        }
+    ]
+}

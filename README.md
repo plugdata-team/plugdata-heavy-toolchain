@@ -90,6 +90,10 @@ patch.pd my_patch "Copyright"
 
 This generates C/C++ sources in `./my_patch/c/`. On Windows, use forward slashes in paths. Pass `--help` for script options;
 
+## Exporter definitions
+
+plugdata builds its export settings from the JSON files in [resources/exporters](resources/exporters), one per exporter. Each names a script in [resources/run](resources/run), the settings to show (`combo`, `int`, `bool` or `string`), and the argument each setting becomes. A setting with `enabled_if` is only enabled, and only passed to the script, while other settings have the listed values. The scripts turn these arguments into Heavy metadata themselves; `--meta FILE` still overrides that. The full format is described at the top of plugdata's `Source/Heavy/HeavyExporter.h`.
+
 ## Updating
 
 Set the toolchain release number in [VERSION](VERSION). Update [COMPATIBILITY](COMPATIBILITY) to map plugdata releases to the toolchain versions they should use.

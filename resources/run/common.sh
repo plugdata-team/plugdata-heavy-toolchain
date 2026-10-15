@@ -47,13 +47,16 @@ case $JOBS in ''|*[!0-9]*|0) fail 'TOOLCHAIN_JOBS must be a positive integer';; 
 usage() {
     printf '%s\n' "Usage: sh build-$GENERATOR.sh input_patch project_name project_copyright [options] [-- search_path ...]" \
         '  --output DIR     Output directory (default: ./project_name)' \
-        '  --meta FILE      Heavy metadata JSON (DPF/Daisy settings)' \
+        '  --meta FILE      Heavy metadata JSON, used instead of the exporter options below' \
         "  --mode MODE      source or build (default: $MODE); Daisy also flash; OWL also load/store" \
-        '  --board OWL1|OWL2|OWL3   OWL target (default: OWL2)' \
-        '  --slot NUMBER    OWL store slot (default: 1)' \
         '  --emsdk DIR      Activated Emscripten SDK for WASM' \
         '  --pd-bin DIR     Directory containing pd.dll for Windows Pd builds' \
         '  --gui            DPF: parse GUI objects, required for a NanoVG UI (enable_ui: 2)'
+    if [ -n "${OPTIONS_HELP:-}" ]; then printf '%s\n' "$OPTIONS_HELP"; fi
+}
+# A JSON string literal, for metadata written by write_meta
+json_string() {
+    printf '"%s"' "$(printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g')"
 }
 absolute_file() {
     [ -f "$1" ] || fail "File not found: $1"
@@ -69,9 +72,7 @@ parse_args() {
     # shell or make metacharacters through to generated build recipes.
     case $NAME in ''|[0-9]*|*[!a-zA-Z0-9_]*) fail 'Project name must be a C identifier (letters, digits, underscores)';; esac
     OUTPUT="$PWD/$NAME"
-    META=${DEFAULT_META:-}
-    BOARD=OWL2
-    SLOT=1
+    META=
     EMSDK_DIR=${EMSDK:-}
     PD_BIN=
     GUI=
@@ -81,19 +82,22 @@ parse_args() {
             --) shift; break;;
             --help) usage; exit 0;;
             --gui) GUI=1; shift;;
-            --output|--meta|--mode|--board|--slot|--emsdk|--pd-bin)
+            --output|--meta|--mode|--emsdk|--pd-bin)
                 [ "$#" -ge 2 ] || fail "Missing value for $1"
                 case $1 in
                     --output) OUTPUT=$2;;
                     --meta) META=$(absolute_file "$2");;
                     --mode) MODE=$2;;
-                    --board) BOARD=$2;;
-                    --slot) SLOT=$2;;
                     --emsdk) EMSDK_DIR=$2;;
                     --pd-bin) PD_BIN=$2;;
                 esac
                 shift 2;;
-            *) fail "Unknown option: $1 (put search paths after --)";;
+            *)
+                # Exporter options: parse_option in the build script sets CONSUMED to the words it used
+                CONSUMED=0
+                if command -v parse_option >/dev/null 2>&1; then parse_option "$@"; fi
+                [ "$CONSUMED" -gt 0 ] || fail "Unknown option: $1 (put search paths after --)"
+                shift "$CONSUMED";;
         esac
     done
     case "$GENERATOR:$MODE" in
@@ -101,12 +105,15 @@ parse_args() {
         *) fail "Unsupported mode '$MODE' for $GENERATOR";;
     esac
     [ -z "$GUI" ] || [ "$GENERATOR" = dpf ] || fail '--gui is only supported for DPF'
-    case $BOARD in OWL1|OWL2|OWL3) ;; *) fail 'OWL board must be OWL1, OWL2 or OWL3';; esac
-    case $SLOT in ''|*[!0-9]*) fail 'OWL slot must be a non-negative integer';; esac
     [ -n "$OUTPUT" ] || fail 'Output directory cannot be empty'
     run_command mkdir -p -- "$OUTPUT"
     OUTPUT=$(CDPATH= cd -- "$OUTPUT" && pwd -P)
     [ "$OUTPUT" != / ] && [ "$OUTPUT" != "$TOOLCHAIN_ROOT" ] || fail 'Choose a separate project output directory'
+    # Build scripts with exporter options turn them into Heavy metadata, unless --meta gives it
+    if [ -z "$META" ] && command -v write_meta >/dev/null 2>&1; then
+        write_meta > "$OUTPUT/meta.json"
+        META="$OUTPUT/meta.json"
+    fi
     # Keep search arguments as individual words: no eval or shell command strings.
     generate "$@"
 }

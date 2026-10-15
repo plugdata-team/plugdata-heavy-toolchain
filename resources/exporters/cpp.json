@@ -1,0 +1,5 @@
+{
+    "name": "C++ Code",
+    "order": 1,
+    "script": "build-cpp.sh"
+}

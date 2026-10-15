@@ -1,0 +1,37 @@
+{
+    "name": "OWL Platform",
+    "order": 4,
+    "script": "build-owl.sh",
+    "quick_menu": "mode",
+    "sections": [
+        {
+            "name": "OWL",
+            "settings": [
+                {
+                    "id": "board", "label": "Target board", "type": "combo", "argument": "--board", "default": "OWL2",
+                    "options": [ "OWL1", "OWL2", "OWL3" ]
+                },
+                {
+                    "id": "mode", "label": "Export type", "type": "combo", "argument": "--mode", "default": "load",
+                    "options": [
+                        { "label": "Source code", "value": "source" },
+                        { "label": "Binary", "value": "build" },
+                        { "label": "Load", "value": "load", "action": "flash" },
+                        { "label": "Store", "value": "store", "action": "flash" }
+                    ]
+                },
+                {
+                    "id": "slot", "label": "Store slot", "type": "combo", "argument": "--slot", "default": "1",
+                    "enabled_if": { "mode": "store" },
+                    "options": [
+                        { "label": "1", "value": "1" }, { "label": "2", "value": "2" }, { "label": "3", "value": "3" },
+                        { "label": "4", "value": "4" }, { "label": "5", "value": "5" }, { "label": "6", "value": "6" },
+                        { "label": "7", "value": "7" }, { "label": "8", "value": "8" }, { "label": "9", "value": "9" },
+                        { "label": "A", "value": "10" }, { "label": "B", "value": "11" }, { "label": "C", "value": "12" },
+                        { "label": "D", "value": "13" }, { "label": "E", "value": "14" }, { "label": "F", "value": "15" }
+                    ]
+                }
+            ]
+        }
+    ]
+}

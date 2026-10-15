@@ -1,0 +1,25 @@
+{
+    "name": "Pd External",
+    "order": 5,
+    "script": "build-pd.sh",
+    "quick_menu": "mode",
+    "arguments": [ "--pd-bin", "{pd_bin_dir}" ],
+    "sections": [
+        {
+            "name": "Pd",
+            "settings": [
+                {
+                    "id": "mode", "label": "Export type", "type": "combo", "argument": "--mode", "default": "build",
+                    "options": [
+                        { "label": "Source code", "value": "source" },
+                        { "label": "Binary", "value": "build" }
+                    ]
+                },
+                {
+                    "id": "copy_to_externals", "label": "Copy to externals path", "type": "bool",
+                    "argument": "--copy-to", "value": "{externals_dir}", "enabled_if": { "mode": "build" }
+                }
+            ]
+        }
+    ]
+}

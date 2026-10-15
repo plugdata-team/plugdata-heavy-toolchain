@@ -1,0 +1,5 @@
+{
+    "name": "Unity Plugin",
+    "order": 8,
+    "script": "build-unity.sh"
+}

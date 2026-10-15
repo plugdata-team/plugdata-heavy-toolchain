@@ -3,6 +3,23 @@ GENERATOR=owl
 HV_GENERATOR=OWL
 MODE=build
 . "$(dirname -- "$0")/common.sh"
+BOARD=OWL2
+SLOT=1
+OPTIONS_HELP='  --board OWL1|OWL2|OWL3   OWL target (default: OWL2)
+  --slot NUMBER    Store slot for --mode store (default: 1)'
+parse_option() {
+    case $1 in
+        --board|--slot) [ "$#" -ge 2 ] || fail "Missing value for $1";;
+    esac
+    case $1 in
+        --board)
+            case $2 in OWL1|OWL2|OWL3) ;; *) fail 'OWL board must be OWL1, OWL2 or OWL3';; esac
+            BOARD=$2; CONSUMED=2;;
+        --slot)
+            case $2 in ''|*[!0-9]*) fail 'OWL slot must be a non-negative integer';; esac
+            SLOT=$2; CONSUMED=2;;
+    esac
+}
 parse_args "$@"
 copy_library OwlProgram OwlProgram
 run_command rm -rf -- "$OUTPUT/c"

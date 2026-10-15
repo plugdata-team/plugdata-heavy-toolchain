@@ -1,0 +1,5 @@
+{
+    "name": "FMOD Plugin",
+    "order": 7,
+    "script": "build-fmod.sh"
+}

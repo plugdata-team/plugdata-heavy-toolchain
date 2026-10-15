@@ -3,7 +3,84 @@ GENERATOR=dpf
 HV_GENERATOR=dpf
 MODE=build
 . "$(dirname -- "$0")/common.sh"
-DEFAULT_META="$RUN_DIR/dpf-defaults.json"
+MAKER=plugdata
+LICENSE=ISC
+PLUGIN_TYPE=effect
+MIDI_IN=false
+MIDI_OUT=false
+FORMATS=
+UI=none
+THEME=
+USE_THEME=false
+NOSIMD=false
+OPTIONS_HELP='  --maker NAME        Plugin maker (default: plugdata)
+  --license NAME      Plugin license (default: ISC)
+  --plugin-type TYPE  effect, instrument (MIDI input) or custom (default: effect)
+  --midi-in, --midi-out    MIDI ports for --plugin-type custom
+  --format FORMAT     lv2_sep, vst2, vst3, clap or jack; repeat for more (default: lv2_sep vst2 vst3 clap)
+  --ui TYPE           none, imgui or nanovg (default: none)
+  --theme "KEY=VALUE ..."  NanoVG colours: obj_corner_radius, cnv_color, cnv_txt_color,
+                      io_color, bg_color, sel_color, com_txt_color, out_color
+  --use-theme         Apply the object colours from --theme too, not only the canvas ones
+  --nosimd            Disable SIMD'
+parse_option() {
+    case $1 in
+        --maker|--license|--plugin-type|--format|--ui|--theme) [ "$#" -ge 2 ] || fail "Missing value for $1";;
+    esac
+    case $1 in
+        --maker) MAKER=$2; CONSUMED=2;;
+        --license) LICENSE=$2; CONSUMED=2;;
+        --plugin-type)
+            case $2 in effect|instrument|custom) ;; *) fail 'Plugin type must be effect, instrument or custom';; esac
+            PLUGIN_TYPE=$2; CONSUMED=2;;
+        --midi-in) MIDI_IN=true; CONSUMED=1;;
+        --midi-out) MIDI_OUT=true; CONSUMED=1;;
+        --format)
+            case $2 in lv2|lv2_sep|vst2|vst3|clap|jack|dssi|ladspa|au) ;; *) fail "Unknown plugin format: $2";; esac
+            FORMATS="$FORMATS $2"; CONSUMED=2;;
+        --ui)
+            case $2 in none|imgui|nanovg) ;; *) fail 'UI must be none, imgui or nanovg';; esac
+            UI=$2; CONSUMED=2
+            # NanoVG UIs are drawn from the patch's GUI objects
+            if [ "$2" = nanovg ]; then GUI=1; fi;;
+        --theme) THEME=$2; CONSUMED=2;;
+        --use-theme) USE_THEME=true; CONSUMED=1;;
+        --nosimd) NOSIMD=true; CONSUMED=1;;
+    esac
+}
+write_meta() {
+    case $PLUGIN_TYPE in
+        effect) MIDI_IN=false; MIDI_OUT=false;;
+        instrument) MIDI_IN=true; MIDI_OUT=false;;
+    esac
+    formats=
+    for format in ${FORMATS:-lv2_sep vst2 vst3 clap}; do formats="${formats:+$formats, }\"$format\""; done
+    ui=0
+    case $UI in imgui) ui=1;; nanovg) ui=2;; esac
+    printf '{\n  "nosimd": %s,\n  "dpf": {\n' "$NOSIMD"
+    printf '    "description": "Rename Me",\n    "maker": %s,\n    "license": %s,\n' "$(json_string "$MAKER")" "$(json_string "$LICENSE")"
+    printf '    "midi_input": %s,\n    "midi_output": %s,\n' "$MIDI_IN" "$MIDI_OUT"
+    printf '    "plugin_formats": [%s],\n    "enable_ui": %s' "$formats" "$ui"
+    if [ "$UI" = nanovg ]; then
+        # hvcc applies every colour it gets, so the object colours are left out without --use-theme
+        colours=
+        for pair in $THEME; do
+            key=${pair%%=*}
+            value=${pair#*=}
+            case $key in
+                obj_corner_radius) case $value in ''|*[!0-9.]*) fail "Invalid corner radius: $value";; esac;;
+                cnv_color|cnv_txt_color) value=$(json_string "$value");;
+                io_color|bg_color|sel_color|com_txt_color|out_color)
+                    [ "$USE_THEME" = true ] || continue
+                    value=$(json_string "$value");;
+                *) fail "Unknown theme key: $key";;
+            esac
+            colours="${colours:+$colours, }\"$key\": $value"
+        done
+        printf ',\n    "ui_theme": "default",\n    "ui_theme_set": %s,\n    "ui_themes": {"default": {%s}}' "$USE_THEME" "$colours"
+    fi
+    printf '\n  }\n}\n'
+}
 parse_args "$@"
 copy_library DPF dpf
 copy_library dpf-widgets dpf-widgets

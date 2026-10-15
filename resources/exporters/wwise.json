@@ -1,0 +1,5 @@
+{
+    "name": "Wwise Plugin",
+    "order": 9,
+    "script": "build-wwise.sh"
+}
