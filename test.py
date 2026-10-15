@@ -168,9 +168,11 @@ def run_tests(root, emsdk=None):
                                                'plugin_formats': ['clap'], 'enable_ui': 2}}))
         dpf = work / 'dpf plugin'
         run(shell, root / 'run/build-dpf.sh', patch, 'smoke', '', '--output', dpf, '--meta', metadata, '--gui')
-        check((dpf / 'meta.json').read_bytes() == metadata.read_bytes(), 'Metadata was not preserved')
         check((dpf / 'smoke.clap').exists(), 'DPF CLAP plugin was not built')
-        check_only(dpf, 'meta.json', 'smoke.clap')
+        check_only(dpf, 'smoke.clap')
+        dpf_source = work / 'dpf source'
+        run(shell, root / 'run/build-dpf.sh', patch, 'smoke', '', '--output', dpf_source, '--mode', 'source', '--meta', metadata, '--gui')
+        check((dpf_source / 'meta.json').read_bytes() == metadata.read_bytes(), 'Metadata was not preserved')
         if sys.platform.startswith('linux'):
             audit_linux(dpf, root / 'packages/clang/bin/llvm-readelf')
         daisy = work / 'daisy firmware'
