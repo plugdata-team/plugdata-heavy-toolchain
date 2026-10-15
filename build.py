@@ -8,6 +8,7 @@ Result: .toolchain/Toolchain and .toolchain/dist/heavy-toolchain-<os>-<arch>.tar
 import hashlib
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -262,7 +263,13 @@ def packageClang():
     for path in CLANG_BIN.iterdir():
         if path.name.removesuffix(".exe") not in keep and path.suffix.lower() != ".dll":
             deleteFile(path)
-    deleteMatching(OUTPUT / "packages/clang", "include/llvm", "include/clang", "lib/cmake", "lib/libLLVM*.a", "lib/libclang*.a")
+    deleteMatching(OUTPUT / "packages/clang", "include/llvm", "include/clang", "lib/cmake", "lib/libLLVM*.a", "lib/libclang*.a",
+                   "lib/libclang.*", "*/liblldb*", "lib/LLVMPolly*", "lib/libPolly*.a")  # clang and lld only link libLLVM and libclang-cpp
+    # Sanitizer runtimes; the builtins, crt objects, profile, fuzzer and xray runtimes stay.
+    sanitizer = re.compile(r"libclang_rt\.(asan|cfi|dd|dfsan|dyndd|gwp_asan|hwasan|lsan|memprof|msan|nsan|rtsan|safestack|scudo|stats|tsan|tysan|ubsan)[-_.]")
+    for path in (OUTPUT / "packages/clang/lib/clang").glob("*/lib/*/*"):
+        if sanitizer.match(path.name):
+            deleteFile(path)
 
 
 def packageArmGcc():
