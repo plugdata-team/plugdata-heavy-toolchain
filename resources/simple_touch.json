@@ -1,0 +1,67 @@
+{
+    "name": "simpletouch",
+    "som": "seed",
+    "defines": {
+        "HAS_MIDI": 1
+    },
+    "audio": {
+        "channels": 2
+    },
+    "parents": {
+        "touch": {
+            "component": "Mpr121",
+                "pin": {
+                    "scl": 11,
+                    "sda": 12
+                }
+        }
+    },
+    "components": {
+        "faderleft": {
+            "component": "AnalogControl",
+            "pin": 21
+        },
+        "faderright": {
+            "component": "AnalogControl",
+            "pin": 22
+        },
+        "knob1": {
+            "component": "AnalogControl",
+            "pin": 15
+        },
+        "knob2": {
+            "component": "AnalogControl",
+            "pin": 16
+        },
+        "knob3": {
+            "component": "AnalogControl",
+            "pin": 17
+        },
+        "knob4": {
+            "component": "AnalogControl",
+            "pin": 18
+        },
+        "knob5": {
+            "component": "AnalogControl",
+            "pin": 19
+        },
+        "knob6": {
+            "component": "AnalogControl",
+            "pin": 20
+        },
+        "sw1": {
+            "component": "Switch3",
+            "pin": {
+                "a": 8,
+                "b": 9
+            }
+        },
+        "sw2": {
+            "component": "Switch3",
+            "pin": {
+                "a": 7,
+                "b": 6
+            }
+        }
+  }
+}
