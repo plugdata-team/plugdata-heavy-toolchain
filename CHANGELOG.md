@@ -5,7 +5,7 @@ next
 -----
 
 * Add pdvg
-* update hvcc
+* update hvcc to v0.17.3
 * use dpf fork
 
 0.9.5
