@@ -8,6 +8,11 @@ next
 * update hvcc
 * use dpf fork
 
+0.9.5
+-----
+
+* update hvcc to v0.17.2
+
 0.9.4
 -----
 
