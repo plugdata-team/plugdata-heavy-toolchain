@@ -6,10 +6,13 @@
 	url = https://github.com/electro-smith/libDaisy.git
 [submodule "dpf"]
 	path = dpf
-	url = https://github.com/DISTRHO/DPF.git
+	url = https://github.com/Wasted-Audio/DPF.git
 [submodule "dpf-widgets"]
 	path = dpf-widgets
 	url = https://github.com/DISTRHO/DPF-Widgets.git
 [submodule "OwlProgram"]
 	path = OwlProgram
 	url = https://github.com/Wasted-Audio/OwlProgram.git
+[submodule "pdvg"]
+	path = pdvg
+	url = https://github.com/Wasted-Audio/PDVG.git

@@ -7,7 +7,7 @@ It provides tooling for:
 - [arm-gcc](https://developer.arm.com/downloads/-/gnu-rm) (10-2020-q4)
 - [libDaisy](https://github.com/electro-smith/libDaisy)
 - [OwlProgram](https://github.com/Wasted-Audio/OwlProgram/)
-- [DPF](https://github.com/DISTRHO/DPF) and [DPF-Widgets](https://github.com/DISTRHO/DPF-Widgets)
+- [DPF](https://github.com/Wasted-Audio/DPF), [DPF-Widgets](https://github.com/DISTRHO/DPF-Widgets) and [PDVG](https://github.com/Wasted-Audio/PDVG)
 
 Windows
 -----

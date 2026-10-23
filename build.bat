@@ -48,6 +48,7 @@ xcopy /E /H /C /I libdaisy Heavy\usr\lib\libdaisy
 xcopy /E /H /C /I OwlProgram Heavy\usr\lib\OwlProgram
 xcopy /E /H /C /I dpf Heavy\usr\lib\dpf
 xcopy /E /H /C /I dpf-widgets Heavy\usr\lib\dpf-widgets
+xcopy /E /H /C /I pdvg Heavy\usr\lib\pdvg
 
 :: Download OWL FirmwareSender from CI
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://github.com/Wasted-Audio/FirmwareSender_plugdata/releases/download/plugdata/FirmwareSender-windows.zip -OutFile FirmwareSender.zip"
