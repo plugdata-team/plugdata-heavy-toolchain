@@ -7,6 +7,7 @@ next
 * Add pdvg
 * update hvcc to v0.17.3
 * use dpf fork
+* update libDaisy to v9.0.0
 
 0.9.5
 -----
