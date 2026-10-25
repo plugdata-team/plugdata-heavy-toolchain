@@ -109,6 +109,7 @@ mkdir -p ./Heavy/etc/linkers
 # copy resource files
 cp -rf ./resources/*.lds ./Heavy/etc/linkers
 cp ./resources/simple.json ./Heavy/etc/simple.json
+cp ./resources/simple_touch.json ./Heavy/etc/simple_touch.json
 cp ./resources/terrarium.json ./Heavy/etc/terrarium.json
 cp ./resources/versio.json ./Heavy/etc/versio.json
 cp ./resources/hothouse.json ./Heavy/etc/hothouse.json
